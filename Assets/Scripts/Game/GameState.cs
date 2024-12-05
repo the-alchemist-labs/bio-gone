@@ -12,10 +12,14 @@ public enum Phase
 
 public class GameState
 {
-    Phase Phase { get; set; }
+    public string RoomId { get; }
+    public Phase Phase { get; }
+    public List<Player> Players { get; }
 
-    public GameState()
+    public GameState(string roomId, List<Player> players)
     {
+        RoomId = roomId;
         Phase = Phase.Start;
+        Players = players;
     }
 }

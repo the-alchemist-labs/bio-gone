@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class RollDiceCommandPayload : ICommandPayload
 { 
-    public string PlayerId { get; }
-    public TileId MoveTileId { get; }
+    public string PlayerId { get; set;  }
+    public int DiceValue { get; set; }
+
+    public RollDiceCommandPayload(string playerId, int diceValue)
+    {
+        PlayerId = playerId;
+        DiceValue = diceValue;
+    }
 }
 
 public class RollDiceCommandFactory : ICommandFactory
@@ -21,17 +27,17 @@ public class RollDiceCommandFactory : ICommandFactory
 }
 public class RollDiceCommand : ICommand
 {
-    private string _playerId;
-    private TileId _moveTileId;
+    private string PlayerId { get; set; }
+    private int DiceValue { get; set; }
     
     public RollDiceCommand(RollDiceCommandPayload payload)
     {
-        _playerId = payload.PlayerId;
-        _moveTileId = payload.MoveTileId;
+        PlayerId = payload.PlayerId;
+        DiceValue = payload.DiceValue;
     }
     
     public void Execute()
     {
-        Debug.Log($"{_playerId} - {_moveTileId}");
+        Debug.Log($"{PlayerId} - {DiceValue}");
     }
 }

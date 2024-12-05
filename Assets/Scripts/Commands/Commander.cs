@@ -1,23 +1,48 @@
 using System;
 using System.Collections.Generic;
 
-public static class Commander
+public class CommandEvent
 {
-    private static readonly Dictionary<Command, ICommandFactory> CommandFactories = new()
+    public string RoomId { get; set; }
+    public Command CommandType { get; set; }
+    public ICommandPayload Payload { get; set; }
+
+    public CommandEvent(string roomId, Command commandType, ICommandPayload payload)
+    {
+        RoomId = roomId;
+        CommandType = commandType;
+        Payload = payload;
+    }
+}
+
+public class Commander
+{
+    private readonly Dictionary<Command, ICommandFactory> CommandFactories = new()
     {
         { Command.RollDice, new RollDiceCommandFactory() },
+        { Command.MovePlayer, new MovePlayerCommandFactory() },
     };
-
-    public static void QueueCommand(Command commandType, ICommandPayload payload)
+    
+    public Commander()
     {
-        if (CommandFactories.TryGetValue(commandType, out var factory))
+        SocketIO.Instance.RegisterEvent<CommandEvent>(SocketEvents.CommandReceived, ExecuteCommand);
+    }
+
+    public void PostCommand(CommandEvent command)
+    {
+        SocketIO.Instance.EmitEvent(SocketEvents.PostCommand, command);
+    }
+    
+    private void ExecuteCommand(CommandEvent @event)
+    {
+        if (CommandFactories.TryGetValue(@event.CommandType, out var factory))
         {
-            ICommand command = factory.CreateCommand(payload);
-            GameManager.Instance.CommandsQueue.AddCommand(command);
+            ICommand command = factory.CreateCommand(@event.Payload);
+            command.Execute();
         }
         else
         {
-            throw new Exception($"Unknown command type: {commandType}");
+            throw new Exception($"Unknown command type: {@event.CommandType}");
         }
     }
 }

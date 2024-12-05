@@ -58,7 +58,13 @@ public class SocketIO : MonoBehaviour
         Debug.LogError("Socket failed to connect");
     }
 
-    public void Disconnect()
+    private static void SocketConnected()
+    {
+        Debug.Log("Socket connected");
+        OnSocketConnected?.Invoke();
+    }
+    
+    private void Disconnect()
     {
         Socket.Disconnect();
         Socket.Dispose();
@@ -83,9 +89,10 @@ public class SocketIO : MonoBehaviour
         });
     }
     
-    private static void SocketConnected()
+    public void EmitEvent<T>(string eventName, T data)
     {
-        Debug.Log("Socket connected");
-        OnSocketConnected?.Invoke();
+        string jsonData = JsonConvert.SerializeObject(data);
+        Socket.EmitAsync(eventName, jsonData);
     }
+   
 }

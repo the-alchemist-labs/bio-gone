@@ -1,25 +1,22 @@
 
 import { Server } from 'socket.io';
-import { SocketEvent, SocketResponseEvent } from '../types/SocketEvents';
-import { ClientManager } from './clients';
-import { playerSocketConnectionSchema } from '../types/Player';
-import { emitPlayerOffline } from '../flows/friends';
+import { CommandMessage, SearchMatchData, SocketEvent } from '../types/Sockets';
+import { searchMatch, postCommand } from '../flows/game-session';
 
+let onlineCounter = 0;
 
 export function initializeSockets(io: Server) {
   io.on(SocketEvent.Connection, async socket => {
-    try {
-      const { playerId } = playerSocketConnectionSchema.parse(socket.handshake.query);
-      ClientManager.addClient(playerId, socket.id);
+    onlineCounter++;
 
-      socket.on(SocketEvent.Disconnect, () => {
-        const { playerId } = playerSocketConnectionSchema.parse(socket.handshake.query);
-        ClientManager.removeClient(socket.id);
-        emitPlayerOffline(playerId);
-      });
+    try {
+      // Add schema validations
+      socket.on(SocketEvent.SearchMatch, (data: SearchMatchData) => searchMatch(data, socket));
+      socket.on(SocketEvent.PostCommand, (data: CommandMessage) => postCommand(io, data));
+      socket.on(SocketEvent.Disconnect, () => { onlineCounter-- });
 
     } catch (err) {
-      socket.emit(SocketResponseEvent.Error, { message: (err as Error).message });
+      socket.emit(SocketEvent.Error, { message: (err as Error).message });
       console.log("Socket event failed", (err as Error).message);
     }
   });

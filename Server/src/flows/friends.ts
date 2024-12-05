@@ -1,4 +1,3 @@
-import { SocketResponseEvent } from "../types/SocketEvents";
 import { FriendRequestRespond } from "../types/FriendRequest";
 import { ClientManager } from "../sockets/clients";
 import * as PlayersStore from '../stores/PlayerStore';
@@ -65,7 +64,7 @@ export async function sendFriendRequest(senderId: string, toFriendCode: string):
         const sender = await PlayersStore.GetPlayerById(senderId);
 
         if (recipientSocketId && sender) {
-            io.to(recipientSocketId).emit(SocketResponseEvent.FriendRequestReceived, { from: sender });
+            // io.to(recipientSocketId).emit(SocketResponseEvent.FriendRequestReceived, { from: sender });
         }
 
 
@@ -84,7 +83,7 @@ export async function handleFriendRequestRespond(fromPlayerId: string, requestFr
 
             const recipientSocketId = ClientManager.getClient(requestFromPlayerId);
             if (respond == FriendRequestRespond.Accept && recipientSocketId) {
-                io.to(recipientSocketId).emit(SocketResponseEvent.FriendRequestAccepted, { fromPlayerId });
+               // io.to(recipientSocketId).emit(SocketResponseEvent.FriendRequestAccepted, { fromPlayerId });
             }
         }
 
@@ -136,7 +135,7 @@ function emitPlayerOnline(playerId: string, friends: string[], isOnline: boolean
         const friendSocketId = ClientManager.getClient(friend);
 
         if (friendSocketId) {
-            io.to(friendSocketId).emit(SocketResponseEvent.FriendOnlineStatus, { playerId, isOnline });
+           // io.to(friendSocketId).emit(SocketResponseEvent.FriendOnlineStatus, { playerId, isOnline });
         }
     }
 }
