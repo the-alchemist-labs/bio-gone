@@ -10,10 +10,6 @@ public class SearchMatchEvent
 
 public class MatchFoundEvent
 {
-    private string RoomId { get; set; }
-
-    public MatchFoundEvent(string roomId)
-    {
-        this.RoomId = roomId;
-    }
+    public string RoomId { get; private set; }
+    public string[] PlayerIds { get; private set; }
 }

@@ -8,4 +8,5 @@ public static class SocketEvents
     public const string CommandReceived = "commandReceived";
     public const string PostCommand = "postCommand";
     public const string SearchMatch = "searchMatch";
+    public const string MatchFound = "matchFound";
 }
