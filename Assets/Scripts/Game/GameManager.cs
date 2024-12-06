@@ -1,5 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -26,27 +27,42 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Commander = new Commander();
+        StartCoroutine(WaitForSocketConnection());
+    }
 
-        // move to SearchMatch & MatchFound matchmaking
-        // change SearchMatch to http
+    IEnumerator WaitForSocketConnection()
+    {
+        while (SocketIO.Instance == null)
+        {
+            Debug.Log("Waiting for socket to connect...");
+            yield return new WaitForSeconds(0.1f); // Wait a short time before checking again
+        }
+
+        Debug.Log("Socket connected. Proceeding with the rest of the logic.");
+
+        Commander = new Commander();
+        Debug.Log("SearchMatch");
+        Debug.Log("waste time");
         SocketIO.Instance.EmitEvent(SocketEvents.SearchMatch, new SearchMatchEvent(PlayerProfile.Instance.Id));
         SocketIO.Instance.RegisterEvent<MatchFoundEvent>(SocketEvents.MatchFound, GameManager.Instance.InitGame);
-
+    }
+    
+    private void InitGame(MatchFoundEvent matchFoundEvent)
+    {
+        List<Player> players = GetPlayers(matchFoundEvent.PlayerIds);
+        GameState = new GameState(matchFoundEvent.RoomId, players);
+        
         // test
+        Debug.Log("CommandEvent");
+        Debug.Log("waste time");
         Commander.PostCommand(new CommandEvent(
             GameState.RoomId,
             Command.RollDice,
-            new RollDiceCommandPayload(PlayerProfile.Instance.Id, 3)));
+            JsonConvert.SerializeObject(new RollDiceCommandPayload(PlayerProfile.Instance.Id, 3))
+            ));
     }
 
-    async private void InitGame(MatchFoundEvent matchFoundEvent)
-    {
-        List<Player> players = await GetPlayers(matchFoundEvent.PlayerIds);
-        GameState = new GameState(matchFoundEvent.RoomId, players);
-    }
-
-    async private Task<List<Player>> GetPlayers(string[] playerIds)
+    private List<Player> GetPlayers(string[] playerIds)
     {
         // get players profile
         return new List<Player>

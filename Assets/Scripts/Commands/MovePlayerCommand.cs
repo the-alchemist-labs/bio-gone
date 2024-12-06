@@ -1,30 +1,22 @@
 
 using System;
+using UnityEngine;
 
-public class MovePlayerCommandPayload : ICommandPayload
+[Serializable]
+public class MovePlayerCommandPayload
 { 
     public string PlayerId { get; set; }
     public TileId MoveTileId { get; set; }
 }
 
-public class MovePlayerCommandFactory : ICommandFactory
-{
-    public ICommand CreateCommand(ICommandPayload payload)
-    {
-        if (payload is MovePlayerCommandPayload movePlayerPayload)
-        {
-            return new MovePlayerCommand(movePlayerPayload);
-        }
-        throw new InvalidCastException("Invalid payload type for MovePlayerCommand");
-    }
-}
 public class MovePlayerCommand : ICommand
 {
     private string PlayerId { get; set; }
     private TileId MoveTileId { get; set; }
     
-    public MovePlayerCommand(MovePlayerCommandPayload payload)
+    public MovePlayerCommand(string payloadString)
     {
+        MovePlayerCommandPayload payload = JsonUtility.FromJson<MovePlayerCommandPayload>(payloadString);
         PlayerId = payload.PlayerId;
         MoveTileId = payload.MoveTileId;
     }

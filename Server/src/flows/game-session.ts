@@ -1,27 +1,33 @@
 import { Server, Socket } from "socket.io";
-import { CommandMessage, SearchMatchData, SocketEvent } from "../types/Sockets";
+import { CommandMessage, CommandMessageData, SearchMatchData, SocketEvent } from "../types/Sockets";
+import { ParseSocketMessage } from "../utils/Parser";
 
-type LobbyRecord = { playerId: string, socket: Socket };
+type LobbyRecord = { PlayerId: string, socket: Socket };
 const lobby: LobbyRecord[]= [];
 
-export async function searchMatch({ playerId }: SearchMatchData, socket: Socket) {
-    OpenRoom([socket]);
+export async function searchMatch(data: string, socket: Socket) {
+    const { PlayerId } = ParseSocketMessage<SearchMatchData>(data, SearchMatchData);
+
+    OpenRoom([{ socket, PlayerId }]);
     return; // for test
-    if (lobby.length > 0 || true) {
-        OpenRoom([socket, lobby.shift()!.socket]);
+    if (lobby.length > 0) {
+        OpenRoom([{ socket, PlayerId }, lobby.shift()!]);
     } else {
-        lobby.push({ playerId, socket});
+        lobby.push({ PlayerId, socket });
     }
 }
 
-export async function postCommand(io: Server, commandMessage: CommandMessage) {
-    io.to(commandMessage.roomId).emit(SocketEvent.CommandReceived, commandMessage);
+export async function postCommand(io: Server, commandMessageString: string) {
+    const commandMessage = ParseSocketMessage<CommandMessageData>(commandMessageString, CommandMessageData);
+    io.to(commandMessage.RoomId).emit(SocketEvent.CommandReceived, commandMessage);
+
 }
 
-function OpenRoom(sockets: Socket[]){
-    const roomId = crypto.randomUUID();
-    sockets.forEach(s => {
-        s.join(roomId);
-        s.emit(SocketEvent.MatchFound, { roomId });
+function OpenRoom(records: LobbyRecord[]){
+    const playerIds = records.map(s => s.PlayerId)
+    const roomId = playerIds.join('-');
+    records.forEach(s => {
+        s.socket.join(roomId);
+        s.socket.emit(SocketEvent.MatchFound, { RoomId: roomId, playerIds: playerIds });
     });
 }

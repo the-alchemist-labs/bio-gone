@@ -1,6 +1,9 @@
+using System;
+
+[Serializable]
 public class SearchMatchEvent
 {
-    private string PlayerId { get; set; }
+    public string PlayerId { get; set; }
 
     public SearchMatchEvent(string playerId)
     {
@@ -8,8 +11,9 @@ public class SearchMatchEvent
     }
 }
 
+[Serializable]
 public class MatchFoundEvent
 {
-    public string RoomId { get; private set; }
-    public string[] PlayerIds { get; private set; }
+    public string RoomId { get; set; }
+    public string[] PlayerIds { get; set; }
 }

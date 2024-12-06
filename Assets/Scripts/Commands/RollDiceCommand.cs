@@ -1,12 +1,14 @@
 
 using System;
+using Newtonsoft.Json;
 using UnityEngine;
 
-public class RollDiceCommandPayload : ICommandPayload
+[Serializable]
+public class RollDiceCommandPayload
 { 
     public string PlayerId { get; set;  }
     public int DiceValue { get; set; }
-
+    
     public RollDiceCommandPayload(string playerId, int diceValue)
     {
         PlayerId = playerId;
@@ -14,30 +16,21 @@ public class RollDiceCommandPayload : ICommandPayload
     }
 }
 
-public class RollDiceCommandFactory : ICommandFactory
-{
-    public ICommand CreateCommand(ICommandPayload payload)
-    {
-        if (payload is RollDiceCommandPayload rollDicePayload)
-        {
-            return new RollDiceCommand(rollDicePayload);
-        }
-        throw new InvalidCastException("Invalid payload type for RollDiceCommand");
-    }
-}
 public class RollDiceCommand : ICommand
 {
     private string PlayerId { get; set; }
     private int DiceValue { get; set; }
     
-    public RollDiceCommand(RollDiceCommandPayload payload)
+    public RollDiceCommand(string payloadString)
     {
+        Debug.Log(payloadString);
+        RollDiceCommandPayload payload = JsonConvert.DeserializeObject<RollDiceCommandPayload>(payloadString);
         PlayerId = payload.PlayerId;
         DiceValue = payload.DiceValue;
     }
     
     public void Execute()
     {
-        Debug.Log($"{PlayerId} - {DiceValue}");
+        Debug.Log($"RollDice: {PlayerId} - {DiceValue}");
     }
 }

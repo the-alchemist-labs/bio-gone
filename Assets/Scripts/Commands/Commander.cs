@@ -1,26 +1,13 @@
 using System;
 using System.Collections.Generic;
-
-public class CommandEvent
-{
-    public string RoomId { get; set; }
-    public Command CommandType { get; set; }
-    public ICommandPayload Payload { get; set; }
-
-    public CommandEvent(string roomId, Command commandType, ICommandPayload payload)
-    {
-        RoomId = roomId;
-        CommandType = commandType;
-        Payload = payload;
-    }
-}
+using UnityEngine;
 
 public class Commander
 {
-    private readonly Dictionary<Command, ICommandFactory> CommandFactories = new()
+    private readonly Dictionary<Command, Func<string, ICommand>> CommandMap = new()
     {
-        { Command.RollDice, new RollDiceCommandFactory() },
-        { Command.MovePlayer, new MovePlayerCommandFactory() },
+        { Command.RollDice, payload => new RollDiceCommand(payload) },
+        { Command.MovePlayer, payload => new MovePlayerCommand(payload) },
     };
     
     public Commander()
@@ -30,19 +17,22 @@ public class Commander
 
     public void PostCommand(CommandEvent command)
     {
+        // string json = JsonConvert.SerializeObject(commandEvent);
+
         SocketIO.Instance.EmitEvent(SocketEvents.PostCommand, command);
     }
     
-    private void ExecuteCommand(CommandEvent @event)
+    private void ExecuteCommand(CommandEvent message)
     {
-        if (CommandFactories.TryGetValue(@event.CommandType, out var factory))
+        Debug.Log(message);
+        if (CommandMap.TryGetValue(message.CommandType, out var command))
         {
-            ICommand command = factory.CreateCommand(@event.Payload);
-            command.Execute();
+            var commandInstance = command(message.Payload);
+            commandInstance.Execute();
         }
         else
         {
-            throw new Exception($"Unknown command type: {@event.CommandType}");
+            throw new Exception($"Unknown command type: {message.CommandType}");
         }
     }
 }

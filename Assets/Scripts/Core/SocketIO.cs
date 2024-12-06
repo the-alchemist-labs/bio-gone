@@ -75,7 +75,16 @@ public class SocketIO : MonoBehaviour
     {
         Socket.On(eventName, response =>
         {
-            T parsedResponse = JsonConvert.DeserializeObject<T[]>(response.ToString()).First();
+            Debug.Log($"Event: {eventName}, {response}");
+
+            T parsedResponse = JsonConvert.DeserializeObject<T[]>(response.ToString(), new JsonSerializerSettings
+            {
+                MissingMemberHandling = MissingMemberHandling.Error,
+                Error = (sender, args) =>
+                {
+                    Debug.LogError(args.ErrorContext.Error);
+                }
+            }).First();
             MainThreadDispatcher.Enqueue(() => handler(parsedResponse));
         });
     }
@@ -94,5 +103,21 @@ public class SocketIO : MonoBehaviour
         string jsonData = JsonConvert.SerializeObject(data);
         Socket.EmitAsync(eventName, jsonData);
     }
-   
+}
+
+public class CommandConverter : JsonConverter<Command>
+{
+    public override Command ReadJson(JsonReader reader, Type objectType, Command existingValue, bool hasExistingValue, JsonSerializer serializer)
+    {
+        if (reader.TokenType == JsonToken.Integer)
+        {
+            return (Command)(int)reader.Value;
+        }
+        throw new JsonSerializationException($"Unexpected token {reader.TokenType} when parsing Command enum.");
+    }
+
+    public override void WriteJson(JsonWriter writer, Command value, JsonSerializer serializer)
+    {
+        writer.WriteValue((int)value);
+    }
 }
