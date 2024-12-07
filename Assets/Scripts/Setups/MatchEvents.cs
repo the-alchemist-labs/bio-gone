@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class SearchMatchEvent
@@ -15,5 +16,11 @@ public class SearchMatchEvent
 public class MatchFoundEvent
 {
     public string RoomId { get; set; }
-    public string[] PlayerIds { get; set; }
+    public List<Player> PlayersData{ get; set; }
+    public int FirstTurnPlayer { get; set; }
+}
+
+public class MatchFoundResults
+{
+    public static MatchFoundEvent Instance;
 }

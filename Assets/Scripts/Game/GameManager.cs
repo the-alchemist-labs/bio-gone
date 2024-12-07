@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using Newtonsoft.Json;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static event Action OnGameStateSet;
     public static GameManager Instance { get; private set; }
     public GameState GameState { get; private set; }
     private Commander Commander { get; set; }
@@ -25,8 +25,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Commander = new Commander();
-        GameState = new GameState(MatchFoundResults.Instance.RoomId, MatchFoundResults.Instance.Players);
-        InitPlayersPosition();
+        GameState = new GameState(MatchFoundResults.Instance);
+        OnGameStateSet?.Invoke();
         
         // test
         Commander.PostCommand(new CommandEvent(
@@ -34,10 +34,5 @@ public class GameManager : MonoBehaviour
             Command.RollDice,
             JsonConvert.SerializeObject(new RollDiceCommandPayload(PlayerProfile.Instance.Id, 3))
         ));
-    }
-    
-    private void InitPlayersPosition()
-    {
-        GameState.Players[0].MovePlayer(TileId.A1);
     }
 }

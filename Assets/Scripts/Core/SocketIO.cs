@@ -12,6 +12,8 @@ public class SocketIO : MonoBehaviour
 
     public SocketIOUnity Socket { get; private set; }
 
+    public static event Action OnSocketConnected;
+
     async void Awake()
     {
         if (Instance == null)
@@ -53,7 +55,7 @@ public class SocketIO : MonoBehaviour
     private static void SocketConnected()
     {
         Debug.Log("Socket connected");
-        GameEvents.GameInitialized();
+        OnSocketConnected?.Invoke();
     }
     
     private void Disconnect()

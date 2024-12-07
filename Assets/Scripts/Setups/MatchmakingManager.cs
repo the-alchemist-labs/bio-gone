@@ -12,20 +12,7 @@ public class MatchmakingManager : MonoBehaviour
 
     private void OnMatchFound(MatchFoundEvent matchFoundEvent)
     {
-        List<Player> players = GetPlayers(matchFoundEvent.PlayerIds);
-        
-        MatchFoundResults.Instance.Players = players;
-        MatchFoundResults.Instance.RoomId = matchFoundEvent.RoomId;
-        
+        MatchFoundResults.Instance = matchFoundEvent;
         SceneManager.LoadScene(SceneNames.Game);
-    }
-    
-    private List<Player> GetPlayers(string[] playerIds)
-    {
-        // get players profile
-        return new List<Player>
-        {
-            new Player(playerIds[0], "Sol"),
-        };
     }
 }

@@ -28,12 +28,12 @@ public class MainManager : MonoBehaviour
         Application.targetFrameRate = 120;
         QualitySettings.vSyncCount = 0;
 
-        GameEvents.OnGameInitialized += StartGame;
+        SocketIO.OnSocketConnected += StartGame;
     }
 
     void OnDestroy()
     {
-        GameEvents.OnGameInitialized -= StartGame;
+        SocketIO.OnSocketConnected -= StartGame;
     }
 
     void StartGame()

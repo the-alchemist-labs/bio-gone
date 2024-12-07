@@ -8,6 +8,7 @@ public class PlayerProfile : MonoBehaviour
     public static PlayerProfile Instance { get; private set; }
 
     public string Id { get; private set; }
+    public PlayerProfilePicture ProfilePicture { get; private set; }
    
     async void Awake()
     {
