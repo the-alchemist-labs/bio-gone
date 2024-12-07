@@ -6,7 +6,8 @@ import { searchMatch, postCommand } from '../flows/game-session';
 
 export function initializeSockets(io: Server) {
   io.on(SocketEvent.Connection, async socket => {
-
+    console.log("Socket connected - ", socket.id);
+    
     try {
       // Add schema validations
       socket.on(SocketEvent.SearchMatch, (data: string) => {
@@ -14,7 +15,7 @@ export function initializeSockets(io: Server) {
 
       });
       socket.on(SocketEvent.PostCommand, (data: string) => postCommand(io, data));
-      socket.on(SocketEvent.Disconnect, () => console.log("Socket disconected - ", socket.id));
+      socket.on(SocketEvent.Disconnect, () => console.log("Socket disconnected - ", socket.id));
 
     } catch (err) {
       socket.emit(SocketEvent.Error, { message: (err as Error).message });

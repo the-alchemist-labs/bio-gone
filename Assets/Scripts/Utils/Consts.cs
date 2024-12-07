@@ -10,3 +10,12 @@ public static class SocketEvents
     public const string SearchMatch = "searchMatch";
     public const string MatchFound = "matchFound";
 }
+
+public static class SceneNames
+{
+    public const string Loading = "LoadingScene";
+    public const string MainMenu = "MainMenuScene";
+    public const string Matchmaking = "MatchmakingScene";
+    public const string Game = "GameScene";
+    
+}

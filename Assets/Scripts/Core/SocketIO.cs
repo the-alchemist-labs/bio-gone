@@ -12,7 +12,6 @@ public class SocketIO : MonoBehaviour
 
     public SocketIOUnity Socket { get; private set; }
 
-    public static event Action OnSocketConnected;
     async void Awake()
     {
         if (Instance == null)
@@ -34,16 +33,9 @@ public class SocketIO : MonoBehaviour
     private async Task Initialize()
     {
         Uri uri = new Uri($"ws://{Consts.ServerURI}");
-        string playerId = PlayerProfile.Instance.Id;
-
-        if (string.IsNullOrEmpty(playerId))
-        {
-            throw new InvalidOperationException("Player ID cannot be null or empty.");
-        }
-
+        
         Socket = new SocketIOUnity(uri, new SocketIOOptions
         {
-            Query = new Dictionary<string, string> { { "playerId", playerId } },
             Transport = SocketIOClient.Transport.TransportProtocol.WebSocket
         });
 
@@ -61,7 +53,7 @@ public class SocketIO : MonoBehaviour
     private static void SocketConnected()
     {
         Debug.Log("Socket connected");
-        OnSocketConnected?.Invoke();
+        GameEvents.GameInitialized();
     }
     
     private void Disconnect()
@@ -102,22 +94,5 @@ public class SocketIO : MonoBehaviour
     {
         string jsonData = JsonConvert.SerializeObject(data);
         Socket.EmitAsync(eventName, jsonData);
-    }
-}
-
-public class CommandConverter : JsonConverter<Command>
-{
-    public override Command ReadJson(JsonReader reader, Type objectType, Command existingValue, bool hasExistingValue, JsonSerializer serializer)
-    {
-        if (reader.TokenType == JsonToken.Integer)
-        {
-            return (Command)(int)reader.Value;
-        }
-        throw new JsonSerializationException($"Unexpected token {reader.TokenType} when parsing Command enum.");
-    }
-
-    public override void WriteJson(JsonWriter writer, Command value, JsonSerializer serializer)
-    {
-        writer.WriteValue((int)value);
     }
 }

@@ -16,7 +16,6 @@ public class PlayerProfile : MonoBehaviour
             Instance = this;
             await InitializeUnityServices();
             Id = AuthenticationService.Instance.PlayerId;
-            gameObject.AddComponent<SocketIO>();
         }
         else if (Instance != this)
         {
