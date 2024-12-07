@@ -22,4 +22,6 @@ public class GameState
         Phase = Phase.Start;
         Players = players;
     }
+    
+    
 }

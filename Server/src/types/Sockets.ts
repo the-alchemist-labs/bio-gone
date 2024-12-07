@@ -19,8 +19,3 @@ export const CommandMessageData = z.object({
     RoomId: z.string(),
   }).passthrough();
 export type CommandMessageData = z.infer<typeof CommandMessageData>;
-
-export interface CommandMessage  {
-    RoomId: string;
-    [key: string]: unknown;
-  };

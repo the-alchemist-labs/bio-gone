@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     {
         List<Player> players = GetPlayers(matchFoundEvent.PlayerIds);
         GameState = new GameState(matchFoundEvent.RoomId, players);
+        InitPlayersPosition();
         
         // test
         Debug.Log("CommandEvent");
@@ -67,7 +68,12 @@ public class GameManager : MonoBehaviour
         // get players profile
         return new List<Player>
         {
-            new Player(playerIds[0], TileId.A1),
+            new Player(playerIds[0], "Sol"),
         };
+    }
+
+    private void InitPlayersPosition()
+    {
+        GameState.Players[0].MovePlayer(TileId.A1);
     }
 }

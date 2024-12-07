@@ -1,12 +1,16 @@
+
 public class Player
 { 
-    public string PlayerId { get; }
+    public string PlayerId { get; private set; }
+    string Name { get; set; }
     TileId PlayerPosition { get; set; }
 
-    public Player(string playerId, TileId playerPosition)
+
+    public Player(string playerId, string name)
     {
-        PlayerId = playerId;
-        PlayerPosition = playerPosition;
+        PlayerId = playerId;    
+        Name = name;
+        PlayerPosition = TileId.None;
     }
 
     public void MovePlayer(TileId newPosition)

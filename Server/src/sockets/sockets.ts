@@ -1,6 +1,6 @@
 
 import { Server } from 'socket.io';
-import { CommandMessage, SocketEvent } from '../types/Sockets';
+import { SocketEvent } from '../types/Sockets';
 import { searchMatch, postCommand } from '../flows/game-session';
 
 

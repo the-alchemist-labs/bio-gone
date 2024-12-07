@@ -1,5 +1,5 @@
 import { Server, Socket } from "socket.io";
-import { CommandMessage, CommandMessageData, SearchMatchData, SocketEvent } from "../types/Sockets";
+import { CommandMessageData, SearchMatchData, SocketEvent } from "../types/Sockets";
 import { ParseSocketMessage } from "../utils/Parser";
 
 type LobbyRecord = { PlayerId: string, socket: Socket };
