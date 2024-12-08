@@ -1,6 +1,8 @@
 public static class Consts
 {
     public const string ServerURI = "192.168.1.223:3000";
+    public const int MaxRollValue = 6;
+    public const int MinRollValue = 1;
 }
 
 public static class SocketEvents

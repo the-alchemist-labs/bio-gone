@@ -4,7 +4,7 @@ import { ParseSocketMessage } from "../utils/Parser";
 import { getPlayer } from "./players";
 
 type LobbyRecord = { PlayerId: string, socket: Socket };
-const lobby: LobbyRecord[]= [];
+const lobby: LobbyRecord[] = [];
 
 export async function searchMatch(data: string, socket: Socket) {
     const { PlayerId } = ParseSocketMessage<SearchMatchData>(data, SearchMatchData);
@@ -24,7 +24,7 @@ export async function postCommand(io: Server, commandMessageString: string) {
 
 }
 
-async function OpenRoom(records: LobbyRecord[]){
+async function OpenRoom(records: LobbyRecord[]) {
     const playerIds = records.map(s => s.PlayerId);
     const roomId = playerIds.join('-');
 
@@ -32,23 +32,31 @@ async function OpenRoom(records: LobbyRecord[]){
 
     records.forEach(s => {
         s.socket.join(roomId);
-        s.socket.emit(SocketEvent.MatchFound, { 
+        s.socket.emit(SocketEvent.MatchFound, {
             RoomId: roomId,
             PlayersData: playersData,
-            FirstTurnPlayer:  getFirstPlayerIndex(records.length -1),
+            FirstTurnPlayer: getFirstPlayerIndex(records.length - 1),
         });
     });
 }
 
-function getFirstPlayerIndex(playersNum: number){
+function getFirstPlayerIndex(playersNum: number) {
     return Math.floor(Math.random() * playersNum)
 }
 
-async function getPlayersData(playerIds: string[]){
-    return Promise.resolve([{
-        PlayerId: playerIds[0],
-        Name: 'Sol',
-        ProfilePicture: 0,
-        Position: 1,
-    }]);
+async function getPlayersData(playerIds: string[]) {
+    return Promise.resolve([
+        {
+            PlayerId: playerIds[0],
+            Name: 'Sol',
+            ProfilePicture: 0,
+            Position: 1,
+        },
+        {
+            PlayerId: "123123",
+            Name: 'Bla',
+            ProfilePicture: 1,
+            Position: 4,
+        },
+    ]);
 }
