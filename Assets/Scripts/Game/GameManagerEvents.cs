@@ -36,7 +36,7 @@ public partial class GameManager
 
     private void TakeStep()
     {
-        if (GameState.Steps == 0)
+        if (IsLastStep())
         {
             RegisterEndTurn();
         }
@@ -58,27 +58,14 @@ public partial class GameManager
 
     private void MovePlayer(string playerId, TileId newPosition)
     {
+        if (GameState.IsYourTurn(_playerId))
+        {
+            GameState.SetSteps(GameState.Steps - 1);
+        };
         GameState.MovePlayer(playerId, newPosition);
-        if (!GameState.IsYourTurn(_playerId)) return;
-        
-        GameState.SetSteps(GameState.Steps - 1);
-        TileType tileType = BoardManager.Instance.GetTile(newPosition).tileType;
-        
-        if (IsLanding())
-        {
-            BoardManager.Instance.InteractWithTile(tileType);
-            return;
-        }
-        
-        if (BoardManager.IntractableOnPassTileTypes.Contains(tileType))
-        {
-            BoardManager.Instance.InteractWithTile(tileType);
-            return;
-        }
-        
-        TakeStep();
     }
 
+    
     private void CoinsGained(string playerId, int amount)
     {
         GameState.AddCoinsToPlayer(playerId, amount);
@@ -89,7 +76,7 @@ public partial class GameManager
         GameState.UpdatePlayerTurn(index);
     }
     
-    private bool IsLanding()
+    private bool IsLastStep()
     {
         return GameState.Steps == 0;
     }

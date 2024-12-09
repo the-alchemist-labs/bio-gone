@@ -1,8 +1,8 @@
 public class Player
 { 
     public string PlayerId { get; private set; }
-    string Name { get; set; }
-    PlayerProfilePicture ProfilePicture { get; set; }
+    public string Name { get; }
+    public PlayerProfilePicture ProfilePicture { get; }
     public TileId Position { get; private set; }
     
     public int Coins { get; private set; }

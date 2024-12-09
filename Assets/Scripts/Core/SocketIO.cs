@@ -69,8 +69,6 @@ public class SocketIO : MonoBehaviour
     {
         Socket.On(eventName, response =>
         {
-            Debug.Log($"Event: {eventName}, {response}");
-
             T parsedResponse = JsonConvert.DeserializeObject<T[]>(response.ToString(), new JsonSerializerSettings
             {
                 MissingMemberHandling = MissingMemberHandling.Error,

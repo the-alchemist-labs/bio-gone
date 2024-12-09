@@ -1,13 +1,17 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private float movementSpeed = 5;
+    
     private string _playerId;
 
     public void SetPlayer(Player player)
     {
         _playerId = player.PlayerId;
-        // image
+        spriteRenderer.sprite = Resources.Load<Sprite>($"Sprites/ProfilePics/{player.ProfilePicture}");
     }
 
     void OnEnable()
@@ -22,9 +26,22 @@ public class PlayerController : MonoBehaviour
 
     private void UpdatePlayerPosition(string playerId, TileId newPosition)
     {
+        Debug.Log($"Player {newPosition}");
         if (playerId != _playerId) return;
 
         Vector3 position = BoardManager.Instance.GetTilePosition(newPosition);
-        gameObject.transform.position = position;
+        StartCoroutine(MoveToPosition(position));
+    }
+    
+    private IEnumerator MoveToPosition(Vector3 targetPosition)
+    {
+        while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
+        {
+            transform.position = Vector3.Lerp(transform.position, targetPosition, movementSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        transform.position = targetPosition;
+        GameManager.Instance.LandOnTile();
     }
 }

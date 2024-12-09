@@ -28,6 +28,8 @@ public partial class GameManager : MonoBehaviour
         Commander = new Commander();
         GameState = new GameState(MatchFoundResults.Instance);
         OnGameStateSet?.Invoke();
+        
+        GameState.UpdatePlayerTurn(GameState.PlayerIndexTurn);
 
         // show animation for who is starting
     }
@@ -40,6 +42,28 @@ public partial class GameManager : MonoBehaviour
     void OnDisable()
     {
         UnsetUpEventListeners();
+    }
+
+    public void LandOnTile()
+    {
+        if (!GameState.IsYourTurn(_playerId)) return;
+        
+        TileId position = GameState.GetPlayer(_playerId).Position;
+        TileType tileType = BoardManager.Instance.GetTile(position).tileType;
+        
+        if (IsLastStep())
+        {
+            BoardManager.Instance.InteractWithTile(tileType);
+            return;
+        }
+        
+        if (BoardManager.IntractableOnPassTileTypes.Contains(tileType))
+        {
+            BoardManager.Instance.InteractWithTile(tileType);
+            return;
+        }
+        
+        TakeStep();
     }
     
     public void RegisterRollDice()

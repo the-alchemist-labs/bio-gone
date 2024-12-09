@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class GameState
 {
     public static event Action<string, TileId> OnPlayerMove;
-    public static event Action<bool> OnTurnChanged;
+    public static event Action OnTurnChanged;
     public static event Action<int> OnStepsChanged;
 
     public static event Action<string, int> OnCoinsChanged;
@@ -23,7 +23,6 @@ public class GameState
         RoomId = matchFoundEvent.RoomId;
         Players = matchFoundEvent.PlayersData;
         PlayerIndexTurn = matchFoundEvent.FirstTurnPlayer;
-        OnTurnChanged?.Invoke(IsYourTurn(_playerId));
     }
 
     public Player GetPlayer(string id)
@@ -44,7 +43,7 @@ public class GameState
     public void UpdatePlayerTurn(int index)
     {
         PlayerIndexTurn = index;
-        OnTurnChanged?.Invoke(IsYourTurn(_playerId));
+        OnTurnChanged?.Invoke();
     }
     
     public void MovePlayer(string playerId, TileId newPosition)
@@ -63,5 +62,11 @@ public class GameState
     {
         Steps = steps;
         OnStepsChanged?.Invoke(Steps);
+    }
+    
+    // TEMP
+    public string GetOpponentId()
+    {
+        return Players[1].PlayerId;
     }
 }
