@@ -27,6 +27,7 @@ public partial class GameManager : MonoBehaviour
         _playerId = PlayerProfile.Instance.Id;
         Commander = new Commander();
         GameState = new GameState(MatchFoundResults.Instance);
+        OnGameStateSet?.Invoke();
 
         // show animation for who is starting
     }
@@ -40,7 +41,7 @@ public partial class GameManager : MonoBehaviour
     {
         UnsetUpEventListeners();
     }
-
+    
     public void RegisterRollDice()
     {
         int rollValue = 3; //UnityEngine.Random.Range(Consts.MinRollValue, Consts.MaxRollValue);
@@ -77,7 +78,7 @@ public partial class GameManager : MonoBehaviour
         ));
     }
     
-    public void EndTurn()
+    public void RegisterEndTurn()
     {
         Commander.PostCommand(new CommandEvent(
             GameState.RoomId,

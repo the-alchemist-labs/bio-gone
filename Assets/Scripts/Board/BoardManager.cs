@@ -40,12 +40,12 @@ public partial class BoardManager : MonoBehaviour
     
     void OnEnable()
     {
-        GameState.OnGameStateSet += InstantiateBoard;
+        GameManager.OnGameStateSet += InstantiateBoard;
     }
 
     void OnDisable()
     {
-        GameState.OnGameStateSet -= InstantiateBoard;
+        GameManager.OnGameStateSet -= InstantiateBoard;
     }
     
     public BoardTile GetTile(TileId tileId)

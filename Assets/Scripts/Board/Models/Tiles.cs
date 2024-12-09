@@ -8,6 +8,8 @@ public enum TileId
     B2,
     B3,
     M1,
+    M2,
+    M3,
 }
 public enum TileZone
 {

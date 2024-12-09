@@ -4,8 +4,9 @@ using System.Linq;
 
 public partial class GameManager
 {
+    public static event Action OnGameStateSet;
+
     private List<TileId> _selectedTiles;
-    private int _turnsLeft = 0;
 
     private void SetUpEventListeners()
     {
@@ -28,16 +29,16 @@ public partial class GameManager
 
         if (playerId == PlayerProfile.Instance.Id)
         {
-            _turnsLeft = steps;
+            GameState.SetSteps(steps);
             TakeStep();
         }
     }
 
     private void TakeStep()
     {
-        if (_turnsLeft == 0)
+        if (GameState.Steps == 0)
         {
-            EndTurn();
+            RegisterEndTurn();
         }
         
         TileId currentPosition = GameState.GetPlayer(_playerId).Position;
@@ -60,7 +61,7 @@ public partial class GameManager
         GameState.MovePlayer(playerId, newPosition);
         if (!GameState.IsYourTurn(_playerId)) return;
         
-        _turnsLeft--;
+        GameState.SetSteps(GameState.Steps - 1);
         TileType tileType = BoardManager.Instance.GetTile(newPosition).tileType;
         
         if (IsLanding())
@@ -90,6 +91,6 @@ public partial class GameManager
     
     private bool IsLanding()
     {
-        return _turnsLeft == 0;
+        return GameState.Steps == 0;
     }
 }

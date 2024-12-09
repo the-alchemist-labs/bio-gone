@@ -8,6 +8,8 @@ public class Commander
     {
         { Command.RollDice, payload => new RollDiceCommand(payload) },
         { Command.MovePlayer, payload => new MovePlayerCommand(payload) },
+        { Command.GainCoins, payload => new GainCoinsCommand(payload) },
+        { Command.NewTurn, payload => new NewTurnCommand(payload) },
     };
     
     public Commander()

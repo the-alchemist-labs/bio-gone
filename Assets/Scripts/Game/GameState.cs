@@ -5,12 +5,16 @@ public class GameState
 {
     public static event Action<string, TileId> OnPlayerMove;
     public static event Action<bool> OnTurnChanged;
-    public static event Action OnGameStateSet;
+    public static event Action<int> OnStepsChanged;
+
+    public static event Action<string, int> OnCoinsChanged;
 
     public string RoomId { get; }
     public List<Player> Players {  get; }
     public int PlayerIndexTurn { get; private set; }
     
+    public int Steps { get; private set; }
+
     private string _playerId;
 
     public GameState(MatchFoundEvent matchFoundEvent)
@@ -19,7 +23,6 @@ public class GameState
         RoomId = matchFoundEvent.RoomId;
         Players = matchFoundEvent.PlayersData;
         PlayerIndexTurn = matchFoundEvent.FirstTurnPlayer;
-        OnGameStateSet?.Invoke();
         OnTurnChanged?.Invoke(IsYourTurn(_playerId));
     }
 
@@ -53,6 +56,12 @@ public class GameState
     public void AddCoinsToPlayer(string playerId, int amount)
     {
         GetPlayer(playerId).UpdateCoins(amount);
-        // invoke ui update
+        OnCoinsChanged?.Invoke(playerId, amount);
+    }
+
+    public void SetSteps(int steps)
+    {
+        Steps = steps;
+        OnStepsChanged?.Invoke(Steps);
     }
 }

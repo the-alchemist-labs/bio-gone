@@ -28,7 +28,6 @@ public class TileHandler
     {
         Debug.Log("Add coins");
         GameManager.Instance.RegisterCoinGain(CoinGain);
-        GameManager.Instance.EndTurn();
-
+        GameManager.Instance.RegisterEndTurn();
     }
 }
