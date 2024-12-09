@@ -7,12 +7,12 @@ public class RollDiceButton : MonoBehaviour
 
     void OnEnable()
     {
-        GameManager.OnTurnChanged += UpdateUI;
+        GameState.OnTurnChanged += UpdateUI;
     }
 
     void OnDisable()
     {
-        GameManager.OnTurnChanged -= UpdateUI;
+        GameState.OnTurnChanged -= UpdateUI;
     }
     private void UpdateUI(bool yourTurn)
     {
@@ -21,6 +21,6 @@ public class RollDiceButton : MonoBehaviour
 
     public void OnRollClicked()
     {
-        GameManager.Instance.RollDice();
+        GameManager.Instance.RegisterRollDice();
     }
 }

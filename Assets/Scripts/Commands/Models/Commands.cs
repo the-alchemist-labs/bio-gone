@@ -4,9 +4,10 @@ using Newtonsoft.Json.Converters;
 
 public enum Command
 {
-    UpdatePhase = 0,
-    RollDice = 1,
-    MovePlayer = 2,
+    NewTurn,
+    RollDice,
+    MovePlayer,
+    GainCoins,
 }
 
 public interface ICommand

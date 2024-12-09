@@ -14,12 +14,12 @@ public class PlayerController : MonoBehaviour
 
     void OnEnable()
     {
-        Player.OnPlayerMove += UpdatePlayerPosition;
+        GameState.OnPlayerMove += UpdatePlayerPosition;
     }
 
     void OnDisable()
     {
-        Player.OnPlayerMove -= UpdatePlayerPosition;
+        GameState.OnPlayerMove -= UpdatePlayerPosition;
     }
 
     private void UpdatePlayerPosition(string playerId, TileId newPosition)

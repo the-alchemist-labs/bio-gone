@@ -17,6 +17,8 @@ public class MovePlayerCommandPayload
 
 public class MovePlayerCommand : ICommand
 {
+    public static event Action<string, TileId> OnPlayerMove;
+
     private string PlayerId { get; set; }
     private TileId MoveTileId { get; set; }
     
@@ -29,7 +31,6 @@ public class MovePlayerCommand : ICommand
     
     public void Execute()
     {
-        Player player = GameManager.Instance.GameState.Players.Find(p => p.PlayerId == PlayerId);
-        player.MovePlayer(MoveTileId);
+        OnPlayerMove?.Invoke(PlayerId, MoveTileId);
     }
 }

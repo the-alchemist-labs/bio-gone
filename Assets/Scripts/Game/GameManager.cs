@@ -1,18 +1,14 @@
-using System;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public partial class GameManager : MonoBehaviour
 {
-    public static event Action<bool> OnTurnChanged;
- 
-    public static event Action OnGameStateSet;
     public static GameManager Instance { get; private set; }
     public GameState GameState { get; private set; }
     private Commander Commander { get; set; }
-    
-    private int TurnsLeft { get; set; }
-    
+
+    private string _playerId;
+
     void Awake()
     {
         if (Instance == null)
@@ -28,29 +24,65 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        TurnsLeft = 0;
+        _playerId = PlayerProfile.Instance.Id;
         Commander = new Commander();
         GameState = new GameState(MatchFoundResults.Instance);
-        
+
         // show animation for who is starting
-
-        OnGameStateSet?.Invoke();
-        OnTurnChanged?.Invoke(IsYourTurn());
-    }
-    
-    private bool IsYourTurn()
-    {
-        return GameState.Players[GameState.PlayerTurn].PlayerId == PlayerProfile.Instance.Id;
     }
 
-    public void RollDice()
+    void OnEnable()
     {
-        int rollValue = UnityEngine.Random.Range(Consts.MinRollValue, Consts.MaxRollValue);
+        SetUpEventListeners();
+    }
+
+    void OnDisable()
+    {
+        UnsetUpEventListeners();
+    }
+
+    public void RegisterRollDice()
+    {
+        int rollValue = 3; //UnityEngine.Random.Range(Consts.MinRollValue, Consts.MaxRollValue);
         Commander.PostCommand(new CommandEvent(
             GameState.RoomId,
             Command.RollDice,
-            JsonConvert.SerializeObject(new RollDiceCommandPayload(PlayerProfile.Instance.Id, rollValue))
+            JsonConvert.SerializeObject(new RollDiceCommandPayload(_playerId, rollValue))
         ));
     }
 
+    public void RegisterPlayerMove(TileId tileId)
+    {
+        if (_selectedTiles != null)
+        {
+            _selectedTiles.ForEach(t => BoardManager.Instance
+                .GetTile(t)
+                .ToggleSelectableIndicator(false));
+            _selectedTiles = null;
+        }
+
+        Commander.PostCommand(new CommandEvent(
+            GameState.RoomId,
+            Command.MovePlayer,
+            JsonConvert.SerializeObject(new MovePlayerCommandPayload(_playerId, tileId))
+        ));
+    }
+
+    public void RegisterCoinGain(int amount)
+    {
+        Commander.PostCommand(new CommandEvent(
+            GameState.RoomId,
+            Command.GainCoins,
+            JsonConvert.SerializeObject(new GainCoinsCommandPayload(_playerId, amount))
+        ));
+    }
+    
+    public void EndTurn()
+    {
+        Commander.PostCommand(new CommandEvent(
+            GameState.RoomId,
+            Command.NewTurn,
+            JsonConvert.SerializeObject(new NewTurnCommandPayload(GameState.GetNextPlayerTurnIndex()))
+        ));
+    }
 }

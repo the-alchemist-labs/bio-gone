@@ -1,37 +1,58 @@
+using System;
 using System.Collections.Generic;
-
-public enum Phase
-{
-    Start,
-    RollDice,
-    Move,
-    EnterShop,
-    Battle,
-    End
-}
 
 public class GameState
 {
+    public static event Action<string, TileId> OnPlayerMove;
+    public static event Action<bool> OnTurnChanged;
+    public static event Action OnGameStateSet;
+
     public string RoomId { get; }
-    public Phase Phase { get; private set; }
-    public List<Player> Players { get; }
-    public int PlayerTurn { get; private set; }
+    public List<Player> Players {  get; }
+    public int PlayerIndexTurn { get; private set; }
+    
+    private string _playerId;
 
     public GameState(MatchFoundEvent matchFoundEvent)
     {
+        _playerId = PlayerProfile.Instance.Id;
         RoomId = matchFoundEvent.RoomId;
-        Phase = Phase.Start;
         Players = matchFoundEvent.PlayersData;
-        PlayerTurn = matchFoundEvent.FirstTurnPlayer;
+        PlayerIndexTurn = matchFoundEvent.FirstTurnPlayer;
+        OnGameStateSet?.Invoke();
+        OnTurnChanged?.Invoke(IsYourTurn(_playerId));
     }
 
-    public void UpdatePhase(Phase phase)
+    public Player GetPlayer(string id)
     {
-        Phase = phase;
+        return Players.Find(player => player.PlayerId == id);
     }
 
-    public void UpdatePlayerTurn(int playerIndex)
+    public int GetNextPlayerTurnIndex()
     {
-        PlayerTurn = playerIndex;
+        return (PlayerIndexTurn + 1) % Players.Count;
+    }
+    
+    public bool IsYourTurn(string yourPlayerId)
+    {
+        return Players[PlayerIndexTurn].PlayerId == yourPlayerId;
+    }
+
+    public void UpdatePlayerTurn(int index)
+    {
+        PlayerIndexTurn = index;
+        OnTurnChanged?.Invoke(IsYourTurn(_playerId));
+    }
+    
+    public void MovePlayer(string playerId, TileId newPosition)
+    {
+        GetPlayer(playerId).MovePlayer(newPosition);
+        OnPlayerMove?.Invoke(playerId, newPosition);
+    }
+
+    public void AddCoinsToPlayer(string playerId, int amount)
+    {
+        GetPlayer(playerId).UpdateCoins(amount);
+        // invoke ui update
     }
 }

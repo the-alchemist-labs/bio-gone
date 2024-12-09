@@ -18,8 +18,10 @@ public class RollDiceCommandPayload
 
 public class RollDiceCommand : ICommand
 {
-    private string PlayerId { get; set; }
-    private int DiceValue { get; set; }
+    public static event Action<string, int> OnDiceRolled;
+
+    private string PlayerId { get; }
+    private int DiceValue { get; }
     
     public RollDiceCommand(string payloadString)
     {
@@ -31,6 +33,7 @@ public class RollDiceCommand : ICommand
     
     public void Execute()
     {
-        Debug.Log($"RollDice: {PlayerId} - {DiceValue}");
+        Debug.Log($"[RollDice] {PlayerId} : {DiceValue}");
+        OnDiceRolled?.Invoke(PlayerId, DiceValue);
     }
 }
