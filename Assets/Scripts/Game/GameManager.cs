@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -30,8 +32,6 @@ public partial class GameManager : MonoBehaviour
         OnGameStateSet?.Invoke();
         
         GameState.UpdatePlayerTurn(GameState.PlayerIndexTurn);
-
-        // show animation for who is starting
     }
 
     void OnEnable()
@@ -44,9 +44,31 @@ public partial class GameManager : MonoBehaviour
         UnsetUpEventListeners();
     }
 
+    public void TakeStep()
+    {
+        if (IsLastStep())
+        {
+            RegisterEndTurn();
+        }
+        
+        TileId currentPosition = GameState.GetPlayer(_playerId).Position;
+        List<TileId> nextTiles = BoardManager.Instance.GetTile(currentPosition).GetNextTiles();
+
+        if (nextTiles.Count == 1)
+        {
+            RegisterPlayerMove(nextTiles.First());
+            return;
+        }
+
+        _selectedTiles = nextTiles;
+        _selectedTiles.ForEach(t => BoardManager.Instance
+            .GetTile(t)
+            .ToggleSelectableIndicator(true));
+    }
+    
     public void LandOnTile()
     {
-        if (!GameState.IsYourTurn(_playerId)) return;
+        if (!GameState.IsYourTurn()) return;
         
         TileId position = GameState.GetPlayer(_playerId).Position;
         TileType tileType = BoardManager.Instance.GetTile(position).tileType;
@@ -97,8 +119,8 @@ public partial class GameManager : MonoBehaviour
     {
         Commander.PostCommand(new CommandEvent(
             GameState.RoomId,
-            Command.GainCoins,
-            JsonConvert.SerializeObject(new GainCoinsCommandPayload(_playerId, amount))
+            Command.ModifyPlayerCoins,
+            JsonConvert.SerializeObject(new ModifyCoinsCommandPayload(_playerId, amount))
         ));
     }
     
@@ -109,5 +131,28 @@ public partial class GameManager : MonoBehaviour
             Command.NewTurn,
             JsonConvert.SerializeObject(new NewTurnCommandPayload(GameState.GetNextPlayerTurnIndex()))
         ));
+    }
+    
+    public void RegisterItemGain(ItemId itemId)
+    {
+        Commander.PostCommand(new CommandEvent(
+            GameState.RoomId,
+            Command.GainItem,
+            JsonConvert.SerializeObject(new GainItemCommandPayload(_playerId, itemId))
+        ));
+    }
+    
+    public void RegisterToggleShop(bool isOpen)
+    {
+        Commander.PostCommand(new CommandEvent(
+            GameState.RoomId,
+            Command.ToggleShop,
+            JsonConvert.SerializeObject(new ToggleShopCommandPayload(isOpen))
+        ));
+    }
+    
+    private bool IsLastStep()
+    {
+        return GameState.Steps == 0;
     }
 }

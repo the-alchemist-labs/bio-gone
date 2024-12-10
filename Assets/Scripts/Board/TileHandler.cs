@@ -12,7 +12,8 @@ public class TileHandler
     {
         TileTypeHandlers = new Dictionary<TileType, Action>()
         {
-            { TileType.Coin, HandleCoinTile }
+            { TileType.Coin, HandleCoinTile },
+            { TileType.Shop, HandleShopTile }
         };
     }
 
@@ -26,8 +27,12 @@ public class TileHandler
 
     private void HandleCoinTile()
     {
-        Debug.Log("Add coins");
         GameManager.Instance.RegisterCoinGain(CoinGain);
         GameManager.Instance.RegisterEndTurn();
+    }
+    
+    private void HandleShopTile()
+    {
+        GameManager.Instance.RegisterToggleShop(true);
     }
 }

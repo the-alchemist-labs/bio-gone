@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class BoardManager : MonoBehaviour
+public class BoardManager : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
 

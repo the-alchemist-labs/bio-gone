@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 public partial class GameManager
 {
@@ -12,60 +11,44 @@ public partial class GameManager
     {
         RollDiceCommand.OnDiceRolled += DiceRolled;
         MovePlayerCommand.OnPlayerMove += MovePlayer;
-        GainCoinsCommand.OnCoinsGained += CoinsGained;
+        ModifyCoinsCommand.OnCoinsModified += CoinsGained;
         NewTurnCommand.OnNewTurn += NewTurn;
+        ToggleShopCommand.OnShopToggled += ToggleShop;
+        GainItemCommand.OnItemGained += GainItem;
     }
 
     private void UnsetUpEventListeners()
     {
         RollDiceCommand.OnDiceRolled -= DiceRolled;
         MovePlayerCommand.OnPlayerMove -= MovePlayer;
-        GainCoinsCommand.OnCoinsGained -= CoinsGained;
+        ModifyCoinsCommand.OnCoinsModified -= CoinsGained;
         NewTurnCommand.OnNewTurn -= NewTurn;
+        ToggleShopCommand.OnShopToggled -= ToggleShop;
+        GainItemCommand.OnItemGained -= GainItem;
     }
+
     private void DiceRolled(string playerId, int steps)
     {
-        // show animation of roll with the result
+        PopupManager.Instance.dicePopup.Display(steps);
 
         if (playerId == PlayerProfile.Instance.Id)
         {
             GameState.SetSteps(steps);
-            TakeStep();
         }
-    }
-
-    private void TakeStep()
-    {
-        if (IsLastStep())
-        {
-            RegisterEndTurn();
-        }
-        
-        TileId currentPosition = GameState.GetPlayer(_playerId).Position;
-        List<TileId> nextTiles = BoardManager.Instance.GetTile(currentPosition).GetNextTiles();
-
-        if (nextTiles.Count == 1)
-        {
-            RegisterPlayerMove(nextTiles.First());
-            return;
-        }
-
-        _selectedTiles = nextTiles;
-        _selectedTiles.ForEach(t => BoardManager.Instance
-            .GetTile(t)
-            .ToggleSelectableIndicator(true));
     }
 
     private void MovePlayer(string playerId, TileId newPosition)
     {
-        if (GameState.IsYourTurn(_playerId))
+        if (GameState.IsYourTurn())
         {
             GameState.SetSteps(GameState.Steps - 1);
-        };
+        }
+
+        ;
         GameState.MovePlayer(playerId, newPosition);
     }
 
-    
+
     private void CoinsGained(string playerId, int amount)
     {
         GameState.AddCoinsToPlayer(playerId, amount);
@@ -75,9 +58,16 @@ public partial class GameManager
     {
         GameState.UpdatePlayerTurn(index);
     }
-    
-    private bool IsLastStep()
+
+    private void ToggleShop(bool isOpen)
     {
-        return GameState.Steps == 0;
+        ShopPopup shop = PopupManager.Instance.shopPopup;
+        if (isOpen) shop.Display();
+        else shop.ClosePopup();
+    }
+
+    private void GainItem(string playerId, ItemId itemId)
+    {
+        GameState.AddItemsToPlayer(playerId, itemId);
     }
 }

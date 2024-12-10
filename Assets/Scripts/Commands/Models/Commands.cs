@@ -7,7 +7,9 @@ public enum Command
     NewTurn,
     RollDice,
     MovePlayer,
-    GainCoins,
+    ModifyPlayerCoins,
+    GainItem,
+    ToggleShop,
 }
 
 public interface ICommand

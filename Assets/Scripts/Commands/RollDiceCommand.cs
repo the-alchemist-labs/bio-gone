@@ -25,7 +25,6 @@ public class RollDiceCommand : ICommand
     
     public RollDiceCommand(string payloadString)
     {
-        Debug.Log(payloadString);
         RollDiceCommandPayload payload = JsonConvert.DeserializeObject<RollDiceCommandPayload>(payloadString);
         PlayerId = payload.PlayerId;
         DiceValue = payload.DiceValue;
@@ -33,7 +32,6 @@ public class RollDiceCommand : ICommand
     
     public void Execute()
     {
-        Debug.Log($"[RollDice] {PlayerId} : {DiceValue}");
         OnDiceRolled?.Invoke(PlayerId, DiceValue);
     }
 }

@@ -6,8 +6,8 @@ public class GameState
     public static event Action<string, TileId> OnPlayerMove;
     public static event Action OnTurnChanged;
     public static event Action<int> OnStepsChanged;
-
     public static event Action<string, int> OnCoinsChanged;
+    public static event Action<string> OnPlayerItemsUpdated;
 
     public string RoomId { get; }
     public List<Player> Players {  get; }
@@ -27,17 +27,21 @@ public class GameState
 
     public Player GetPlayer(string id)
     {
-        return Players.Find(player => player.PlayerId == id);
+        return Players.Find(player => player.Id == id);
     }
 
+    public Player GetCurrentTurnPlayer()
+    {
+        return Players[PlayerIndexTurn];
+    }
     public int GetNextPlayerTurnIndex()
     {
         return (PlayerIndexTurn + 1) % Players.Count;
     }
     
-    public bool IsYourTurn(string yourPlayerId)
+    public bool IsYourTurn()
     {
-        return Players[PlayerIndexTurn].PlayerId == yourPlayerId;
+        return Players[PlayerIndexTurn].Id == PlayerProfile.Instance.Id;
     }
 
     public void UpdatePlayerTurn(int index)
@@ -63,10 +67,16 @@ public class GameState
         Steps = steps;
         OnStepsChanged?.Invoke(Steps);
     }
+
+    public void AddItemsToPlayer(string playerId, ItemId itemId)
+    {
+        GetPlayer(playerId).AddItem(itemId);
+        OnPlayerItemsUpdated?.Invoke(playerId);
+    }
     
     // TEMP
     public string GetOpponentId()
     {
-        return Players[1].PlayerId;
+        return Players[1].Id;
     }
 }

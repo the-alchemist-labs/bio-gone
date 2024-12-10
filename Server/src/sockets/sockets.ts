@@ -2,24 +2,17 @@
 import { Server } from 'socket.io';
 import { SocketEvent } from '../types/Sockets';
 import { searchMatch, postCommand } from '../flows/game-session';
+import { socketHandler } from '../utils/middlewares';
 
 
 export function initializeSockets(io: Server) {
   io.on(SocketEvent.Connection, async socket => {
     console.log("Socket connected - ", socket.id);
-    
-    try {
-      // Add schema validations
-      socket.on(SocketEvent.SearchMatch, (data: string) => {
-        searchMatch(data, socket);
 
-      });
-      socket.on(SocketEvent.PostCommand, (data: string) => postCommand(io, data));
-      socket.on(SocketEvent.Disconnect, () => console.log("Socket disconnected - ", socket.id));
+    // Add schema validations
 
-    } catch (err) {
-      socket.emit(SocketEvent.Error, { message: (err as Error).message });
-      console.log("Socket event failed", (err as Error).message);
-    }
+    socketHandler(socket, SocketEvent.SearchMatch, (message: string) => searchMatch(message, socket));
+    socketHandler(socket, SocketEvent.PostCommand, (message: string) => postCommand(io, message));
+    socketHandler(socket, SocketEvent.Disconnect, async (_: string) => console.log("Socket disconnected - ", socket.id));
   });
 };

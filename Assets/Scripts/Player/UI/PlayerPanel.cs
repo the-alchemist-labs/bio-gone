@@ -10,13 +10,15 @@ public class PlayerPanel : MonoBehaviour
     [SerializeField] private TMP_Text battlePowerText;
     [SerializeField] private Button rollButton;
 
-    private string _playerId;
+    private Player _player;
     
     void OnEnable()
     {
+        
         GameManager.OnGameStateSet += InitializePanel;
         GameState.OnTurnChanged += UpdateRollButton;
         GameState.OnCoinsChanged += UpdateCoins;
+        GameState.OnPlayerItemsUpdated += ItemsUpdated;
     }
 
     void OnDisable()
@@ -24,26 +26,35 @@ public class PlayerPanel : MonoBehaviour
         GameManager.OnGameStateSet -= InitializePanel;
         GameState.OnTurnChanged -= UpdateRollButton;
         GameState.OnCoinsChanged -= UpdateCoins;
+        GameState.OnPlayerItemsUpdated -= ItemsUpdated;
+
     }
 
     private void InitializePanel()
     {
-        _playerId = PlayerProfile.Instance.Id;
-        Player player = GameManager.Instance.GameState.GetPlayer(_playerId);
-        playerImage.sprite = Resources.Load<Sprite>($"Sprites/ProfilePics/{player.ProfilePicture}");
-        playerNameText.text = player.Name;
+        _player = GameManager.Instance.GameState.GetPlayer(PlayerProfile.Instance.Id);
+        playerImage.sprite = Resources.Load<Sprite>($"Sprites/ProfilePics/{_player.ProfilePicture}");
+        playerNameText.text = _player.Name;
     }
     
     private void UpdateRollButton()
     {
-        rollButton.interactable = GameManager.Instance.GameState.IsYourTurn(_playerId);
+        rollButton.interactable = GameManager.Instance.GameState.IsYourTurn();
     }
 
     private void UpdateCoins(string playerId, int coins)
     {
-        if (playerId == _playerId)
+        if (playerId == _player.Id)
         {
             coinsText.text = $"Coins: {coins}";
+        }
+    }
+
+    private void ItemsUpdated(string playerId)
+    {
+        if (playerId == _player.Id)
+        {
+            Debug.Log($"Player {_player.Id} Items: { GameManager.Instance.GameState.GetPlayer(_player.Id).Items.Count })");
         }
     }
     
@@ -52,5 +63,6 @@ public class PlayerPanel : MonoBehaviour
         rollButton.interactable = false;
         GameManager.Instance.RegisterRollDice();
     }
+    
 }
 

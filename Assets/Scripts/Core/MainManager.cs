@@ -14,6 +14,7 @@ public class MainManager : MonoBehaviour
             gameObject.AddComponent<MainThreadDispatcher>();
             gameObject.AddComponent<SocketIO>();
             gameObject.AddComponent<PlayerProfile>();
+            gameObject.AddComponent<ItemCatalog>();
 
             DontDestroyOnLoad(gameObject);
         }

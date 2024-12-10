@@ -4,33 +4,33 @@ using Newtonsoft.Json;
 using UnityEngine;
 
 [Serializable]
-public class GainCoinsCommandPayload
+public class ModifyCoinsCommandPayload
 { 
     public string PlayerId { get; set; }
     public int CoinsAmount { get; set; }
-    public GainCoinsCommandPayload(string playerId, int coinsAmount)
+    public ModifyCoinsCommandPayload(string playerId, int coinsAmount)
     {
         PlayerId = playerId;
         CoinsAmount = coinsAmount;
     }
 }
 
-public class GainCoinsCommand : ICommand
+public class ModifyCoinsCommand : ICommand
 {
-    public static event Action<string, int> OnCoinsGained;
+    public static event Action<string, int> OnCoinsModified;
 
     private string PlayerId { get; set; }
     private int CoinsAmount { get; set; }
     
-    public GainCoinsCommand(string payloadString)
+    public ModifyCoinsCommand(string payloadString)
     {
-        GainCoinsCommandPayload payload = JsonConvert.DeserializeObject<GainCoinsCommandPayload>(payloadString);
+        ModifyCoinsCommandPayload payload = JsonConvert.DeserializeObject<ModifyCoinsCommandPayload>(payloadString);
         PlayerId = payload.PlayerId;
         CoinsAmount = payload.CoinsAmount;
     }
     
     public void Execute()
     {
-        OnCoinsGained?.Invoke(PlayerId, CoinsAmount);
+        OnCoinsModified?.Invoke(PlayerId, CoinsAmount);
     }
 }

@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     public void SetPlayer(Player player)
     {
-        _playerId = player.PlayerId;
+        _playerId = player.Id;
         spriteRenderer.sprite = Resources.Load<Sprite>($"Sprites/ProfilePics/{player.ProfilePicture}");
     }
 
@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
 
     private void UpdatePlayerPosition(string playerId, TileId newPosition)
     {
-        Debug.Log($"Player {newPosition}");
         if (playerId != _playerId) return;
 
         Vector3 position = BoardManager.Instance.GetTilePosition(newPosition);

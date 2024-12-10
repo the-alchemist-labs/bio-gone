@@ -1,7 +1,6 @@
 import { Server, Socket } from "socket.io";
 import { CommandMessageData, SearchMatchData, SocketEvent } from "../types/Sockets";
 import { ParseSocketMessage } from "../utils/Parser";
-import { getPlayer } from "./players";
 
 type LobbyRecord = { PlayerId: string, socket: Socket };
 const lobby: LobbyRecord[] = [];

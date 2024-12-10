@@ -60,6 +60,8 @@ public class BoardTile : MonoBehaviour
                 return Color.red;
             case TileType.Curse:
                 return Color.gray;
+            case TileType.Shop:
+                return Color.green;
             default:
                 return Color.white;
         }
