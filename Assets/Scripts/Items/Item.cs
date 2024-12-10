@@ -3,7 +3,6 @@ using UnityEngine;
 
 public enum ItemId
 {
-    None,
     Helmet1,
     Helmet2,
     Heal1,
@@ -29,7 +28,7 @@ public class ItemEffect
     public int Value;
 }
 
-public class Item : ScriptableObject
+public abstract class Item : ScriptableObject
 {
     public ItemId Id;
     public int Price;
@@ -41,13 +40,11 @@ public class Item : ScriptableObject
 [CreateAssetMenu(fileName = "New Equip Item", menuName = "Scriptable Objects/Items/Equipment")]
 public class EquipItem : Item
 {
-    ItemType ItemType = ItemType.Equipment;
     public int BattlePowerBonus;
 }
 
 [CreateAssetMenu(fileName = "New Consumable Item", menuName = "Scriptable Objects/Items/Consumable")]
 public class ConsumableItem : Item
 {
-    ItemType ItemType = ItemType.Consumable;
     public ItemEffect Effect;
 }
