@@ -3,6 +3,7 @@ using UnityEngine;
 
 public enum ItemId
 {
+    None,
     Helmet1,
     Helmet2,
     Heal1,

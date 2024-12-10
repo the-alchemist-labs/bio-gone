@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,8 +10,12 @@ public class PlayerPanel : MonoBehaviour
     [SerializeField] private TMP_Text playerNameText;
     [SerializeField] private TMP_Text coinsText;
     [SerializeField] private TMP_Text battlePowerText;
+    [SerializeField] private TMP_Text levelText;
     [SerializeField] private Button rollButton;
-
+    [SerializeField] private TMP_Text bagText;
+    [SerializeField] private Transform equippedItemsContainer;
+    [SerializeField] private GameObject equippedItemPrefab;
+    
     private Player _player;
     
     void OnEnable()
@@ -17,17 +23,16 @@ public class PlayerPanel : MonoBehaviour
         
         GameManager.OnGameStateSet += InitializePanel;
         GameState.OnTurnChanged += UpdateRollButton;
-        GameState.OnCoinsChanged += UpdateCoins;
-        GameState.OnPlayerItemsUpdated += ItemsUpdated;
+        GameState.OnStatsChanged += UpdateStats;
+        GameState.OnPlayerItemsUpdated += UpdateItemsView;
     }
 
     void OnDisable()
     {
         GameManager.OnGameStateSet -= InitializePanel;
         GameState.OnTurnChanged -= UpdateRollButton;
-        GameState.OnCoinsChanged -= UpdateCoins;
-        GameState.OnPlayerItemsUpdated -= ItemsUpdated;
-
+        GameState.OnStatsChanged -= UpdateStats;
+        GameState.OnPlayerItemsUpdated -= UpdateItemsView;
     }
 
     private void InitializePanel()
@@ -35,6 +40,8 @@ public class PlayerPanel : MonoBehaviour
         _player = GameManager.Instance.GameState.GetPlayer(PlayerProfile.Instance.Id);
         playerImage.sprite = Resources.Load<Sprite>($"Sprites/ProfilePics/{_player.ProfilePicture}");
         playerNameText.text = _player.Name;
+        UpdateItemsView(_player.Id);
+        UpdateStats(_player.Id);
     }
     
     private void UpdateRollButton()
@@ -42,19 +49,39 @@ public class PlayerPanel : MonoBehaviour
         rollButton.interactable = GameManager.Instance.GameState.IsYourTurn();
     }
 
-    private void UpdateCoins(string playerId, int coins)
+    private void UpdateStats(string playerId)
     {
         if (playerId == _player.Id)
         {
-            coinsText.text = $"Coins: {coins}";
+            coinsText.text = $"Coins: {_player.Coins}";
+            battlePowerText.text = $"BP: {_player.BattlePower}";
+            levelText.text = $"{_player.Level}";
         }
     }
 
-    private void ItemsUpdated(string playerId)
+    private void UpdateItemsView(string playerId)
     {
         if (playerId == _player.Id)
         {
-            Debug.Log($"Player {_player.Id} Items: { GameManager.Instance.GameState.GetPlayer(_player.Id).Items.Count })");
+            int bagItemsCount = _player.GetBagItems().Count;
+            bagText.text =bagItemsCount > 0 ? $"Bag [{bagItemsCount}]" : "Bag";
+            UpdateEquippedItems();
+        }
+    }
+    
+    private void UpdateEquippedItems()
+    {
+        equippedItemsContainer.Cast<Transform>().ToList().ForEach(child => Destroy(child.gameObject));
+        
+        List<Item> equippedItems = GameManager.Instance.GameState.GetPlayer().GetEquippedItems();
+        
+        foreach (Item item in equippedItems)
+        {
+            GameObject newEquippedItem = Instantiate(equippedItemPrefab, equippedItemsContainer);
+            if (newEquippedItem.TryGetComponent(out EquippedItem equippedItem))
+            {
+               equippedItem.InitializeEquippedItem(item);
+            }
         }
     }
     

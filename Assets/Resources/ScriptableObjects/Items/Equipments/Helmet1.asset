@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Helmet1
   m_EditorClassIdentifier: Assembly-CSharp::EquipItem
-  Id: 0
+  Id: 1
   Price: 0
-  IsFree: 0
+  IsFree: 1
   ItemType: 0
-  Description: 
-  BattlePowerBonus: 0
+  Description: 21
+  BattlePowerBonus: 2

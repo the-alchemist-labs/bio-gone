@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Heal1
   m_EditorClassIdentifier: Assembly-CSharp::ConsumableItem
-  Id: 2
+  Id: 3
   Price: 100
   IsFree: 1
   ItemType: 1

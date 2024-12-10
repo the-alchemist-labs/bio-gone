@@ -6,13 +6,13 @@ public class GameState
     public static event Action<string, TileId> OnPlayerMove;
     public static event Action OnTurnChanged;
     public static event Action<int> OnStepsChanged;
-    public static event Action<string, int> OnCoinsChanged;
+    public static event Action<string> OnStatsChanged;
     public static event Action<string> OnPlayerItemsUpdated;
 
     public string RoomId { get; }
-    public List<Player> Players {  get; }
+    public List<Player> Players { get; }
     public int PlayerIndexTurn { get; private set; }
-    
+
     public int Steps { get; private set; }
 
     private string _playerId;
@@ -25,23 +25,21 @@ public class GameState
         PlayerIndexTurn = matchFoundEvent.FirstTurnPlayer;
     }
 
-    public Player GetPlayer(string id)
+    public Player GetPlayer(string id = null)
     {
-        return Players.Find(player => player.Id == id);
+        string playerId = id ?? PlayerProfile.Instance.Id;
+        return Players.Find(player => player.Id == playerId);
     }
-
-    public Player GetCurrentTurnPlayer()
-    {
-        return Players[PlayerIndexTurn];
-    }
+    
     public int GetNextPlayerTurnIndex()
     {
         return (PlayerIndexTurn + 1) % Players.Count;
     }
-    
-    public bool IsYourTurn()
+
+    public bool IsYourTurn(string id = null)
     {
-        return Players[PlayerIndexTurn].Id == PlayerProfile.Instance.Id;
+        string playerId = id ?? PlayerProfile.Instance.Id;
+        return Players[PlayerIndexTurn].Id == playerId;
     }
 
     public void UpdatePlayerTurn(int index)
@@ -49,7 +47,7 @@ public class GameState
         PlayerIndexTurn = index;
         OnTurnChanged?.Invoke();
     }
-    
+
     public void MovePlayer(string playerId, TileId newPosition)
     {
         GetPlayer(playerId).MovePlayer(newPosition);
@@ -59,7 +57,7 @@ public class GameState
     public void AddCoinsToPlayer(string playerId, int amount)
     {
         GetPlayer(playerId).UpdateCoins(amount);
-        OnCoinsChanged?.Invoke(playerId, amount);
+        OnStatsChanged?.Invoke(playerId);
     }
 
     public void SetSteps(int steps)
@@ -72,11 +70,13 @@ public class GameState
     {
         GetPlayer(playerId).AddItem(itemId);
         OnPlayerItemsUpdated?.Invoke(playerId);
+        
+        OnStatsChanged?.Invoke(playerId);
     }
-    
+
     // TEMP
-    public string GetOpponentId()
+    public Player GetOpponent()
     {
-        return Players[1].Id;
+        return Players[1];
     }
 }

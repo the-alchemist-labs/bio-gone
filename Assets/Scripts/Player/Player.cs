@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public class Player
 {
@@ -9,7 +10,9 @@ public class Player
 
     public int Coins { get; private set; }
 
-    public List<ItemId> Items { get; private set; }
+    private List<Item> Items { get; set; }
+    public int BattlePower => CalculatePower();
+    public int Level { get; set; }
 
     public Player(string playerId, string name, PlayerProfilePicture profilePicture, TileId position)
     {
@@ -18,7 +21,8 @@ public class Player
         ProfilePicture = profilePicture;
         Position = position;
         Coins = 0;
-        Items =  new List<ItemId>();
+        Level = 1;
+        Items = new List<Item>();
     }
 
     public void MovePlayer(TileId newPosition)
@@ -33,6 +37,27 @@ public class Player
 
     public void AddItem(ItemId itemId)
     {
-        Items.Add(itemId);
+        Item newItem = ItemCatalog.Instance.GetItem(itemId);
+        Items.Add(newItem);
+    }
+
+    public List<Item> GetBagItems()
+    {
+        return Items.Where(i => i.ItemType == ItemType.Consumable).ToList();
+    }
+    
+    public List<Item> GetEquippedItems()
+    {
+        return Items.Where(i => i.ItemType == ItemType.Equipment).ToList();
+    }
+
+    private int CalculatePower()
+    {
+        int levelsPower = Level * Consts.LevelPowerModifier;
+        int itemsPower = Items
+            .Where(i => i.ItemType == ItemType.Equipment)
+            .OfType<EquipItem>()
+            .Sum(e => e.BattlePowerBonus);
+        return levelsPower + itemsPower;
     }
 }

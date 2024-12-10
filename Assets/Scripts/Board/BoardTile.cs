@@ -45,7 +45,6 @@ public class BoardTile : MonoBehaviour
     {
         if (_isSelectable)
         {
-            Debug.Log("Circle clicked!");
             GameManager.Instance.RegisterPlayerMove(tileId);
         }
     }

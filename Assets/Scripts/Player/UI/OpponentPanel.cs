@@ -8,42 +8,46 @@ public class OpponentPanel : MonoBehaviour
     [SerializeField] private TMP_Text playerNameText;
     [SerializeField] private TMP_Text coinsText;
     [SerializeField] private TMP_Text battlePowerText;
+    [SerializeField] private TMP_Text levelText;
     [SerializeField] private GameObject turnIndicator;
 
-    private string _playerId;
+    private Player _player;
     
     void OnEnable()
     {
         GameManager.OnGameStateSet += InitializePanel;
-        GameState.OnCoinsChanged += UpdateCoins;
+        GameState.OnStatsChanged += UpdateStats;
         GameState.OnTurnChanged += UpdateTurnIndicator;
     }
 
     void OnDisable()
     {
         GameManager.OnGameStateSet -= InitializePanel;
-        GameState.OnCoinsChanged -= UpdateCoins;
+        GameState.OnStatsChanged -= UpdateStats;
         GameState.OnTurnChanged -= UpdateTurnIndicator;
     }
 
     private void InitializePanel()
     {
-        _playerId = GameManager.Instance.GameState.GetOpponentId();
-        Player player = GameManager.Instance.GameState.GetPlayer(_playerId);
+        _player = GameManager.Instance.GameState.GetOpponent();
+        Player player = GameManager.Instance.GameState.GetPlayer(_player.Id);
         playerImage.sprite = Resources.Load<Sprite>($"Sprites/ProfilePics/{player.ProfilePicture}");
         playerNameText.text = player.Name;
+        UpdateStats(_player.Id);
     }
     
     private void UpdateTurnIndicator()
     {
-        turnIndicator.SetActive(GameManager.Instance.GameState.IsYourTurn());
+        turnIndicator.SetActive(GameManager.Instance.GameState.IsYourTurn(_player.Id));
     }
     
-    private void UpdateCoins(string playerId, int coins)
+    private void UpdateStats(string playerId)
     {
-        if (playerId == _playerId)
+        if (playerId == _player.Id)
         {
-            coinsText.text = $"Coins: {coins}";
+            coinsText.text = $"Coins: {_player.Coins}";
+            battlePowerText.text = $"BP: {_player.BattlePower}";
+            levelText.text = $"{_player.Level}";
         }
     }
 }
