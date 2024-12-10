@@ -19,8 +19,8 @@ public class MovePlayerCommand : ICommand
 {
     public static event Action<string, TileId> OnPlayerMove;
 
-    private string PlayerId { get; set; }
-    private TileId MoveTileId { get; set; }
+    private string PlayerId { get; }
+    private TileId MoveTileId { get; }
     
     public MovePlayerCommand(string payloadString)
     {

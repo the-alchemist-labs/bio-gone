@@ -31,11 +31,11 @@ public class ItemCatalog : MonoBehaviour
     private void Initialize()
     {
         ConsumableItems = Resources.LoadAll<Item>(SCRIPTABLE_OBJECT_CONSUMABLES_ITEMS_PATH)
-            //.Select(item => Instantiate(item))
+            .Select(Instantiate)
             .ToList();
 
         EquipmentItems = Resources.LoadAll<Item>(SCRIPTABLE_OBJECT_EQUIPMENTS_ITEMS_PATH)
-           // .Select(item => Instantiate(item))
+            .Select(Instantiate)
             .ToList();
 
         Items = ConsumableItems.Concat(EquipmentItems).ToList();

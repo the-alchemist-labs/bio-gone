@@ -7,7 +7,6 @@ public class PopupManager : MonoBehaviour
 
     public static PopupManager Instance { get; private set; }
     
-
     void Awake()
     {
         if (Instance == null)

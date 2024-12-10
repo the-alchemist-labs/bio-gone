@@ -17,7 +17,7 @@ public class ToggleShopCommand : ICommand
 {
     public static event Action<bool> OnShopToggled;
 
-    public bool IsOpen { get; set; }
+    public bool IsOpen { get; }
     
     public ToggleShopCommand(string payloadString)
     {

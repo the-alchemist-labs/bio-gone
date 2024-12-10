@@ -19,8 +19,8 @@ public class ModifyCoinsCommand : ICommand
 {
     public static event Action<string, int> OnCoinsModified;
 
-    private string PlayerId { get; set; }
-    private int CoinsAmount { get; set; }
+    private string PlayerId { get; }
+    private int CoinsAmount { get; }
     
     public ModifyCoinsCommand(string payloadString)
     {

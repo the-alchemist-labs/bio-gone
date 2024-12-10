@@ -17,7 +17,7 @@ public class NewTurnCommand : ICommand
 {
     public static event Action<int> OnNewTurn;
 
-    private int PlayerTurnIndex { get; set; }
+    private int PlayerTurnIndex { get; }
     
     public NewTurnCommand(string payloadString)
     {

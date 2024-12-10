@@ -18,8 +18,8 @@ public class GainItemCommand : ICommand
 {
     public static event Action<string, ItemId> OnItemGained;
 
-    private string PlayerId { get; set; }
-    private ItemId ItemId { get; set; }
+    private string PlayerId { get; }
+    private ItemId ItemId { get; }
 
     public GainItemCommand(string payloadString)
     {
