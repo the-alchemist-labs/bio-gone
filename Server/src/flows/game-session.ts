@@ -8,10 +8,10 @@ const lobby: LobbyRecord[] = [];
 export async function searchMatch(data: string, socket: Socket) {
     const { PlayerId } = ParseSocketMessage<SearchMatchData>(data, SearchMatchData);
 
-    OpenRoom([{ socket, PlayerId }]);
-    return; // for test
+    //OpenRoom([{ socket, PlayerId }]);
+    //return; // for test
     if (lobby.length > 0) {
-        OpenRoom([{ socket, PlayerId }, lobby.shift()!]);
+        OpenRoom([lobby.shift()!, { socket, PlayerId } ]);
     } else {
         lobby.push({ PlayerId, socket });
     }
@@ -52,7 +52,7 @@ async function getPlayersData(playerIds: string[]) {
             Position: 1,
         },
         {
-            PlayerId: "123123",
+            PlayerId: playerIds[1],
             Name: 'Bla',
             ProfilePicture: 1,
             Position: 4,
