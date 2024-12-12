@@ -15,6 +15,7 @@ public class MainManager : MonoBehaviour
             gameObject.AddComponent<SocketIO>();
             gameObject.AddComponent<PlayerProfile>();
             gameObject.AddComponent<ItemCatalog>();
+            gameObject.AddComponent<MonsterCatalog>();
 
             DontDestroyOnLoad(gameObject);
         }

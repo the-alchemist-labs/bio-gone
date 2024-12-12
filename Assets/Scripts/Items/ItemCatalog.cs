@@ -41,8 +41,8 @@ public class ItemCatalog : MonoBehaviour
         Items = ConsumableItems.Concat(EquipmentItems).ToList();
     }
 
-    public Item GetItem(ItemId id)
+    public T GetItem<T>(ItemId id) where T : Item
     {
-        return Items.Find(el => el.Id == id);
+        return Items.Find(el => el.Id == id) as T;
     }
 }

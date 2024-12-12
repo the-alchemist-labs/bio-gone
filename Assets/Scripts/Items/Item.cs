@@ -31,6 +31,7 @@ public class ItemEffect
 public abstract class Item : ScriptableObject
 {
     public ItemId Id;
+    public string Name;
     public int Price;
     public bool IsFree;
     public ItemType ItemType;

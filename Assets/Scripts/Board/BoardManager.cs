@@ -7,7 +7,10 @@ public class BoardManager : MonoBehaviour
 
     public static BoardManager Instance { get; private set; }
     
-    public TileHandler TileHandler { get; private set; }
+    public TileService TileService { get; private set; }
+    public ShopService ShopService { get; private set; }
+    public Battle Battle { get; private set; }
+    
     private Dictionary<TileId, BoardTile> TilesMap { get; set; }
 
     public static readonly List<TileType> IntractableOnPassTileTypes = new List<TileType>
@@ -34,7 +37,8 @@ public class BoardManager : MonoBehaviour
     void Start()
     {
         TilesMap ??= MapTiles();
-        TileHandler = new TileHandler();
+        TileService = new TileService();
+        ShopService = new ShopService();
     }
     
     void OnEnable()
@@ -63,7 +67,7 @@ public class BoardManager : MonoBehaviour
 
     public void InteractWithTile(TileType tileType)
     {
-        TileHandler.Interact(tileType);
+        TileService.Interact(tileType);
     }
     
     private void InstantiateBoard()

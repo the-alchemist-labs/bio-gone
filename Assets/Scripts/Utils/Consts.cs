@@ -1,9 +1,12 @@
 public static class Consts
 {
     public const string ServerURI = "192.168.1.223:3000";
+    public const int DefaultLives = 5;
     public const int MaxRollValue = 6;
     public const int MinRollValue = 1;
     public const int LevelPowerModifier = 10;
+    public const int MonsterLevelDiff = 2;
+
 }
 
 public static class SocketEvents

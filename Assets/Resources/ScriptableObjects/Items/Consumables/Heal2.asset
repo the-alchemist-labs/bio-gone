@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Heal2
   m_EditorClassIdentifier: Assembly-CSharp::ConsumableItem
   Id: 3
+  Name: Heal 2
   Price: 200
   IsFree: 0
   ItemType: 1

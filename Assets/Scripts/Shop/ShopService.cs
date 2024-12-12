@@ -3,9 +3,9 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public static class ShopManager
+public class ShopService
 {
-    public static List<Item> GetItems()
+    public List<Item> GetItems()
     {
         List<Item> consumableItem = ItemCatalog.Instance.ConsumableItems;
         List<Item> equipItems = ItemCatalog.Instance.EquipmentItems;
@@ -21,7 +21,7 @@ public static class ShopManager
         return shopItems;
     }
 
-    private static Item GetRandomItem(List<Item> fromList, List<Item> notFromList)
+    private Item GetRandomItem(List<Item> fromList, List<Item> notFromList)
     {
         var filteredList = fromList.Except(notFromList).ToList();
         return filteredList[Random.Range(0, filteredList.Count)];

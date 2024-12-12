@@ -10,6 +10,8 @@ public enum Command
     ModifyPlayerCoins,
     GainItem,
     ToggleShop,
+    ToggleBattle,
+    UpdateBattlePhase,
 }
 
 public interface ICommand

@@ -23,7 +23,7 @@ public class ShopPopup : MonoBehaviour
 
     private void RestockShop()
     {
-        List<Item> shopItems = ShopManager.GetItems();
+        List<Item> shopItems = BoardManager.Instance.ShopService.GetItems();
         
         content.Cast<Transform>().ToList().ForEach(child =>
         {

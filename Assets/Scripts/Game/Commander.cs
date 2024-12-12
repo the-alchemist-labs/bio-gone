@@ -12,6 +12,8 @@ public class Commander
         { Command.ToggleShop, payload => new ToggleShopCommand(payload) },
         { Command.NewTurn, payload => new NewTurnCommand(payload) },
         { Command.GainItem, payload => new GainItemCommand(payload) },
+        { Command.ToggleBattle, payload => new ToggleBattleCommand(payload) },
+        { Command.UpdateBattlePhase, payload => new UpdateBattlePhaseCommand(payload) },
     };
     
     public Commander()
@@ -21,8 +23,6 @@ public class Commander
 
     public void PostCommand(CommandEvent command)
     {
-        // string json = JsonConvert.SerializeObject(commandEvent);
-
         SocketIO.Instance.EmitEvent(SocketEvents.PostCommand, command);
     }
     

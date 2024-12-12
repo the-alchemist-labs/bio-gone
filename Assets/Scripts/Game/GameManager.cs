@@ -7,10 +7,11 @@ public partial class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public GameState GameState { get; private set; }
+    public Battle Battle { get; private set; }
     private Commander Commander { get; set; }
 
-    private string _playerId;
-
+    private Player _player;
+    
     void Awake()
     {
         if (Instance == null)
@@ -26,9 +27,9 @@ public partial class GameManager : MonoBehaviour
 
     void Start()
     {
-        _playerId = PlayerProfile.Instance.Id;
         Commander = new Commander();
         GameState = new GameState(MatchFoundResults.Instance);
+        _player = GameState.GetPlayer();
         OnGameStateSet?.Invoke();
         
         GameState.UpdatePlayerTurn(GameState.PlayerIndexTurn);
@@ -51,7 +52,7 @@ public partial class GameManager : MonoBehaviour
             RegisterEndTurn();
         }
         
-        TileId currentPosition = GameState.GetPlayer(_playerId).Position;
+        TileId currentPosition = GameState.GetPlayer(_player.Id).Position;
         List<TileId> nextTiles = BoardManager.Instance.GetTile(currentPosition).GetNextTiles();
 
         if (nextTiles.Count == 1)
@@ -70,7 +71,7 @@ public partial class GameManager : MonoBehaviour
     {
         if (!GameState.IsYourTurn()) return;
         
-        TileId position = GameState.GetPlayer(_playerId).Position;
+        TileId position = GameState.GetPlayer(_player.Id).Position;
         TileType tileType = BoardManager.Instance.GetTile(position).tileType;
         
         if (IsLastStep())
@@ -86,69 +87,6 @@ public partial class GameManager : MonoBehaviour
         }
         
         TakeStep();
-    }
-    
-    public void RegisterRollDice()
-    {
-        int rollValue = 3; //UnityEngine.Random.Range(Consts.MinRollValue, Consts.MaxRollValue);
-        Commander.PostCommand(new CommandEvent(
-            GameState.RoomId,
-            Command.RollDice,
-            JsonConvert.SerializeObject(new RollDiceCommandPayload(_playerId, rollValue))
-        ));
-    }
-
-    public void RegisterPlayerMove(TileId tileId)
-    {
-        if (_selectedTiles != null)
-        {
-            _selectedTiles.ForEach(t => BoardManager.Instance
-                .GetTile(t)
-                .ToggleSelectableIndicator(false));
-            _selectedTiles = null;
-        }
-
-        Commander.PostCommand(new CommandEvent(
-            GameState.RoomId,
-            Command.MovePlayer,
-            JsonConvert.SerializeObject(new MovePlayerCommandPayload(_playerId, tileId))
-        ));
-    }
-
-    public void RegisterCoinGain(int amount)
-    {
-        Commander.PostCommand(new CommandEvent(
-            GameState.RoomId,
-            Command.ModifyPlayerCoins,
-            JsonConvert.SerializeObject(new ModifyCoinsCommandPayload(_playerId, amount))
-        ));
-    }
-    
-    public void RegisterEndTurn()
-    {
-        Commander.PostCommand(new CommandEvent(
-            GameState.RoomId,
-            Command.NewTurn,
-            JsonConvert.SerializeObject(new NewTurnCommandPayload(GameState.GetNextPlayerTurnIndex()))
-        ));
-    }
-    
-    public void RegisterItemGain(ItemId itemId)
-    {
-        Commander.PostCommand(new CommandEvent(
-            GameState.RoomId,
-            Command.GainItem,
-            JsonConvert.SerializeObject(new GainItemCommandPayload(_playerId, itemId))
-        ));
-    }
-    
-    public void RegisterToggleShop(bool isOpen)
-    {
-        Commander.PostCommand(new CommandEvent(
-            GameState.RoomId,
-            Command.ToggleShop,
-            JsonConvert.SerializeObject(new ToggleShopCommandPayload(isOpen))
-        ));
     }
     
     private bool IsLastStep()

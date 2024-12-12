@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 public partial class GameManager
 {
@@ -15,6 +16,8 @@ public partial class GameManager
         NewTurnCommand.OnNewTurn += NewTurn;
         ToggleShopCommand.OnShopToggled += ToggleShop;
         GainItemCommand.OnItemGained += GainItem;
+        ToggleBattleCommand.OnBattleToggled += ToggleBattle;
+        UpdateBattlePhaseCommand.OnBattlePhaseChanged += BattlePhaseChanged;
     }
 
     private void UnsetUpEventListeners()
@@ -25,6 +28,8 @@ public partial class GameManager
         NewTurnCommand.OnNewTurn -= NewTurn;
         ToggleShopCommand.OnShopToggled -= ToggleShop;
         GainItemCommand.OnItemGained -= GainItem;
+        ToggleBattleCommand.OnBattleToggled -= ToggleBattle;
+        UpdateBattlePhaseCommand.OnBattlePhaseChanged -= BattlePhaseChanged;
     }
 
     private void DiceRolled(string playerId, int steps)
@@ -44,11 +49,9 @@ public partial class GameManager
             GameState.SetSteps(GameState.Steps - 1);
         }
 
-        ;
         GameState.MovePlayer(playerId, newPosition);
     }
-
-
+    
     private void CoinsGained(string playerId, int amount)
     {
         GameState.AddCoinsToPlayer(playerId, amount);
@@ -69,5 +72,26 @@ public partial class GameManager
     private void GainItem(string playerId, ItemId itemId)
     {
         GameState.AddItemsToPlayer(playerId, itemId);
+    }
+
+    private void ToggleBattle(bool isOpen, string playerId, MonsterId? monsterId)
+    {
+        BattlePopup battle = PopupManager.Instance.battlePopup;
+        if (isOpen && monsterId.HasValue)
+        {
+            Battle = new Battle(playerId, monsterId.Value);
+            battle.Display(Battle);
+        }
+            
+        else battle.ClosePopup();
+    }
+
+    private void BattlePhaseChanged(BattlePhase phase, [CanBeNull] BattleItemUsed usedItem)
+    {
+        Battle.UpdateBattlePhase(phase);
+        if (usedItem != null)
+        {
+            Battle.UseItem(usedItem);
+        }
     }
 }

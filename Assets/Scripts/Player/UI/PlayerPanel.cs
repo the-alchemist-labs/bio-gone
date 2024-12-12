@@ -12,6 +12,7 @@ public class PlayerPanel : MonoBehaviour
     [SerializeField] private TMP_Text battlePowerText;
     [SerializeField] private TMP_Text levelText;
     [SerializeField] private Button rollButton;
+    [SerializeField] private Button bagButton;
     [SerializeField] private TMP_Text bagText;
     [SerializeField] private Transform equippedItemsContainer;
     [SerializeField] private GameObject equippedItemPrefab;
@@ -64,7 +65,8 @@ public class PlayerPanel : MonoBehaviour
         if (playerId == _player.Id)
         {
             int bagItemsCount = _player.GetBagItems().Count;
-            bagText.text =bagItemsCount > 0 ? $"Bag [{bagItemsCount}]" : "Bag";
+            bagButton.interactable = bagItemsCount > 0;
+            bagText.text = bagItemsCount > 0 ? $"Bag [{bagItemsCount}]" : "Bag";
             UpdateEquippedItems();
         }
     }
@@ -73,9 +75,9 @@ public class PlayerPanel : MonoBehaviour
     {
         equippedItemsContainer.Cast<Transform>().ToList().ForEach(child => Destroy(child.gameObject));
         
-        List<Item> equippedItems = GameManager.Instance.GameState.GetPlayer().GetEquippedItems();
+        List<EquipItem> equippedItems = GameManager.Instance.GameState.GetPlayer().GetEquippedItems();
         
-        foreach (Item item in equippedItems)
+        foreach (EquipItem item in equippedItems)
         {
             GameObject newEquippedItem = Instantiate(equippedItemPrefab, equippedItemsContainer);
             if (newEquippedItem.TryGetComponent(out EquippedItem equippedItem))
@@ -89,6 +91,11 @@ public class PlayerPanel : MonoBehaviour
     {
         rollButton.interactable = false;
         GameManager.Instance.RegisterRollDice();
+    }
+    
+    public void OnBagClicked()
+    {
+        PopupManager.Instance.bagPopup.Display(BagState.Idle);
     }
     
 }
