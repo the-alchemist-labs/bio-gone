@@ -1,10 +1,18 @@
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum GamePrerequisite
+{
+    Socket,
+    Player,
+}
 public class MainManager : MonoBehaviour
 {
     private static MainManager _instance;
 
+    private bool _isSocketReady = false;
+    private bool _isPlayerReady = false;
     void Awake()
     {
         if (_instance == null)
@@ -30,16 +38,32 @@ public class MainManager : MonoBehaviour
         Application.targetFrameRate = 120;
         QualitySettings.vSyncCount = 0;
 
-        SocketIO.OnSocketConnected += StartGame;
+        SocketIO.OnSocketConnected += PrepareGame;
+        PlayerProfile.OnPlayerInit += PrepareGame;
     }
 
     void OnDestroy()
     {
-        SocketIO.OnSocketConnected -= StartGame;
+        SocketIO.OnSocketConnected -= PrepareGame;
+        PlayerProfile.OnPlayerInit -= PrepareGame;
     }
 
-    void StartGame()
+    
+    void PrepareGame(GamePrerequisite prerequisite)
     {
-        SceneManager.LoadScene(SceneNames.Matchmaking);
+        switch (prerequisite)
+        {
+            case GamePrerequisite.Socket:
+                _isSocketReady = true;
+                break;
+            case GamePrerequisite.Player:
+                _isPlayerReady = true;
+                break;
+        }
+
+        if (_isSocketReady && _isPlayerReady)
+        {
+            SceneManager.LoadScene(SceneNames.Matchmaking);
+        }
     }
 }

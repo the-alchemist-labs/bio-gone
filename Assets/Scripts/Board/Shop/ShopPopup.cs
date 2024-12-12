@@ -18,7 +18,7 @@ public class ShopPopup : MonoBehaviour
         closeButton.gameObject.SetActive(isYourTurn);
         content.gameObject.SetActive(isYourTurn);
 
-        RestockShop();
+        if (isYourTurn) RestockShop();
     }
 
     private void RestockShop()

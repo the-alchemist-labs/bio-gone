@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 public class PlayerProfile : MonoBehaviour
 {
+    public static event Action<GamePrerequisite> OnPlayerInit;
     public static PlayerProfile Instance { get; private set; }
 
     public string Id { get; private set; }
@@ -17,6 +19,7 @@ public class PlayerProfile : MonoBehaviour
             Instance = this;
             await InitializeUnityServices();
             Id = AuthenticationService.Instance.PlayerId;
+            OnPlayerInit?.Invoke(GamePrerequisite.Player);
         }
         else if (Instance != this)
         {

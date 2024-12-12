@@ -12,7 +12,7 @@ public class SocketIO : MonoBehaviour
 
     public SocketIOUnity Socket { get; private set; }
 
-    public static event Action OnSocketConnected;
+    public static event Action<GamePrerequisite> OnSocketConnected;
 
     async void Awake()
     {
@@ -55,7 +55,7 @@ public class SocketIO : MonoBehaviour
     private static void SocketConnected()
     {
         Debug.Log("Socket connected");
-        OnSocketConnected?.Invoke();
+        OnSocketConnected?.Invoke(GamePrerequisite.Socket);
     }
     
     private void Disconnect()

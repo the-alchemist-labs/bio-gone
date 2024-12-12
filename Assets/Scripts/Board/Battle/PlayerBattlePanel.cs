@@ -40,14 +40,21 @@ public class PlayerBattlePanel : MonoBehaviour
     {
         encounterButtons.SetActive(false);
         fightButtons.SetActive(false);
-        opponentButtons.SetActive(true);
+        if (GameManager.Instance.GameState.GetPlayer().GetBagItems().Count == 0)
+        {
+            OnDontInterruptClicked();
+        }
+        else if (!_youAreFighting)
+        {
+            opponentButtons.SetActive(true);
+        }
     }
 
     public void OnPlayerActionPhase()
     {
         encounterButtons.SetActive(false);
         opponentButtons.SetActive(false);
-        fightButtons.SetActive(true);
+        fightButtons.SetActive(_youAreFighting);
     }
     
     public void OnResultPhase()
