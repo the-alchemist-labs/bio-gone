@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float movementSpeed = 5;
     
     private string _playerId;
+    private Coroutine _moveCoroutine;
 
     public void SetPlayer(Player player)
     {
@@ -29,7 +30,9 @@ public class PlayerController : MonoBehaviour
         if (playerId != _playerId) return;
 
         Vector3 position = BoardManager.Instance.GetTilePosition(newPosition);
-        StartCoroutine(MoveToPosition(position));
+        
+        if (_moveCoroutine != null) StopCoroutine(_moveCoroutine);
+        _moveCoroutine  = StartCoroutine(MoveToPosition(position));
     }
     
     private IEnumerator MoveToPosition(Vector3 targetPosition)
