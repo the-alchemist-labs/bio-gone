@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Helmet1
   m_EditorClassIdentifier: Assembly-CSharp::EquipItem
   Id: 0
-  Name: 
-  Price: 0
+  Name: Helm
+  Price: 100
   IsFree: 0
   ItemType: 0
-  Description: 
-  BattlePowerBonus: 0
+  Description: yes
+  BattlePowerBonus: 3

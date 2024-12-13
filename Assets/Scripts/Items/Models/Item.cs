@@ -37,15 +37,3 @@ public abstract class Item : ScriptableObject
     public ItemType ItemType;
     public string Description;
 }
-
-[CreateAssetMenu(fileName = "New Equip Item", menuName = "Scriptable Objects/Items/Equipment")]
-public class EquipItem : Item
-{
-    public int BattlePowerBonus;
-}
-
-[CreateAssetMenu(fileName = "New Consumable Item", menuName = "Scriptable Objects/Items/Consumable")]
-public class ConsumableItem : Item
-{
-    public ItemEffect Effect;
-}
