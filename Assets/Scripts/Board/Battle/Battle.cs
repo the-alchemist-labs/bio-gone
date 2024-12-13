@@ -119,8 +119,8 @@ public class Battle
 
     public BattleResult GetBattleResult(bool? hasEscaped)
     {
-        if (Phase == BattlePhase.Flee && hasEscaped == true) return BattleResult.Fled;
-        if (Phase == BattlePhase.Flee && !hasEscaped == true) return BattleResult.FailedFlee;
+        if (hasEscaped == true) return BattleResult.Fled;
+        if (hasEscaped == false) return BattleResult.FailedFlee;
         if (Monster.BattlePower < Player.BattlePower) return BattleResult.Win;
         if (Monster.BattlePower > Player.BattlePower) return BattleResult.Lose;
         return BattleResult.Draw;

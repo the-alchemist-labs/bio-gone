@@ -38,14 +38,13 @@ public class PlayerBattlePanel : MonoBehaviour
     {
         encounterButtons.SetActive(false);
         fightButtons.SetActive(false);
-        if (GameManager.Instance.GameState.GetPlayer().GetBagItems().Count == 0)
+        if (!_youAreFighting && GameManager.Instance.GameState.GetPlayer().GetBagItems().Count == 0)
         {
             OnDontInterruptClicked();
+            return;
         }
-        else if (!_youAreFighting)
-        {
-            opponentButtons.SetActive(true);
-        }
+
+        opponentButtons.SetActive(!_youAreFighting);
     }
 
     public void OnPlayerActionPhase()
@@ -75,7 +74,8 @@ public class PlayerBattlePanel : MonoBehaviour
     
     public void OnFleeRollClicked()
     {
-        bool hasFled = Random.Range(1, 3) > Random.Range(1, 3);
+        bool hasFled = Random.Range(1, 5) > Random.Range(1, 5);
+        Debug.Log($"{Random.Range(1, 5)} > {Random.Range(1, 5)}");
         VsPanel.UpdateVsValues();
         GameManager.Instance.RegisterBattlePhaseUpdate(BattlePhase.Result, null, hasFled);
     }
