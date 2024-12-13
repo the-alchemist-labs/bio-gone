@@ -38,7 +38,7 @@ public class OpponentPanel : MonoBehaviour
     
     private void UpdateTurnIndicator()
     {
-        turnIndicator.SetActive(GameManager.Instance.GameState.IsYourTurn(_player.Id));
+        turnIndicator.SetActive(!GameManager.Instance.GameState.IsYourTurn());
     }
     
     private void UpdateStats(string playerId)
