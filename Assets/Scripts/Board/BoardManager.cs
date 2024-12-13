@@ -9,7 +9,6 @@ public class BoardManager : MonoBehaviour
     
     public TileService TileService { get; private set; }
     public ShopService ShopService { get; private set; }
-    public Battle Battle { get; private set; }
     
     private Dictionary<TileId, BoardTile> TilesMap { get; set; }
 

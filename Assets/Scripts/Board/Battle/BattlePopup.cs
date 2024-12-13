@@ -1,18 +1,29 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BattlePopup : MonoBehaviour
 {
     [SerializeField] private MonsterBattlePanel monsterBattlePanel;
     [SerializeField] private PlayerBattlePanel playerBattlePanel;
+    [SerializeField] private BattleResultPanel resultPanel;
     [SerializeField] private VsPanel vsPanel;
+
+    void OnEnable()
+    {
+        VsPanel.OnVsValuesUpdated += vsPanel.SetVsValues;
+    }
     
+    void OnDisable()
+    {
+        VsPanel.OnVsValuesUpdated -= vsPanel.SetVsValues;
+    }
     public void Display(Battle battle)
     {
         gameObject.SetActive(true);
-        
+        vsPanel.SetVsValues();
+
         monsterBattlePanel.Initialize(battle);
         playerBattlePanel.Initialize(battle);
-        vsPanel.SetVs(battle.Player.BattlePower, battle.Monster.BattlePower);
     }
 
     public void TryToFlee()
@@ -30,13 +41,15 @@ public class BattlePopup : MonoBehaviour
         playerBattlePanel.OnPlayerActionPhase();
     }
     
-    public void Result()
+    public void Result(bool? hasEscaped)
     {
-        playerBattlePanel.OnResultPhase();
+        BattleResult battleResult = GameManager.Instance.Battle.GetBattleResult(hasEscaped);
+        resultPanel.DisplayBattleResult(battleResult);
     }
     
     public void ClosePopup()
     {
+        resultPanel.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
     

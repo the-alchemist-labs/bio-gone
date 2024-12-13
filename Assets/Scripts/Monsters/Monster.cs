@@ -15,7 +15,6 @@ public class Monster : ScriptableObject
     public int BattlePower;
     public int  ExperienceGain;
     public int  CoinsGain;
-    public int  ItemsGain;
 
     public virtual void Initialize(Monster monster)
     {
@@ -26,6 +25,5 @@ public class Monster : ScriptableObject
         BattlePower = monster.BattlePower;
         ExperienceGain = monster.ExperienceGain;
         CoinsGain = monster.CoinsGain;
-        ItemsGain = monster.ItemsGain;
     }
 }

@@ -86,9 +86,9 @@ public partial class GameManager
         else battle.ClosePopup();
     }
 
-    private void BattlePhaseChanged(BattlePhase phase, [CanBeNull] BattleItemUsed usedItem)
+    private void BattlePhaseChanged(BattlePhase phase, [CanBeNull] BattleItemUsed usedItem, bool? hasEscaped)
     {
-        Battle.UpdateBattlePhase(phase);
+        Battle.UpdateBattlePhase(phase, hasEscaped);
         if (usedItem != null)
         {
             Battle.UseItem(usedItem);

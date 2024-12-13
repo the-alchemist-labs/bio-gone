@@ -22,30 +22,34 @@ public class UpdateBattlePhaseCommandPayload
 { 
     public BattlePhase BattlePhase { get; set; }
     [CanBeNull] public BattleItemUsed BattleItemUsed { get; set; }
+    public bool? HasEscaped { get; set; }
     
-    public UpdateBattlePhaseCommandPayload(BattlePhase battlePhase, BattleItemUsed battleItemUsed)
+    public UpdateBattlePhaseCommandPayload(BattlePhase battlePhase, BattleItemUsed battleItemUsed, bool? hasEscaped)
     {
         BattlePhase = battlePhase;
         BattleItemUsed = battleItemUsed;
+        HasEscaped = hasEscaped;
     }
 }
 
 public class UpdateBattlePhaseCommand : ICommand
 {
-    public static event Action<BattlePhase, BattleItemUsed> OnBattlePhaseChanged;
+    public static event Action<BattlePhase, BattleItemUsed, bool?> OnBattlePhaseChanged;
 
     public BattlePhase BattlePhase { get; set; }
     [CanBeNull] public BattleItemUsed BattleItemUsed { get; set; }
-    
+    public bool? HasEscaped { get; set; }
+
     public UpdateBattlePhaseCommand(string payloadString)
     {
         UpdateBattlePhaseCommandPayload payload = JsonConvert.DeserializeObject<UpdateBattlePhaseCommandPayload>(payloadString);
         BattlePhase = payload.BattlePhase;
         BattleItemUsed = payload.BattleItemUsed;
+        HasEscaped = payload.HasEscaped;
     }
     
     public void Execute()
     {
-        OnBattlePhaseChanged?.Invoke(BattlePhase, BattleItemUsed);
+        OnBattlePhaseChanged?.Invoke(BattlePhase, BattleItemUsed, HasEscaped);
     }
 }

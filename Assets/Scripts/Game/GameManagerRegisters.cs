@@ -76,12 +76,13 @@ public partial class GameManager
         ));
     }
 
-    public void RegisterBattlePhaseUpdate(BattlePhase phase, BattleItemUsed itemUsed = null)
+    
+    public void RegisterBattlePhaseUpdate(BattlePhase phase, BattleItemUsed itemUsed = null, bool? hasEscaped = null)
     {
         Commander.PostCommand(new CommandEvent(
             GameState.RoomId,
             Command.UpdateBattlePhase,
-            JsonConvert.SerializeObject(new UpdateBattlePhaseCommandPayload(phase, itemUsed))
+            JsonConvert.SerializeObject(new UpdateBattlePhaseCommandPayload(phase, itemUsed, hasEscaped))
         ));
     }
 }

@@ -12,7 +12,6 @@
         [SerializeField] private TMP_Text descriptionText;
         [SerializeField] private TMP_Text expText;
         [SerializeField] private TMP_Text coinsText;
-        [SerializeField] private TMP_Text itemsText;
         
         public void Initialize(Battle battle)
         {
@@ -24,6 +23,5 @@
             descriptionText.text = monster.Description;
             expText.text = monster.ExperienceGain.ToString();
             coinsText.text = monster.CoinsGain.ToString();
-            itemsText.text = monster.ItemsGain.ToString();
         }
     }

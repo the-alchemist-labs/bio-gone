@@ -17,6 +17,15 @@ public enum BattlePhase
     Result,
 }
 
+public enum BattleResult
+{
+    Win,
+    Lose,
+    FailedFlee,
+    Fled,
+    Draw,
+}
+
 public class PlayerInBattle : Player
 {
     public int TempPower { get; set; }
@@ -28,7 +37,6 @@ public class PlayerInBattle : Player
         TempPower = 0;
     }
 }
-
 
 public class MonsterInBattle : Monster
 {
@@ -58,7 +66,7 @@ public class Battle
         Player = new PlayerInBattle(player.Id, player.Name, player.ProfilePicture, player.Position);
         Phase = BattlePhase.Encounter;
     }
-
+    
     public static MonsterId GetMonster(int playerLevel)
     {
         List<Monster> monsters = MonsterCatalog.Instance.Monsters
@@ -69,7 +77,12 @@ public class Battle
         return monsters[Random.Range(0, monsters.Count)].Id;
     }
 
-    public void UpdateBattlePhase(BattlePhase battlePhase)
+    public bool IsInBattle(string playerId)
+    {
+        return playerId == Player.Id;
+    }
+    
+    public void UpdateBattlePhase(BattlePhase battlePhase, bool? hasEscaped)
     {
         Phase = battlePhase;
         switch (battlePhase)
@@ -84,7 +97,7 @@ public class Battle
                 PopupManager.Instance.battlePopup.PlayerAction();
                 return;
             case BattlePhase.Result:
-                PopupManager.Instance.battlePopup.Result();
+                PopupManager.Instance.battlePopup.Result(hasEscaped);
                 return;
         }
     }
@@ -104,6 +117,15 @@ public class Battle
         }
     }
 
+    public BattleResult GetBattleResult(bool? hasEscaped)
+    {
+        if (Phase == BattlePhase.Flee && hasEscaped == true) return BattleResult.Fled;
+        if (Phase == BattlePhase.Flee && !hasEscaped == true) return BattleResult.FailedFlee;
+        if (Monster.BattlePower < Player.BattlePower) return BattleResult.Win;
+        if (Monster.BattlePower > Player.BattlePower) return BattleResult.Lose;
+        return BattleResult.Draw;
+    }
+    
     private void ModifyBattlePower(BattleTarget target, int modifier)
     {
         if (target == BattleTarget.Player) Player.TempPower += modifier;
