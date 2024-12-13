@@ -30,9 +30,8 @@ public class OpponentPanel : MonoBehaviour
     private void InitializePanel()
     {
         _player = GameManager.Instance.GameState.GetOpponent();
-        Player player = GameManager.Instance.GameState.GetPlayer(_player.Id);
-        playerImage.sprite = Resources.Load<Sprite>($"Sprites/ProfilePics/{player.ProfilePicture}");
-        playerNameText.text = player.Name;
+        playerImage.sprite = Resources.Load<Sprite>($"Sprites/ProfilePics/{_player.ProfilePicture}");
+        playerNameText.text = _player.Name;
         UpdateStats(_player.Id);
     }
     

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GameState
 {
@@ -77,6 +78,6 @@ public class GameState
     // TEMP
     public Player GetOpponent()
     {
-        return Players[1];
+        return Players.FirstOrDefault(p => p.Id != PlayerProfile.Instance.Id);
     }
 }
