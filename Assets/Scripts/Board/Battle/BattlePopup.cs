@@ -44,6 +44,10 @@ public class BattlePopup : MonoBehaviour
     public void Result(bool? hasEscaped)
     {
         BattleResult battleResult = GameManager.Instance.Battle.GetBattleResult(hasEscaped);
+        if (battleResult == BattleResult.Lose || battleResult == BattleResult.FailedFlee)
+        {
+            GameManager.Instance.RegisterLivesUpdate(-1);
+        }
         resultPanel.DisplayBattleResult(battleResult);
     }
     

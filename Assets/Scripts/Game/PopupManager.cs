@@ -6,6 +6,7 @@ public class PopupManager : MonoBehaviour
     [SerializeField] public ShopPopup shopPopup;
     [SerializeField] public BattlePopup battlePopup;
     [SerializeField] public BagPopup bagPopup;
+    [SerializeField] public GameOverPopup gameOverPopup;
     
     public static PopupManager Instance { get; private set; }
     

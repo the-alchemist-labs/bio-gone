@@ -28,7 +28,7 @@ public class TileService
 
     private void HandleCoinTile()
     {
-        GameManager.Instance.RegisterCoinGain(CoinGain);
+        GameManager.Instance.RegisterCoinsUpdate(CoinGain);
         GameManager.Instance.RegisterEndTurn();
     }
     

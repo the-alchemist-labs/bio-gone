@@ -9,7 +9,8 @@ public class GameState
     public static event Action<int> OnStepsChanged;
     public static event Action<string> OnStatsChanged;
     public static event Action<string> OnPlayerItemsUpdated;
-
+    public static event Action<Player> OnGameOver;
+    
     public string RoomId { get; }
     public List<Player> Players { get; }
     public int PlayerIndexTurn { get; private set; }
@@ -55,12 +56,20 @@ public class GameState
         OnPlayerMove?.Invoke(playerId, newPosition);
     }
 
-    public void AddCoinsToPlayer(string playerId, int amount)
+    public void AddCoinsToPlayer(string playerId, int modifier)
     {
-        GetPlayer(playerId).UpdateCoins(amount);
+        GetPlayer(playerId).UpdateCoins(modifier);
         OnStatsChanged?.Invoke(playerId);
     }
 
+    public void UpdatePlayerLive(string playerId, int modifier)
+    {
+        int lives = GetPlayer(playerId).ModifyLives(modifier);
+
+        OnStatsChanged?.Invoke(playerId);
+        
+        if (lives == 0) PlayerDied();
+    }
     public void SetSteps(int steps)
     {
         Steps = steps;
@@ -79,5 +88,13 @@ public class GameState
     public Player GetOpponent()
     {
         return Players.FirstOrDefault(p => p.Id != PlayerProfile.Instance.Id);
+    }
+
+    private void PlayerDied()
+    {
+        List<Player> alivePlayers = Players.Where(player => player.Lives > 0).ToList();
+        Player winner = alivePlayers.Count == 1 ? alivePlayers.First() : null;
+
+        if (winner != null) OnGameOver?.Invoke(winner);
     }
 }

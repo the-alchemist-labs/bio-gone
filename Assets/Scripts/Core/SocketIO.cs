@@ -64,7 +64,7 @@ public class SocketIO : MonoBehaviour
         Socket.Dispose();
     }
 
-    // Maybe unite to 1 function with handler = null, Action noParamHandler = null
+    // TODO: Maybe unite to 1 function with handler = null, Action noParamHandler = null
     public void RegisterEvent<T>(string eventName, Action<T> handler)
     {
         Socket.On(eventName, response =>

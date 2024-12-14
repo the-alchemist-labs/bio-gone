@@ -40,19 +40,16 @@ public class Player
     {
         Coins += newValue;
     }
-
-    public void ModifyLives(int modifier)
+    
+    public int ModifyLives(int modifier)
     {
         if (Lives + modifier > Consts.DefaultLives) Lives = Consts.DefaultLives;
-        if (Lives + modifier <= 0)
-        {
-            Lives = 0;
-            // end player
-            return;
-        }
-        
-        Lives += modifier;
+        if (Lives + modifier <= 0) Lives = 0;
+        else Lives += modifier;
+
+        return Lives;
     }
+    
     public void AddItem(ItemId itemId)
     {
         Item newItem = ItemCatalog.Instance.GetItem<Item>(itemId);

@@ -31,7 +31,7 @@ public partial class GameManager
         ));
     }
 
-    public void RegisterCoinGain(int amount)
+    public void RegisterCoinsUpdate(int amount)
     {
         Commander.PostCommand(new CommandEvent(
             GameState.RoomId,
@@ -40,6 +40,15 @@ public partial class GameManager
         ));
     }
 
+    public void RegisterLivesUpdate(int amount)
+    {
+        Commander.PostCommand(new CommandEvent(
+            GameState.RoomId,
+            Command.ModifyPlayerLive,
+            JsonConvert.SerializeObject(new ModifyLiveCommandPayload(_player.Id, amount))
+        ));
+    }
+    
     public void RegisterEndTurn()
     {
         Commander.PostCommand(new CommandEvent(

@@ -112,7 +112,7 @@ public class Battle
                 ModifyBattlePower(usedItem.Target, item.Effect.Value);
                 return;
             case ItemEffectId.HealUser:
-                Player.ModifyLives(item.Effect.Value);
+                GameManager.Instance.GameState.UpdatePlayerLive(usedItem.UserPlayerId, item.Effect.Value);
                 return;
         }
     }

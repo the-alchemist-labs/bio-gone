@@ -35,7 +35,7 @@ public class ShopItem : MonoBehaviour
     {
         if (!_item.IsFree)
         {
-            GameManager.Instance.RegisterCoinGain(-_item.Price);
+            GameManager.Instance.RegisterCoinsUpdate(-_item.Price);
         }
 
         OnItemSelected?.Invoke(_item.Id);

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Helmet1
   m_EditorClassIdentifier: 
   Id: 0
-  Name: 
-  Price: 0
+  Name: Helmet 1
+  Price: 100
   IsFree: 0
   ItemType: 0
   Description: 
-  BattlePowerBonus: 0
+  BattlePowerBonus: 5

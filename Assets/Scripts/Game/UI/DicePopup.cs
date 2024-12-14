@@ -14,7 +14,7 @@ public class DicePopup : MonoBehaviour
         gameObject.SetActive(true);
         
         _isYourTurn = GameManager.Instance.GameState.IsYourTurn();
-        // play dice animation
+        // TODO: play dice animation
         // land on dice value
         diceText.text = $"{diceValue} steps";
         

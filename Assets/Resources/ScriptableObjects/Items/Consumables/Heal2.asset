@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Heal2
   m_EditorClassIdentifier: 
   Id: 2
-  Name: Heal 1
-  Price: 100
-  IsFree: 1
+  Name: Heal 2
+  Price: 400
+  IsFree: 0
   ItemType: 1
-  Description: Heals 1 live
+  Description: Heals 2 live
   Effect:
     EffectId: 1
-    Value: 1
+    Value: 2

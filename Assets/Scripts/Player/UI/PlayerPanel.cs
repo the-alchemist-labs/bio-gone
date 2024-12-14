@@ -9,6 +9,7 @@ public class PlayerPanel : MonoBehaviour
     [SerializeField] private Image playerImage;
     [SerializeField] private TMP_Text playerNameText;
     [SerializeField] private TMP_Text coinsText;
+    [SerializeField] private TMP_Text livesText;
     [SerializeField] private TMP_Text battlePowerText;
     [SerializeField] private TMP_Text levelText;
     [SerializeField] private Button rollButton;
@@ -55,6 +56,7 @@ public class PlayerPanel : MonoBehaviour
         if (playerId == _player.Id)
         {
             coinsText.text = $"Coins: {_player.Coins}";
+            livesText.text = $"Lives: {_player.Lives}";
             battlePowerText.text = $"BP: {_player.BattlePower}";
             levelText.text = $"{_player.Level}";
         }

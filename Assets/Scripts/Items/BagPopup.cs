@@ -28,6 +28,7 @@ public class BagPopup : MonoBehaviour
 
     public void Display(BagState state)
     {
+        _state = state;
         gameObject.SetActive(true);
         useButton.interactable = state != BagState.Idle;
         UpdateItemDetails(GameManager.Instance.GameState.GetPlayer().GetBagItems().First().Id);

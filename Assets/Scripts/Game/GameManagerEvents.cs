@@ -13,11 +13,13 @@ public partial class GameManager
         RollDiceCommand.OnDiceRolled += DiceRolled;
         MovePlayerCommand.OnPlayerMove += MovePlayer;
         ModifyCoinsCommand.OnCoinsModified += CoinsGained;
+        ModifyLiveCommand.OnLivesModified += LivesUpdated;
         NewTurnCommand.OnNewTurn += NewTurn;
         ToggleShopCommand.OnShopToggled += ToggleShop;
         GainItemCommand.OnItemGained += GainItem;
         ToggleBattleCommand.OnBattleToggled += ToggleBattle;
         UpdateBattlePhaseCommand.OnBattlePhaseChanged += BattlePhaseChanged;
+        GameState.OnGameOver += GameOver;
     }
 
     private void UnsetUpEventListeners()
@@ -25,11 +27,13 @@ public partial class GameManager
         RollDiceCommand.OnDiceRolled -= DiceRolled;
         MovePlayerCommand.OnPlayerMove -= MovePlayer;
         ModifyCoinsCommand.OnCoinsModified -= CoinsGained;
+        ModifyLiveCommand.OnLivesModified -= LivesUpdated;
         NewTurnCommand.OnNewTurn -= NewTurn;
         ToggleShopCommand.OnShopToggled -= ToggleShop;
         GainItemCommand.OnItemGained -= GainItem;
         ToggleBattleCommand.OnBattleToggled -= ToggleBattle;
         UpdateBattlePhaseCommand.OnBattlePhaseChanged -= BattlePhaseChanged;
+        GameState.OnGameOver -= GameOver;
     }
 
     private void DiceRolled(string playerId, int steps)
@@ -52,11 +56,16 @@ public partial class GameManager
         GameState.MovePlayer(playerId, newPosition);
     }
     
-    private void CoinsGained(string playerId, int amount)
+    private void CoinsGained(string playerId, int modifier)
     {
-        GameState.AddCoinsToPlayer(playerId, amount);
+        GameState.AddCoinsToPlayer(playerId, modifier);
     }
 
+    private void LivesUpdated(string playerId, int modifier)
+    {
+        GameState.UpdatePlayerLive(playerId, modifier);
+    }
+    
     private void NewTurn(int index)
     {
         GameState.UpdatePlayerTurn(index);
@@ -93,5 +102,10 @@ public partial class GameManager
         {
             Battle.UseItem(usedItem);
         }
+    }
+
+    private void GameOver(Player player)
+    {
+        PopupManager.Instance.gameOverPopup.Display(player);
     }
 }

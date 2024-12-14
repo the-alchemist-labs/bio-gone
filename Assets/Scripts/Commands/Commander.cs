@@ -14,6 +14,7 @@ public class Commander
         { Command.GainItem, payload => new GainItemCommand(payload) },
         { Command.ToggleBattle, payload => new ToggleBattleCommand(payload) },
         { Command.UpdateBattlePhase, payload => new UpdateBattlePhaseCommand(payload) },
+        { Command.ModifyPlayerLive, payload => new ModifyLiveCommand(payload)}
     };
     
     public Commander()
@@ -28,7 +29,7 @@ public class Commander
     
     private void ExecuteCommand(CommandEvent message)
     {
-        Debug.Log(message);
+        Debug.Log($"{message.CommandType}: {message.Payload}");
         if (CommandMap.TryGetValue(message.CommandType, out var command))
         {
             var commandInstance = command(message.Payload);
