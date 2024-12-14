@@ -46,7 +46,7 @@ public class OpponentPanel : MonoBehaviour
         if (playerId == _player.Id)
         {
             coinsText.text = $"Coins: {_player.Coins}";
-            livesText.text = $"Lives: {_player.Coins}";
+            livesText.text = $"Lives: {_player.Lives}";
             battlePowerText.text = $"BP: {_player.BattlePower}";
             levelText.text = $"{_player.Level}";
         }
