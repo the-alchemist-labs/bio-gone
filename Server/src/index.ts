@@ -4,7 +4,6 @@ import bodyParser from 'body-parser';
 import { Server } from 'socket.io';
 import { initializeSockets } from './sockets/sockets';
 import connectDB from './utils/mongodb';
-import { friends } from './routes/friends';
 import { config } from './config';
 import { errorMiddleware } from './utils/middlewares';
 import { players } from './routes/players';
@@ -16,7 +15,6 @@ export const io = new Server(server);
 
 app.use(bodyParser.json());
 
-app.use('/friends', friends);
 app.use('/players', players);
 
 app.use(errorMiddleware);

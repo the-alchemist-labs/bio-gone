@@ -2,6 +2,14 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
+public class PlayerData
+{
+    public string Id { get; set; }
+    public string Name { get; set; }
+    public PlayerProfilePicture ProfilePicture { get; set; }
+}
+
+[Serializable]
 public class SearchMatchEvent
 {
     public string PlayerId { get; set; }
@@ -16,7 +24,7 @@ public class SearchMatchEvent
 public class MatchFoundEvent
 {
     public string RoomId { get; set; }
-    public List<Player> PlayersData{ get; set; }
+    public List<PlayerData> PlayersData{ get; set; }
     public int FirstTurnPlayer { get; set; }
 }
 
