@@ -12,11 +12,12 @@ public class BattlePopup : MonoBehaviour
     {
         VsPanel.OnVsValuesUpdated += vsPanel.SetVsValues;
     }
-    
+
     void OnDisable()
     {
         VsPanel.OnVsValuesUpdated -= vsPanel.SetVsValues;
     }
+
     public void Display(Battle battle)
     {
         gameObject.SetActive(true);
@@ -30,36 +31,43 @@ public class BattlePopup : MonoBehaviour
     {
         playerBattlePanel.OnFleePhase();
     }
-    
+
     public void Interrupt()
     {
         playerBattlePanel.OnInterruptPhase();
     }
-    
+
     public void PlayerAction()
     {
         playerBattlePanel.OnPlayerActionPhase();
     }
-    
+
     public void Result(bool? hasEscaped)
     {
         BattleResult battleResult = GameManager.Instance.Battle.GetBattleResult(hasEscaped);
-        if (battleResult == BattleResult.Lose || battleResult == BattleResult.FailedFlee)
+        if (ShouldTakeDamage(battleResult))
         {
             GameManager.Instance.RegisterLivesUpdate(-1);
         }
+
         resultPanel.DisplayBattleResult(battleResult);
     }
-    
+
     public void ClosePopup()
     {
         resultPanel.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
-    
+
     public void CloseClicked()
     {
         GameManager.Instance.RegisterToggleBattle(false);
         GameManager.Instance.TakeStep();
+    }
+
+    private bool ShouldTakeDamage(BattleResult result)
+    {
+        return GameManager.Instance.Battle.IsInBattle() &&
+               (result == BattleResult.Lose || result == BattleResult.FailedFlee);
     }
 }

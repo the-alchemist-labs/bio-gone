@@ -75,7 +75,6 @@ public class PlayerBattlePanel : MonoBehaviour
     public void OnFleeRollClicked()
     {
         bool hasFled = Random.Range(1, 5) > Random.Range(1, 5);
-        Debug.Log($"{Random.Range(1, 5)} > {Random.Range(1, 5)}");
         VsPanel.UpdateVsValues();
         GameManager.Instance.RegisterBattlePhaseUpdate(BattlePhase.Result, null, hasFled);
     }

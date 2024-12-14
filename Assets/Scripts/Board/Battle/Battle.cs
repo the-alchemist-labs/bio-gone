@@ -77,9 +77,9 @@ public class Battle
         return monsters[Random.Range(0, monsters.Count)].Id;
     }
 
-    public bool IsInBattle(string playerId)
+    public bool IsInBattle(string playerId = null)
     {
-        return playerId == Player.Id;
+        return playerId == (Player.Id ?? PlayerProfile.Instance.Id);
     }
     
     public void UpdateBattlePhase(BattlePhase battlePhase, bool? hasEscaped)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -39,6 +40,7 @@ public class Player
     public void UpdateCoins(int newValue)
     {
         Coins += newValue;
+        Coins = Math.Max(Coins, 0);
     }
     
     public int ModifyLives(int modifier)
