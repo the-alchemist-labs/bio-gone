@@ -79,7 +79,7 @@ public class Battle
 
     public bool IsInBattle(string playerId = null)
     {
-        return playerId == (Player.Id ?? PlayerProfile.Instance.Id);
+        return Player.Id == (playerId ?? PlayerProfile.Instance.Id);
     }
     
     public void UpdateBattlePhase(BattlePhase battlePhase, bool? hasEscaped)
