@@ -50,6 +50,13 @@ public class BattlePopup : MonoBehaviour
             GameManager.Instance.RegisterLivesUpdate(-1);
         }
 
+        if (battleResult == BattleResult.Win)
+        {
+            Monster monster = GameManager.Instance.Battle.Monster;
+            GameManager.Instance.RegisterCoinsUpdate(monster.CoinsGain);
+            GameManager.Instance.RegisterExpUpdate(monster.ExperienceGain);
+        }
+        
         resultPanel.DisplayBattleResult(battleResult);
     }
 

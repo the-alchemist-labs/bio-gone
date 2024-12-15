@@ -47,9 +47,11 @@ public partial class GameManager : MonoBehaviour
 
     public void TakeStep()
     {
+
         if (IsLastStep())
         {
             RegisterEndTurn();
+            return;
         }
         
         TileId currentPosition = GameState.GetPlayer(_player.Id).Position;

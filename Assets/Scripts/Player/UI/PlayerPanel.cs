@@ -12,6 +12,7 @@ public class PlayerPanel : MonoBehaviour
     [SerializeField] private TMP_Text livesText;
     [SerializeField] private TMP_Text battlePowerText;
     [SerializeField] private TMP_Text levelText;
+    [SerializeField] private Slider expSlider;
     [SerializeField] private Button rollButton;
     [SerializeField] private Button bagButton;
     [SerializeField] private TMP_Text bagText;
@@ -59,6 +60,7 @@ public class PlayerPanel : MonoBehaviour
             livesText.text = $"Lives: {_player.Lives}";
             battlePowerText.text = $"BP: {_player.BattlePower}";
             levelText.text = $"{_player.Level}";
+            expSlider.value = (float)Consts.ExpToLevelUp / _player.Experience;
         }
     }
 

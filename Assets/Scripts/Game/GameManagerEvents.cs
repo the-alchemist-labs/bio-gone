@@ -20,6 +20,9 @@ public partial class GameManager
         ToggleBattleCommand.OnBattleToggled += ToggleBattle;
         UpdateBattlePhaseCommand.OnBattlePhaseChanged += BattlePhaseChanged;
         GameState.OnGameOver += GameOver;
+        GameState.OnLevelUp += RegisterPlayerLevelUp;
+        LevelUpCommand.OnLevelUp -= LevelUpPlayer;
+        ModifyExpCommand.OnExpUpdated += ExpGained;
     }
 
     private void UnsetUpEventListeners()
@@ -34,6 +37,9 @@ public partial class GameManager
         ToggleBattleCommand.OnBattleToggled -= ToggleBattle;
         UpdateBattlePhaseCommand.OnBattlePhaseChanged -= BattlePhaseChanged;
         GameState.OnGameOver -= GameOver;
+        GameState.OnLevelUp -= RegisterPlayerLevelUp;
+        LevelUpCommand.OnLevelUp -= LevelUpPlayer;
+        ModifyExpCommand.OnExpUpdated -= ExpGained;
     }
 
     private void DiceRolled(string playerId, int steps)
@@ -58,7 +64,7 @@ public partial class GameManager
     
     private void CoinsGained(string playerId, int modifier)
     {
-        GameState.AddCoinsToPlayer(playerId, modifier);
+        GameState.ModifyPlayerCoins(playerId, modifier);
     }
 
     private void LivesUpdated(string playerId, int modifier)
@@ -107,5 +113,15 @@ public partial class GameManager
     private void GameOver(Player player)
     {
         PopupManager.Instance.gameOverPopup.Display(player);
+    }
+
+    private void ExpGained(string playerId, int amount)
+    {
+        Instance.GameState.AddExpToPlayer(playerId, amount);
+    }
+
+    private void LevelUpPlayer(string playerId)
+    {
+        GameState.LevelUpPlayer(playerId);
     }
 }

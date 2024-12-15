@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class GameState
 {
@@ -8,6 +9,7 @@ public class GameState
     public static event Action OnTurnChanged;
     public static event Action<int> OnStepsChanged;
     public static event Action<string> OnStatsChanged;
+    public static event Action<string> OnLevelUp;
     public static event Action<string> OnPlayerItemsUpdated;
     public static event Action<Player> OnGameOver;
 
@@ -68,12 +70,26 @@ public class GameState
         OnPlayerMove?.Invoke(playerId, newPosition);
     }
 
-    public void AddCoinsToPlayer(string playerId, int modifier)
+    public void ModifyPlayerCoins(string playerId, int modifier)
     {
         GetPlayer(playerId).UpdateCoins(modifier);
         OnStatsChanged?.Invoke(playerId);
     }
+    
+    public void AddExpToPlayer(string playerId, int amount)
+    {
+        Player player = GetPlayer(playerId);
+        player.UpdateExp(amount);
+        TryLevelUp(player);  
+    }
 
+    public void LevelUpPlayer(string playerId)
+    {
+        Player player = GetPlayer(playerId);
+        player.LevelUp();
+        TryLevelUp(player);
+    }
+    
     public void UpdatePlayerLive(string playerId, int modifier)
     {
         int lives = GetPlayer(playerId).ModifyLives(modifier);
@@ -97,7 +113,7 @@ public class GameState
         OnStatsChanged?.Invoke(playerId);
     }
 
-    // TEMP
+    // On 2 players
     public Player GetOpponent()
     {
         return Players.FirstOrDefault(p => p.Id != PlayerProfile.Instance.Id);
@@ -114,5 +130,11 @@ public class GameState
     private TileId GetStartPosition(int index)
     {
         return new[] { TileId.A1, TileId.B1 }[index];
+    }
+
+    private void TryLevelUp(Player player)
+    {
+        if (player.ShouldLevelUp() && !player.IsMaxLevel())  OnLevelUp?.Invoke(player.Id);
+        OnStatsChanged?.Invoke(player.Id);
     }
 }

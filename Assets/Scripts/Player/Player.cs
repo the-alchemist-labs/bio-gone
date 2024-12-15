@@ -16,7 +16,8 @@ public class Player
     public TileId Position { get; private set; }
     public int Lives { get; private set; }
     public int Coins { get; private set; }
-    public int Level { get; }
+    public int Experience { get; private set; }
+    public int Level { get; private set; }
     public int BattlePower => CalculatePower();
     private List<Item> Items { get; }
     
@@ -28,6 +29,7 @@ public class Player
         Position = position;
         Coins = 0;
         Level = 1;
+        Experience = 0;
         Lives = Consts.DefaultLives;
         Items = new List<Item>();
     }
@@ -41,6 +43,18 @@ public class Player
     {
         Coins += newValue;
         Coins = Math.Max(Coins, 0);
+    }
+    
+    public void UpdateExp(int newValue)
+    {
+        Experience += newValue;
+     }
+
+    public void LevelUp()
+    {
+        if (IsMaxLevel()) return;
+        UpdateExp(-Consts.ExpToLevelUp); 
+        Level++;
     }
     
     public int ModifyLives(int modifier)
@@ -77,5 +91,16 @@ public class Player
             .OfType<EquipItem>()
             .Sum(e => e.BattlePowerBonus);
         return levelsPower + itemsPower;
+    }
+
+    public bool ShouldLevelUp()
+    {
+        return Experience >= Consts.ExpToLevelUp;
+    }
+
+    
+    public bool IsMaxLevel()
+    {
+        return Level >= Consts.MaxLevel;
     }
 }

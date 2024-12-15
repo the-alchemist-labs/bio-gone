@@ -12,7 +12,9 @@ public enum Command
     ToggleShop,
     ToggleBattle,
     UpdateBattlePhase,
-    ModifyPlayerLive
+    ModifyPlayerLive,
+    ModifyPlayerExp,
+    LevelUp
 }
 
 public interface ICommand

@@ -17,7 +17,6 @@ MonoBehaviour:
   Description: This is a very awkward self proclamed general that just want to end
     humanity that's all jeez..
   Level: 2
-  BattlePower: 10
-  ExperienceGain: 20
-  CoinsGain: 15
-  ItemsGain: 1
+  BattlePower: 5
+  ExperienceGain: 500
+  CoinsGain: 200

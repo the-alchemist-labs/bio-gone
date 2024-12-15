@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class TileService
 {
-    private Dictionary<TileType, Action> _tileTypeHandlers;
-
-    private const int CoinGain = 5; // get from unity editor
+    private readonly Dictionary<TileType, Action> _tileTypeHandlers;
     
     public TileService()
     {
@@ -14,7 +12,8 @@ public class TileService
         {
             { TileType.Coin, HandleCoinTile },
             { TileType.Shop, HandleShopTile },
-            { TileType.Monster, HandleMonsterTile }
+            { TileType.Monster, HandleMonsterTile },
+            { TileType.Exp, HandleExpTile }
         };
     }
 
@@ -28,7 +27,7 @@ public class TileService
 
     private void HandleCoinTile()
     {
-        GameManager.Instance.RegisterCoinsUpdate(CoinGain);
+        GameManager.Instance.RegisterCoinsUpdate(Consts.TileCoinGain);
         GameManager.Instance.RegisterEndTurn();
     }
     
@@ -42,5 +41,10 @@ public class TileService
         Player player = GameManager.Instance.GameState.GetPlayer();
         MonsterId monsterId = Battle.GetMonster(player.Level);
         GameManager.Instance.RegisterToggleBattle(true, monsterId);
+    }
+
+    private void HandleExpTile()
+    {
+        GameManager.Instance.RegisterExpUpdate(Consts.TileExpGain);
     }
 }

@@ -6,6 +6,10 @@ public static class Consts
     public const int MinRollValue = 1;
     public const int LevelPowerModifier = 10;
     public const int MonsterLevelDiff = 2;
+    public const int MaxLevel = 10;
+    public const int ExpToLevelUp = 200;
+    public const int TileCoinGain = 100;
+    public const int TileExpGain = 150;
 
 }
 

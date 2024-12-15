@@ -6,7 +6,7 @@ public partial class GameManager
 {
     public void RegisterRollDice()
     {
-        int rollValue = 3; //UnityEngine.Random.Range(Consts.MinRollValue, Consts.MaxRollValue);
+        int rollValue = UnityEngine.Random.Range(Consts.MinRollValue, Consts.MaxRollValue);
         Commander.PostCommand(new CommandEvent(
             GameState.RoomId,
             Command.RollDice,
@@ -37,6 +37,24 @@ public partial class GameManager
             GameState.RoomId,
             Command.ModifyPlayerCoins,
             JsonConvert.SerializeObject(new ModifyCoinsCommandPayload(_player.Id, amount))
+        ));
+    }
+    
+    public void RegisterExpUpdate(int amount)
+    {
+        Commander.PostCommand(new CommandEvent(
+            GameState.RoomId,
+            Command.ModifyPlayerExp,
+            JsonConvert.SerializeObject(new ModifyExpCommanddPayload(_player.Id, amount))
+        ));
+    }
+    
+    public void RegisterPlayerLevelUp(string playerId)
+    {
+        Commander.PostCommand(new CommandEvent(
+            GameState.RoomId,
+            Command.LevelUp,
+            JsonConvert.SerializeObject(new LevelUpCommandPayload(playerId))
         ));
     }
 
@@ -94,4 +112,5 @@ public partial class GameManager
             JsonConvert.SerializeObject(new UpdateBattlePhaseCommandPayload(phase, itemUsed, hasEscaped))
         ));
     }
+
 }
