@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BoardTile : MonoBehaviour
 {
@@ -30,8 +29,8 @@ public class BoardTile : MonoBehaviour
 
     public void ToggleSelectableIndicator(bool isToggledOn)
     {
-        selectableIndicator.enabled = isToggledOn;
         _isSelectable = isToggledOn;
+        selectableIndicator.enabled = isToggledOn;
     }
 
     public void TileSelected()
@@ -53,13 +52,17 @@ public class BoardTile : MonoBehaviour
         switch (type)
         {
             case TileType.Coin:
-                return Color.blue;
+                return new Color32(50, 109, 168, 255);
             case TileType.Exp:
-                return Color.red;
+                return new Color32(41, 217, 179, 255);
             case TileType.Curse:
-                return Color.gray;
+                return new Color32(110, 125, 107, 255);
             case TileType.Shop:
-                return Color.green;
+                return new Color32(79, 158, 66, 255);
+            case TileType.Monster:
+                return new Color32(170, 50, 50, 255);
+            case TileType.Guardian:
+                return new Color32(242, 208, 24, 255);
             default:
                 return Color.white;
         }

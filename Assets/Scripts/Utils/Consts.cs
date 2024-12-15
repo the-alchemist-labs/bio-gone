@@ -10,6 +10,7 @@ public static class Consts
     public const int ExpToLevelUp = 200;
     public const int TileCoinGain = 100;
     public const int TileExpGain = 150;
+    public const int TileLandExpGain = 70;
 
 }
 

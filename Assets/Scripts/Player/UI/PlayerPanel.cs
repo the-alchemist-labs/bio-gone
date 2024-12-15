@@ -60,7 +60,7 @@ public class PlayerPanel : MonoBehaviour
             livesText.text = $"Lives: {_player.Lives}";
             battlePowerText.text = $"BP: {_player.BattlePower}";
             levelText.text = $"{_player.Level}";
-            expSlider.value = (float)Consts.ExpToLevelUp / _player.Experience;
+            expSlider.value = (float) _player.Experience / Consts.ExpToLevelUp;
         }
     }
 

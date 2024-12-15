@@ -15,9 +15,8 @@ public class BoardManager : MonoBehaviour
     public static readonly List<TileType> IntractableOnPassTileTypes = new List<TileType>
     {
         TileType.Shop,
-        TileType.Guardian,
         TileType.Monster,
-        TileType.Goblet,
+        TileType.Guardian,
     };
     
     void Awake()
@@ -67,6 +66,7 @@ public class BoardManager : MonoBehaviour
     public void InteractWithTile(TileType tileType)
     {
         TileService.Interact(tileType);
+        GameManager.Instance.RegisterExpUpdate(Consts.TileLandExpGain);
     }
     
     private void InstantiateBoard()

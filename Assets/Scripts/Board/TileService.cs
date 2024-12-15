@@ -46,5 +46,6 @@ public class TileService
     private void HandleExpTile()
     {
         GameManager.Instance.RegisterExpUpdate(Consts.TileExpGain);
+        GameManager.Instance.RegisterEndTurn();
     }
 }
