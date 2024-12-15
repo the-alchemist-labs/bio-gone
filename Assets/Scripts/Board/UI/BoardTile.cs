@@ -40,7 +40,6 @@ public class BoardTile : MonoBehaviour
         GameManager.Instance.RegisterPlayerMove(tileId);
     }
 
-    // add colider to work
     void OnMouseDown()
     {
         if (_isSelectable)
