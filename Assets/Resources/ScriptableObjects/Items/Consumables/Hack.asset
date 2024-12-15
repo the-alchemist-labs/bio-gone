@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84bd2a3f69644785ad1586366ab16276, type: 3}
   m_Name: Hack
   m_EditorClassIdentifier: 
-  Id: 0
-  Name: 
-  Price: 0
+  Id: 10
+  Name: Hack it
+  Price: 400
   IsFree: 0
   ItemType: 0
-  Description: 
+  Description: Just hack it
   Effect:
     EffectId: 0
-    Value: 0
+    Value: 10

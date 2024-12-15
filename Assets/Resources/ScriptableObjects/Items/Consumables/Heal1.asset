@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Heal1
   m_EditorClassIdentifier: 
   Id: 2
-  Name: Heal 1
+  Name: Chicken Thigh
   Price: 100
   IsFree: 1
   ItemType: 1
-  Description: Heals 1 live
+  Description: Thicc thighs save lives
   Effect:
     EffectId: 1
     Value: 1

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Helmet
   m_EditorClassIdentifier: 
   Id: 0
-  Name: Helmet 1
-  Price: 100
+  Name: Cool Helmet
+  Price: 200
   IsFree: 0
   ItemType: 0
-  Description: 
+  Description: Keep your head
   BattlePowerBonus: 5

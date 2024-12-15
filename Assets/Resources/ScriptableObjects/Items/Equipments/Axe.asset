@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c9220d62fa49a5ab212c194dbcc6cb, type: 3}
   m_Name: Axe
   m_EditorClassIdentifier: 
-  Id: 0
-  Name: 
-  Price: 0
+  Id: 8
+  Name: Decapitator
+  Price: 400
   IsFree: 0
   ItemType: 0
-  Description: 
-  BattlePowerBonus: 0
+  Description: Giving head
+  BattlePowerBonus: 17

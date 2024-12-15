@@ -4336,6 +4336,10 @@ PrefabInstance:
       value: 103
       objectReference: {fileID: 0}
     - target: {fileID: 4318599456465114960, guid: a44ddd0e6c9f0724aa1984159a9c8504, type: 3}
+      propertyPath: nextTile
+      value: 104
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318599456465114960, guid: a44ddd0e6c9f0724aa1984159a9c8504, type: 3}
       propertyPath: tileType
       value: 1
       objectReference: {fileID: 0}
@@ -4565,6 +4569,10 @@ PrefabInstance:
     - target: {fileID: 4318599456465114960, guid: a44ddd0e6c9f0724aa1984159a9c8504, type: 3}
       propertyPath: tileId
       value: 104
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318599456465114960, guid: a44ddd0e6c9f0724aa1984159a9c8504, type: 3}
+      propertyPath: nextTile
+      value: 411
       objectReference: {fileID: 0}
     - target: {fileID: 4318599456465114960, guid: a44ddd0e6c9f0724aa1984159a9c8504, type: 3}
       propertyPath: tileType
@@ -10456,6 +10464,10 @@ PrefabInstance:
       propertyPath: tileId
       value: 101
       objectReference: {fileID: 0}
+    - target: {fileID: 4318599456465114960, guid: a44ddd0e6c9f0724aa1984159a9c8504, type: 3}
+      propertyPath: nextTile
+      value: 102
+      objectReference: {fileID: 0}
     - target: {fileID: 7642494324046925625, guid: a44ddd0e6c9f0724aa1984159a9c8504, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.08
@@ -13165,6 +13177,10 @@ PrefabInstance:
     - target: {fileID: 4318599456465114960, guid: a44ddd0e6c9f0724aa1984159a9c8504, type: 3}
       propertyPath: tileId
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318599456465114960, guid: a44ddd0e6c9f0724aa1984159a9c8504, type: 3}
+      propertyPath: nextTile
+      value: 101
       objectReference: {fileID: 0}
     - target: {fileID: 7642494324046925625, guid: a44ddd0e6c9f0724aa1984159a9c8504, type: 3}
       propertyPath: m_LocalScale.x
@@ -19519,6 +19535,10 @@ PrefabInstance:
     - target: {fileID: 4318599456465114960, guid: a44ddd0e6c9f0724aa1984159a9c8504, type: 3}
       propertyPath: tileId
       value: 102
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318599456465114960, guid: a44ddd0e6c9f0724aa1984159a9c8504, type: 3}
+      propertyPath: nextTile
+      value: 103
       objectReference: {fileID: 0}
     - target: {fileID: 7642494324046925625, guid: a44ddd0e6c9f0724aa1984159a9c8504, type: 3}
       propertyPath: m_LocalScale.x

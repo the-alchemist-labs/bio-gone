@@ -15,7 +15,7 @@ MonoBehaviour:
   Id: 6
   Name: Stabby
   Price: 150
-  IsFree: 0
+  IsFree: 1
   ItemType: 0
   Description: A fokin knife
-  BattlePowerBonus: 3
+  BattlePowerBonus: 7

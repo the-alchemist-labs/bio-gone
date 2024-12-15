@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Heal2
   m_EditorClassIdentifier: 
   Id: 2
-  Name: Heal 2
-  Price: 400
+  Name: First Aid Kit
+  Price: 300
   IsFree: 0
   ItemType: 1
-  Description: Heals 2 live
+  Description: Git gud
   Effect:
     EffectId: 1
     Value: 2
