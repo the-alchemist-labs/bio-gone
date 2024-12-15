@@ -80,12 +80,13 @@ public class GameState
     {
         Player player = GetPlayer(playerId);
         player.UpdateExp(amount);
+        
         if (player.ShouldLevelUp() && !player.IsMaxLevel())
         {
             player.LevelUp();
-            OnLevelUp?.Invoke(-Consts.ExpToLevelUp);
+            if (player.Id == _playerId) OnLevelUp?.Invoke(-Consts.ExpToLevelUp);
         }
-        player.LevelUp();
+        
         OnStatsChanged?.Invoke(player.Id);
     }
     
