@@ -21,7 +21,7 @@ public partial class GameManager
         UpdateBattlePhaseCommand.OnBattlePhaseChanged += BattlePhaseChanged;
         GameState.OnGameOver += GameOver;
         GameState.OnLevelUp += RegisterPlayerLevelUp;
-        LevelUpCommand.OnLevelUp -= LevelUpPlayer;
+        LevelUpCommand.OnLevelUp += LevelUpPlayer;
         ModifyExpCommand.OnExpUpdated += ExpGained;
     }
 
