@@ -9,7 +9,7 @@ public class GameState
     public static event Action OnTurnChanged;
     public static event Action<int> OnStepsChanged;
     public static event Action<string> OnStatsChanged;
-    public static event Action<string> OnLevelUp;
+    public static event Action<int> OnLevelUp;
     public static event Action<string> OnPlayerItemsUpdated;
     public static event Action<Player> OnGameOver;
 
@@ -80,14 +80,13 @@ public class GameState
     {
         Player player = GetPlayer(playerId);
         player.UpdateExp(amount);
-        TryLevelUp(player);  
-    }
-
-    public void LevelUpPlayer(string playerId)
-    {
-        Player player = GetPlayer(playerId);
+        if (player.ShouldLevelUp() && !player.IsMaxLevel())
+        {
+            player.LevelUp();
+            OnLevelUp?.Invoke(-Consts.ExpToLevelUp);
+        }
         player.LevelUp();
-        TryLevelUp(player);
+        OnStatsChanged?.Invoke(player.Id);
     }
     
     public void UpdatePlayerLive(string playerId, int modifier)
@@ -130,11 +129,5 @@ public class GameState
     private TileId GetStartPosition(int index)
     {
         return new[] { TileId.A1, TileId.B1 }[index];
-    }
-
-    private void TryLevelUp(Player player)
-    {
-        if (player.ShouldLevelUp() && !player.IsMaxLevel())  OnLevelUp?.Invoke(player.Id);
-        OnStatsChanged?.Invoke(player.Id);
     }
 }

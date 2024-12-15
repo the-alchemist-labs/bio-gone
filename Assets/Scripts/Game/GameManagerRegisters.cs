@@ -48,15 +48,6 @@ public partial class GameManager
             JsonConvert.SerializeObject(new ModifyExpCommanddPayload(_player.Id, amount))
         ));
     }
-    
-    public void RegisterPlayerLevelUp(string playerId)
-    {
-        Commander.PostCommand(new CommandEvent(
-            GameState.RoomId,
-            Command.LevelUp,
-            JsonConvert.SerializeObject(new LevelUpCommandPayload(playerId))
-        ));
-    }
 
     public void RegisterLivesUpdate(int amount)
     {

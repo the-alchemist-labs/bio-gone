@@ -15,8 +15,7 @@ public class Commander
         { Command.ToggleBattle, payload => new ToggleBattleCommand(payload) },
         { Command.UpdateBattlePhase, payload => new UpdateBattlePhaseCommand(payload) },
         { Command.ModifyPlayerLive, payload => new ModifyLiveCommand(payload)},
-        { Command.ModifyPlayerExp, payload => new ModifyExpCommand(payload)},
-        { Command.LevelUp, payload => new LevelUpCommand(payload)}
+        { Command.ModifyPlayerExp, payload => new ModifyExpCommand(payload)}
     };
     
     public Commander()
