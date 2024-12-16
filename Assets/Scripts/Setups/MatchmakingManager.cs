@@ -1,9 +1,9 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MatchmakingManager : MonoBehaviour
 {
+    [SerializeField] private MatchFoundPanel matchFoundPanel;
     void Start()
     {
         SocketIO.Instance.RegisterEvent<MatchFoundEvent>(SocketEvents.MatchFound, OnMatchFound);
@@ -13,6 +13,6 @@ public class MatchmakingManager : MonoBehaviour
     private void OnMatchFound(MatchFoundEvent matchFoundEvent)
     {
         MatchFoundResults.Instance = matchFoundEvent;
-        SceneManager.LoadScene(SceneNames.Game);
+        matchFoundPanel.Display(matchFoundEvent);
     }
 }

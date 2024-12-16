@@ -1,7 +1,7 @@
 
 import { Server } from 'socket.io';
 import { SocketEvent } from '../types/Sockets';
-import { searchMatch, postCommand } from '../flows/game-session';
+import { searchMatch, postCommand, removePlayerFromLobby } from '../flows/game-session';
 import { socketHandler } from '../utils/middlewares';
 
 
@@ -13,6 +13,6 @@ export function initializeSockets(io: Server) {
 
     socketHandler(socket, SocketEvent.SearchMatch, (message: string) => searchMatch(message, socket));
     socketHandler(socket, SocketEvent.PostCommand, (message: string) => postCommand(io, message));
-    socketHandler(socket, SocketEvent.Disconnect, async (_: string) => console.log("Socket disconnected - ", socket.id));
+    socketHandler(socket, SocketEvent.Disconnect, (_message: string) => removePlayerFromLobby(socket.id));
   });
 };

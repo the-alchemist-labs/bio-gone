@@ -34,7 +34,7 @@ public class SocketIO : MonoBehaviour
 
     private async Task Initialize()
     {
-        Uri uri = new Uri($"ws://{Consts.ServerURI}");
+        Uri uri = new Uri(Consts.ServerURI.Replace("http", "ws"));
         
         Socket = new SocketIOUnity(uri, new SocketIOOptions
         {

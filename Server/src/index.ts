@@ -7,6 +7,7 @@ import connectDB from './utils/mongodb';
 import { config } from './config';
 import { errorMiddleware } from './utils/middlewares';
 import { players } from './routes/players';
+import { lobby } from './routes/lobby';
 
 const app = express();
 
@@ -16,6 +17,7 @@ export const io = new Server(server);
 app.use(bodyParser.json());
 
 app.use('/players', players);
+app.use('/lobby', lobby);
 
 app.use(errorMiddleware);
 

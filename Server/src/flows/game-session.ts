@@ -21,6 +21,14 @@ export async function postCommand(io: Server, commandMessageString: string) {
 
 }
 
+export async function removePlayerFromLobby(identifier: string) {
+    const index = lobby.findIndex(record => record.PlayerId === identifier || record.socket.id === identifier);
+    if (index !== -1) {
+        lobby.splice(index, 1);
+        console.log(`Removed ${identifier} from the lobby`);
+    }
+}
+
 async function OpenRoom(records: LobbyRecord[]) {
     const playerIds = records.map(s => s.PlayerId);
     const roomId = playerIds.join('-');

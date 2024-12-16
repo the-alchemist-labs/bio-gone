@@ -19,7 +19,7 @@ public static class Http
 {
     public static async Task<T> Get<T>(string url)
     {
-        using (UnityWebRequest request = UnityWebRequest.Get($"http://{url}"))
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             await request.SendWebRequest();
 
@@ -40,13 +40,31 @@ public static class Http
         postData ??= new { };
         
         string jsonData = JsonConvert.SerializeObject(postData);
-        using (UnityWebRequest request = new UnityWebRequest($"http://{url}", UnityWebRequest.kHttpVerbPOST))
+        using (UnityWebRequest request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST))
         {
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
 
+            await request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                return JsonUtility.FromJson<T>(request.downloadHandler.text);
+            }
+            else
+            {
+                Debug.LogError("Error: " + request.error);
+                return default;
+            }
+        }
+    }
+    
+    public static async Task<T> Delete<T>(string url)
+    {
+        using (UnityWebRequest request = UnityWebRequest.Delete(url))
+        {
             await request.SendWebRequest();
 
             if (request.result == UnityWebRequest.Result.Success)
