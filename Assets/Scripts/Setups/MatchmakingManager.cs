@@ -7,6 +7,10 @@ public class MatchmakingManager : MonoBehaviour
     void Start()
     {
         SocketIO.Instance.RegisterEvent<MatchFoundEvent>(SocketEvents.MatchFound, OnMatchFound);
+        if (!SocketIO.Instance.Socket.Connected)
+        {
+            Debug.Log("Socket disconnected.");
+        }
         SocketIO.Instance.EmitEvent(SocketEvents.SearchMatch, new SearchMatchEvent(PlayerProfile.Instance.Id));
     }
 

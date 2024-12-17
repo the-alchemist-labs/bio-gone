@@ -28,6 +28,7 @@ public class MatchFoundEvent
     public int FirstTurnPlayer { get; set; }
 }
 
+[Serializable]
 public class MatchFoundResults
 {
     public static MatchFoundEvent Instance;

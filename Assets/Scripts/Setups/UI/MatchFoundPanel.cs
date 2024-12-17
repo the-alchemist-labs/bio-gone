@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class MatchFoundPanel : MonoBehaviour
 {
-    public static event Action OnMatchmakingStart;
-
     [SerializeField] private int countDownSeconds;
     [SerializeField] private Image playerImage;
     [SerializeField] private TMP_Text playerName;

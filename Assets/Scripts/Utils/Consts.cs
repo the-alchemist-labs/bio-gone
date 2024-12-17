@@ -25,7 +25,6 @@ public static class SocketEvents
 
 public static class SceneNames
 {
-    public const string Loading = "LoadingScene";
     public const string MainMenu = "MainMenuScene";
     public const string Matchmaking = "MatchmakingScene";
     public const string Game = "GameScene";

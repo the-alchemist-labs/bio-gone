@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -34,22 +33,36 @@ public class SocketIO : MonoBehaviour
 
     private async Task Initialize()
     {
+        // Force TLS 1.2 for secure connections
+        System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+
         Uri uri = new Uri(Consts.ServerURI.Replace("http", "ws"));
-        
+
         Socket = new SocketIOUnity(uri, new SocketIOOptions
         {
-            Transport = SocketIOClient.Transport.TransportProtocol.WebSocket
+            Transport = SocketIOClient.Transport.TransportProtocol.WebSocket,
+            Reconnection = true, // Enable reconnection in case of issues
+            ReconnectionAttempts = 5,
+            EIO = 4 // Use Engine.IO v4 for better performance
         });
 
         Socket.OnReconnectError += OnReconnectError;
 
-        await Socket.ConnectAsync();
-        SocketConnected();
+        try
+        {
+            Debug.Log("Connecting to socket...");
+            await Task.Run(async () => await Socket.ConnectAsync());
+            SocketConnected();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Socket connection failed: {ex.Message}");
+        }
     }
 
     private void OnReconnectError(object sender, Exception e)
     {
-        Debug.LogError("Socket failed to connect");
+        Debug.LogError($"Socket failed to reconnect: {e.Message}");
     }
 
     private static void SocketConnected()
@@ -57,14 +70,13 @@ public class SocketIO : MonoBehaviour
         Debug.Log("Socket connected");
         OnSocketConnected?.Invoke(GamePrerequisite.Socket);
     }
-    
+
     private void Disconnect()
     {
         Socket.Disconnect();
         Socket.Dispose();
     }
 
-    // TODO: Maybe unite to 1 function with handler = null, Action noParamHandler = null
     public void RegisterEvent<T>(string eventName, Action<T> handler)
     {
         Socket.On(eventName, response =>
@@ -83,16 +95,22 @@ public class SocketIO : MonoBehaviour
 
     public void RegisterEvent(string eventName, Action handler)
     {
-        Socket.On(eventName, response => MainThreadDispatcher.Enqueue(handler));
         Socket.On(eventName, response =>
         {
             MainThreadDispatcher.Enqueue(() => handler());
         });
     }
-    
-    public void EmitEvent<T>(string eventName, T data)
+
+    public async void EmitEvent<T>(string eventName, T data)
     {
         string jsonData = JsonConvert.SerializeObject(data);
-        Socket.EmitAsync(eventName, jsonData);
+        try
+        {
+            await Task.Run(async () => await Socket.EmitStringAsJSONAsync(eventName, jsonData));
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to send event {eventName}: {ex.Message} {ex.Data} {ex.StackTrace} { ex }");
+        }
     }
 }

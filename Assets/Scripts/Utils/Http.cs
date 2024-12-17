@@ -65,11 +65,20 @@ public static class Http
     {
         using (UnityWebRequest request = UnityWebRequest.Delete(url))
         {
+            request.downloadHandler = new DownloadHandlerBuffer();
             await request.SendWebRequest();
 
             if (request.result == UnityWebRequest.Result.Success)
             {
-                return JsonUtility.FromJson<T>(request.downloadHandler.text);
+                if (!string.IsNullOrEmpty(request.downloadHandler.text))
+                {
+                    return JsonUtility.FromJson<T>(request.downloadHandler.text);
+                }
+                else
+                {
+                    Debug.LogWarning("No response content received.");
+                    return default;
+                }
             }
             else
             {
