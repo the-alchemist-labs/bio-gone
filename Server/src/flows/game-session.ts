@@ -12,6 +12,7 @@ export async function searchMatch(data: string, socket: Socket) {
         OpenRoom([lobby.shift()!, { socket, PlayerId }]);
     } else {
         lobby.push({ PlayerId, socket });
+        console.log(`Joined lobby - ${PlayerId}`);
     }
 }
 
