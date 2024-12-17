@@ -18,8 +18,8 @@ export function errorMiddleware(error: any, _req: Request, res: Response, _next:
     });
 };
 
-export function socketHandler(socket: Socket, event: SocketEvent, handler: (message: string) => Promise<void>) {
-    socket.on(event, (message: string) => {
+export function socketHandler<T>(socket: Socket, event: SocketEvent, handler: (message: T) => Promise<void>) {
+    socket.on(event, (message: T) => {
         handler(message).catch((err) => {
             socket.emit(SocketEvent.Error, { message: err.message });
             console.error(`Error in handler for ${event}:`, err.message);

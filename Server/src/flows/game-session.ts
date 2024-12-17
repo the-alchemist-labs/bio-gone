@@ -1,13 +1,11 @@
 import { Server, Socket } from "socket.io";
 import { CommandMessageData, SearchMatchData, SocketEvent } from "../types/Sockets";
-import { ParseSocketMessage } from "../utils/Parser";
 import * as playersFlow from "../flows/players";
 
 type LobbyRecord = { PlayerId: string, socket: Socket };
 const lobby: LobbyRecord[] = [];
 
-export async function searchMatch(data: string, socket: Socket) {
-    const { PlayerId } = ParseSocketMessage<SearchMatchData>(data, SearchMatchData);
+export async function searchMatch({ PlayerId }: SearchMatchData, socket: Socket) {
     if (lobby.length > 0) {
         OpenRoom([lobby.shift()!, { socket, PlayerId }]);
     } else {
@@ -16,10 +14,8 @@ export async function searchMatch(data: string, socket: Socket) {
     }
 }
 
-export async function postCommand(io: Server, commandMessageString: string) {
-    const commandMessage = ParseSocketMessage<CommandMessageData>(commandMessageString, CommandMessageData);
+export async function postCommand(io: Server, commandMessage: CommandMessageData) {
     io.to(commandMessage.RoomId).emit(SocketEvent.CommandReceived, commandMessage);
-
 }
 
 export async function removePlayerFromLobby(identifier: string) {

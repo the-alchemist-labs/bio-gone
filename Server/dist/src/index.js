@@ -25,14 +25,7 @@ const players_1 = require("./routes/players");
 const lobby_1 = require("./routes/lobby");
 const app = (0, express_1.default)();
 const server = http_1.default.createServer(app);
-exports.io = new socket_io_1.Server(server, {
-    cors: {
-        origin: '*', // Allow all origins
-        methods: ['GET', 'POST'],
-        allowedHeaders: ['Content-Type', 'Authorization'],
-        credentials: true,
-    },
-});
+exports.io = new socket_io_1.Server(server);
 app.use(body_parser_1.default.json());
 app.use('/players', players_1.players);
 app.use('/lobby', lobby_1.lobby);

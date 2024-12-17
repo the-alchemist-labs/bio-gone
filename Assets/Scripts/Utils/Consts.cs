@@ -1,6 +1,7 @@
 public static class Consts
 {
     public const string ServerURI = "http://192.168.1.223:3000";
+    // public const string ServerURI = "https://munch-party.onrender.com";
     public const int DefaultLives = 5;
     public const int MaxRollValue = 6;
     public const int MinRollValue = 1;

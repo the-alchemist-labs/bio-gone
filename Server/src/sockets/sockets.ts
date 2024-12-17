@@ -1,6 +1,6 @@
 
 import { Server } from 'socket.io';
-import { SocketEvent } from '../types/Sockets';
+import { CommandMessageData, SearchMatchData, SocketEvent } from '../types/Sockets';
 import { searchMatch, postCommand, removePlayerFromLobby } from '../flows/game-session';
 import { socketHandler } from '../utils/middlewares';
 
@@ -11,8 +11,8 @@ export function initializeSockets(io: Server) {
 
     // Add schema validations
 
-    socketHandler(socket, SocketEvent.SearchMatch, (message: string) => searchMatch(message, socket));
-    socketHandler(socket, SocketEvent.PostCommand, (message: string) => postCommand(io, message));
+    socketHandler<SearchMatchData>(socket, SocketEvent.SearchMatch, (message: SearchMatchData) => searchMatch(message, socket));
+    socketHandler<CommandMessageData>(socket, SocketEvent.PostCommand, (message: CommandMessageData) => postCommand(io, message));
     socketHandler(socket, SocketEvent.Disconnect, (_message: string) => removePlayerFromLobby(socket.id));
   });
 };

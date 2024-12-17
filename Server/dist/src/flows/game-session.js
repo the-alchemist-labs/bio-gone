@@ -36,12 +36,10 @@ exports.searchMatch = searchMatch;
 exports.postCommand = postCommand;
 exports.removePlayerFromLobby = removePlayerFromLobby;
 const Sockets_1 = require("../types/Sockets");
-const Parser_1 = require("../utils/Parser");
 const playersFlow = __importStar(require("../flows/players"));
 const lobby = [];
-function searchMatch(data, socket) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const { PlayerId } = (0, Parser_1.ParseSocketMessage)(data, Sockets_1.SearchMatchData);
+function searchMatch(_a, socket_1) {
+    return __awaiter(this, arguments, void 0, function* ({ PlayerId }, socket) {
         if (lobby.length > 0) {
             OpenRoom([lobby.shift(), { socket, PlayerId }]);
         }
@@ -51,9 +49,8 @@ function searchMatch(data, socket) {
         }
     });
 }
-function postCommand(io, commandMessageString) {
+function postCommand(io, commandMessage) {
     return __awaiter(this, void 0, void 0, function* () {
-        const commandMessage = (0, Parser_1.ParseSocketMessage)(commandMessageString, Sockets_1.CommandMessageData);
         io.to(commandMessage.RoomId).emit(Sockets_1.SocketEvent.CommandReceived, commandMessage);
     });
 }
