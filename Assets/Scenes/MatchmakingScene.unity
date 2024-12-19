@@ -421,6 +421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matchFoundPanel: {fileID: 1132663793}
+  countDownSeconds: 1
 --- !u!4 &413845310
 Transform:
   m_ObjectHideFlags: 0
@@ -1435,7 +1436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fe2c969a084b24c8a8822106d8097d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countDownSeconds: 3
   playerImage: {fileID: 1264161605}
   playerName: {fileID: 1005445522}
   opponentImage: {fileID: 888662073}

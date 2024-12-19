@@ -59,7 +59,7 @@ public class BoardManager : MonoBehaviour
     public Vector3 GetTilePosition(TileId tileId)
     {
         return TilesMap.TryGetValue(tileId, out var tile)
-            ? tile.transform.position
+            ? tile.transform.position + new Vector3(0, Consts.TileYPositionCorrection, 0)
             : throw new KeyNotFoundException($"TileId {tileId} does not exist in the map.");
     }
 

@@ -6,6 +6,7 @@ public enum PlayerProfilePicture
 {
     Bob,
     Dana,
+    Bill,
 }
 
 public class Player

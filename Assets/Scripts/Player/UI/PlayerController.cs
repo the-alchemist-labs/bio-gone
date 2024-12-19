@@ -4,7 +4,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private float movementSpeed = 5;
+    [SerializeField] private float movementSpeed;
+    [SerializeField] private Animator animator;
     
     private string _playerId;
     private Coroutine _moveCoroutine;
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
     private void UpdatePlayerPosition(string playerId, TileId newPosition)
     {
         if (playerId != _playerId) return;
+        animator.SetBool("IsMoving", true);
 
         Vector3 position = BoardManager.Instance.GetTilePosition(newPosition);
         
@@ -39,10 +41,11 @@ public class PlayerController : MonoBehaviour
     {
         while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
         {
-            transform.position = Vector3.Lerp(transform.position, targetPosition, movementSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
             yield return null;
         }
 
+        animator.SetBool("IsMoving", false);
         transform.position = targetPosition;
         GameManager.Instance.LandOnTile();
     }

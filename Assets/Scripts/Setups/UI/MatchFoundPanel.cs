@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class MatchFoundPanel : MonoBehaviour
 {
-    [SerializeField] private int countDownSeconds;
     [SerializeField] private Image playerImage;
     [SerializeField] private TMP_Text playerName;
     [SerializeField] private Image opponentImage;
@@ -16,7 +15,7 @@ public class MatchFoundPanel : MonoBehaviour
     private int _countDown;
     private float _timer; // Tracks time for 1-second intervals
 
-    public void Display(MatchFoundEvent matchFoundEvent)
+    public void Display(MatchFoundEvent matchFoundEvent, int countDownSeconds)
     {
         gameObject.SetActive(true);
         

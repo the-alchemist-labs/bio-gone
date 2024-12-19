@@ -4,6 +4,7 @@ using UnityEngine;
 public class MatchmakingManager : MonoBehaviour
 {
     [SerializeField] private MatchFoundPanel matchFoundPanel;
+    [SerializeField] private int countDownSeconds;
     void Start()
     {
         SocketIO.Instance.RegisterEvent<MatchFoundEvent>(SocketEvents.MatchFound, OnMatchFound);
@@ -17,6 +18,6 @@ public class MatchmakingManager : MonoBehaviour
     private void OnMatchFound(MatchFoundEvent matchFoundEvent)
     {
         MatchFoundResults.Instance = matchFoundEvent;
-        matchFoundPanel.Display(matchFoundEvent);
+        matchFoundPanel.Display(matchFoundEvent, countDownSeconds);
     }
 }
