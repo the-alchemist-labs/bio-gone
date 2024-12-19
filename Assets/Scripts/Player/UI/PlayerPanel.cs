@@ -6,101 +6,55 @@ using UnityEngine.UI;
 
 public class PlayerPanel : MonoBehaviour
 {
+    [SerializeField] private bool isPlayer;
     [SerializeField] private Image playerImage;
     [SerializeField] private TMP_Text playerNameText;
     [SerializeField] private TMP_Text coinsText;
-    [SerializeField] private TMP_Text livesText;
     [SerializeField] private TMP_Text battlePowerText;
     [SerializeField] private TMP_Text levelText;
     [SerializeField] private Slider expSlider;
-    [SerializeField] private Button rollButton;
-    [SerializeField] private Button bagButton;
-    [SerializeField] private TMP_Text bagText;
-    [SerializeField] private Transform equippedItemsContainer;
-    [SerializeField] private GameObject equippedItemPrefab;
+    [SerializeField] private LivesContainer livesContainer;
+    [SerializeField] private GameObject turnIndicator;
     
     private Player _player;
     
     void OnEnable()
     {
-        
         GameManager.OnGameStateSet += InitializePanel;
-        GameState.OnTurnChanged += UpdateRollButton;
         GameState.OnStatsChanged += UpdateStats;
-        GameState.OnPlayerItemsUpdated += UpdateItemsView;
+        GameState.OnTurnChanged += UpdateTurnIndicator;
     }
 
     void OnDisable()
     {
         GameManager.OnGameStateSet -= InitializePanel;
-        GameState.OnTurnChanged -= UpdateRollButton;
         GameState.OnStatsChanged -= UpdateStats;
-        GameState.OnPlayerItemsUpdated -= UpdateItemsView;
+        GameState.OnTurnChanged -= UpdateTurnIndicator;
     }
 
     private void InitializePanel()
     {
-        _player = GameManager.Instance.GameState.GetPlayer(PlayerProfile.Instance.Id);
+        _player = isPlayer ? GameManager.Instance.GameState.GetPlayer() : GameManager.Instance.GameState.GetOpponent();
         playerImage.sprite = Resources.Load<Sprite>($"Sprites/ProfilePics/{_player.ProfilePicture}");
         playerNameText.text = _player.Name;
-        UpdateItemsView(_player.Id);
         UpdateStats(_player.Id);
-    }
-    
-    private void UpdateRollButton()
-    {
-        rollButton.interactable = GameManager.Instance.GameState.IsYourTurn();
     }
 
     private void UpdateStats(string playerId)
     {
         if (playerId == _player.Id)
         {
-            coinsText.text = $"Coins: {_player.Coins}";
-            livesText.text = $"Lives: {_player.Lives}";
-            battlePowerText.text = $"BP: {_player.BattlePower}";
+            livesContainer.UpdateLives(_player.Lives);
+            coinsText.text = $"{_player.Coins}";
+            battlePowerText.text = $"{_player.BattlePower}";
             levelText.text = $"{_player.Level}";
             expSlider.value = (float) _player.Experience / Consts.ExpToLevelUp;
         }
     }
 
-    private void UpdateItemsView(string playerId)
+    private void UpdateTurnIndicator()
     {
-        if (playerId == _player.Id)
-        {
-            int bagItemsCount = _player.GetBagItems().Count;
-            bagButton.interactable = bagItemsCount > 0;
-            bagText.text = bagItemsCount > 0 ? $"Bag [{bagItemsCount}]" : "Bag";
-            UpdateEquippedItems();
-        }
+        turnIndicator.SetActive(GameManager.Instance.GameState.IsYourTurn(_player.Id));
     }
-    
-    private void UpdateEquippedItems()
-    {
-        equippedItemsContainer.Cast<Transform>().ToList().ForEach(child => Destroy(child.gameObject));
-        
-        List<EquipItem> equippedItems = GameManager.Instance.GameState.GetPlayer().GetEquippedItems();
-        
-        foreach (EquipItem item in equippedItems)
-        {
-            GameObject newEquippedItem = Instantiate(equippedItemPrefab, equippedItemsContainer);
-            if (newEquippedItem.TryGetComponent(out EquippedItem equippedItem))
-            {
-               equippedItem.InitializeEquippedItem(item);
-            }
-        }
-    }
-    
-    public void OnRollClicked()
-    {
-        rollButton.interactable = false;
-        GameManager.Instance.RegisterRollDice();
-    }
-    
-    public void OnBagClicked()
-    {
-        PopupManager.Instance.bagPopup.Display(BagState.Idle);
-    }
-    
 }
 
