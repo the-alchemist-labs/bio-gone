@@ -30,7 +30,7 @@ public class DicePopup : MonoBehaviour
         diceImage.sprite = diceSprites[diceValue - 1];
         diceText.text = $"{diceValue} steps";
 
-        Invoke("Go", 2f);
+        Invoke("Go", 1f);
     }
     
     public void Go()
