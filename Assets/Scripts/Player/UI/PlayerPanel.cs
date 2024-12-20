@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +16,8 @@ public class PlayerPanel : MonoBehaviour
     [SerializeField] private Slider expSlider;
     [SerializeField] private LivesContainer livesContainer;
     [SerializeField] private GameObject turnIndicator;
+    [SerializeField] [CanBeNull] private Button rollButton;
+    [SerializeField] [CanBeNull] private GameObject rollButtonMask;
     
     private Player _player;
     
@@ -54,7 +57,18 @@ public class PlayerPanel : MonoBehaviour
 
     private void UpdateTurnIndicator()
     {
-        turnIndicator.SetActive(GameManager.Instance.GameState.IsYourTurn(_player.Id));
+        bool yourTurn = GameManager.Instance.GameState.IsYourTurn(_player.Id);
+        turnIndicator.SetActive(yourTurn);
+        if (rollButtonMask != null) rollButtonMask.gameObject.SetActive(!yourTurn);
+        if (rollButton != null) rollButton.interactable = yourTurn;
+    }
+
+    public void OnRollClicked()
+    {
+        int rollValue = Random.Range(Consts.MinRollValue, Consts.MaxRollValue);
+        GameManager.Instance.RegisterRollDice(rollValue);
+        if (rollButtonMask != null) rollButtonMask.gameObject.SetActive(true);
+        if (rollButton != null) rollButton.interactable = false;
     }
 }
 

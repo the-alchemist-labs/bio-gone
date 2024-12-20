@@ -33,7 +33,6 @@ public partial class GameManager : MonoBehaviour
         OnGameStateSet?.Invoke();
         
         GameState.UpdatePlayerTurn(GameState.PlayerIndexTurn);
-        RegisterRollDice();
     }
 
     void OnEnable()

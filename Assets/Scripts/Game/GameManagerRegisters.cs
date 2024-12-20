@@ -4,9 +4,8 @@ using Newtonsoft.Json;
 
 public partial class GameManager
 {
-    public void RegisterRollDice()
+    public void RegisterRollDice(int rollValue)
     {
-        int rollValue = UnityEngine.Random.Range(Consts.MinRollValue, Consts.MaxRollValue);
         Commander.PostCommand(new CommandEvent(
             GameState.RoomId,
             Command.RollDice,
@@ -60,10 +59,11 @@ public partial class GameManager
     
     public void RegisterEndTurn()
     {
+        int playerIndex = GameState.GetNextPlayerTurnIndex();
         Commander.PostCommand(new CommandEvent(
             GameState.RoomId,
             Command.NewTurn,
-            JsonConvert.SerializeObject(new NewTurnCommandPayload(GameState.GetNextPlayerTurnIndex()))
+            JsonConvert.SerializeObject(new NewTurnCommandPayload(playerIndex))
         ));
     }
 

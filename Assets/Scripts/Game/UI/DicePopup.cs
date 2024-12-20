@@ -6,35 +6,40 @@ public class DicePopup : MonoBehaviour
 {
     [SerializeField] private Image diceImage;
     [SerializeField] private TMP_Text diceText;
-    [SerializeField] private Button goButton;
 
-    private bool _isYourTurn;
     public void Display(int diceValue)
     {
         gameObject.SetActive(true);
-        
-        _isYourTurn = GameManager.Instance.GameState.IsYourTurn();
-        // TODO: play dice animation
-        // land on dice value
-        diceText.text = $"{diceValue} steps";
-        
-        goButton.gameObject.SetActive(_isYourTurn);
-        
-        if (!_isYourTurn)
-        {
-            Invoke("HidePopup", 3f);
-        }
-    }
 
+        diceText.text = "";
+        
+        StartCoroutine(RandomizeDice(diceValue));
+    }
+    
+    private System.Collections.IEnumerator RandomizeDice(int diceValue)
+    {
+        Sprite[] diceSprites = Resources.LoadAll<Sprite>("Sprites/Game/Dice");
+
+        for(int i = 0; i <= 8; i++)
+        {
+            diceImage.sprite = diceSprites[Random.Range(0, diceSprites.Length)];
+            yield return new WaitForSeconds(0.1f);
+        }
+        
+
+        diceImage.sprite = diceSprites[diceValue - 1];
+        diceText.text = $"{diceValue} steps";
+
+        Invoke("Go", 2f);
+    }
+    
     public void Go()
     {
-        GameManager.Instance.TakeStep();
-        HidePopup();
-    }
-
-    private void HidePopup()
-    {
         gameObject.SetActive(false);
-
+        
+        if (GameManager.Instance.GameState.IsYourTurn())
+        {
+            GameManager.Instance.TakeStep();
+        }
     }
 }
