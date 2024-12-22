@@ -8,10 +8,10 @@ public static class Consts
     public const int LevelPowerModifier = 10;
     public const int MonsterLevelDiff = 2;
     public const int MaxLevel = 10;
-    public const int ExpToLevelUp = 200;
+    public const int ExpToLevelUp = 250;
     public const int TileCoinGain = 100;
     public const int TileExpGain = 150;
-    public const int TileLandExpGain = 70;
+    public const int TileLandExpGain = 50;
     public const float TileYPositionCorrection = -0.04f;
 }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using UnityEngine;
 
 public partial class GameManager
 {
@@ -63,9 +64,18 @@ public partial class GameManager
     
     private void CoinsGained(string playerId, int modifier)
     {
+        RewardDestination dest = playerId == _player.Id ? RewardDestination.Player : RewardDestination.Opponent;
+        if (modifier > 0) DisplayRewards(RewardType.Coin, dest, modifier);
         GameState.ModifyPlayerCoins(playerId, modifier);
     }
 
+    private void ExpUpdated(string playerId, int amount)
+    {
+        RewardDestination dest = playerId == _player.Id ? RewardDestination.Player : RewardDestination.Opponent;
+        DisplayRewards(RewardType.Exp, dest, amount);
+        Instance.GameState.AddExpToPlayer(playerId, amount);
+    }
+    
     private void LivesUpdated(string playerId, int modifier)
     {
         GameState.UpdatePlayerLive(playerId, modifier);
@@ -112,10 +122,5 @@ public partial class GameManager
     private void GameOver(Player player)
     {
         PopupManager.Instance.gameOverPopup.Display(player);
-    }
-
-    private void ExpUpdated(string playerId, int amount)
-    {
-        Instance.GameState.AddExpToPlayer(playerId, amount);
     }
 }

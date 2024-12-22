@@ -1,6 +1,4 @@
-using JetBrains.Annotations;
 using Newtonsoft.Json;
-
 
 public partial class GameManager
 {
@@ -39,12 +37,12 @@ public partial class GameManager
         ));
     }
     
-    public void RegisterExpUpdate(int amount)
+    public void RegisterExpUpdate(int amount, string playerId = null)
     {
         Commander.PostCommand(new CommandEvent(
             GameState.RoomId,
             Command.ModifyPlayerExp,
-            JsonConvert.SerializeObject(new ModifyExpCommanddPayload(_player.Id, amount))
+            JsonConvert.SerializeObject(new ModifyExpCommanddPayload(playerId ?? _player.Id, amount))
         ));
     }
 
