@@ -61,7 +61,6 @@ public class BoardManager : MonoBehaviour
     public void InteractWithTile(TileType tileType)
     {
         TileService.Interact(tileType);
-        GameManager.Instance.RegisterExpUpdate(Consts.TileLandExpGain);
     }
     
     private void InstantiateBoard()

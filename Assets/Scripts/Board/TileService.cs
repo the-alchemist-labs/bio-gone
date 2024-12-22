@@ -28,7 +28,6 @@ public class TileService
     private void HandleCoinTile()
     {
         GameManager.Instance.RegisterCoinsUpdate(Consts.TileCoinGain);
-        GameManager.Instance.RegisterEndTurn();
     }
     
     private void HandleShopTile()
@@ -46,6 +45,5 @@ public class TileService
     private void HandleExpTile()
     {
         GameManager.Instance.RegisterExpUpdate(Consts.TileExpGain);
-        GameManager.Instance.RegisterEndTurn();
     }
 }

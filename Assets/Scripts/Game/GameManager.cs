@@ -52,6 +52,7 @@ public partial class GameManager : MonoBehaviour
     {
         if (GameState.IsYourTurn() && IsLastStep())
         {
+            //RegisterExpUpdate(Consts.TileLandExpGain);
             RegisterEndTurn();
             return;
         }
@@ -81,7 +82,6 @@ public partial class GameManager : MonoBehaviour
         if (IsLastStep())
         {
             BoardManager.Instance.InteractWithTile(tileType);
-            return;
         }
 
         if (BoardManager.IntractableOnPassTileTypes.Contains(tileType))
