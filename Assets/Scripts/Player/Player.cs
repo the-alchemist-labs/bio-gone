@@ -17,9 +17,9 @@ public class Player
     public TileId Position { get; private set; }
     public int Lives { get; private set; }
     public int Coins { get; private set; }
-    public int Experience { get; private set; }
     public int Level { get; private set; }
     public int BattlePower => CalculatePower();
+    private int Experience { get; set; }
     private List<Item> Items { get; }
     
     public Player(string playerId, string name, PlayerProfilePicture profilePicture, TileId position)
@@ -46,7 +46,7 @@ public class Player
         Coins = Math.Max(Coins, 0);
     }
     
-    public void UpdateExp(int newValue)
+    public void AddExp(int newValue)
     {
         Experience += newValue;
      }
@@ -54,8 +54,12 @@ public class Player
     public void LevelUp()
     {
         if (IsMaxLevel()) return;
-        UpdateExp(-Consts.ExpToLevelUp); 
         Level++;
+    }
+
+    public int GetSliderExperience()
+    {
+        return Experience % Consts.ExpToLevelUp;
     }
     
     public int ModifyLives(int modifier)
@@ -96,7 +100,7 @@ public class Player
 
     public bool ShouldLevelUp()
     {
-        return Experience >= Consts.ExpToLevelUp;
+        return Experience >= Consts.ExpToLevelUp * Level + 1;
     }
 
     

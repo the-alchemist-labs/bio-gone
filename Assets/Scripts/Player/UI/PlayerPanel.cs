@@ -55,7 +55,7 @@ public class PlayerPanel : MonoBehaviour
             coinsText.text = $"{_player.Coins}";
             battlePowerText.text = $"{_player.BattlePower}";
             levelText.text = $"{_player.Level}";
-            StartCoroutine(GradualExpIncrease((float)_player.Experience / Consts.ExpToLevelUp));
+            StartCoroutine(GradualExpIncrease((float)_player.GetSliderExperience() / Consts.ExpToLevelUp));
         }
     }
 
@@ -69,18 +69,18 @@ public class PlayerPanel : MonoBehaviour
 
     public void OnRollClicked()
     {
-        int rollValue = Random.Range(Consts.MinRollValue, Consts.MaxRollValue);
+        int rollValue = 3; // Random.Range(Consts.MinRollValue, Consts.MaxRollValue);
         GameManager.Instance.RegisterRollDice(rollValue);
         if (rollButtonMask != null) rollButtonMask.gameObject.SetActive(true);
         if (rollButton != null) rollButton.interactable = false;
     }
 
-    private void OnLevelUp(int _, string playerId)
+    private void OnLevelUp(string playerId)
     {
         if (playerId == _player.Id)
         {
             levelUpAnimation.SetTrigger("LevelUpTrigger");
-            expSlider.value = (float)_player.Experience / Consts.ExpToLevelUp;
+            expSlider.value = (float)_player.GetSliderExperience() / Consts.ExpToLevelUp;
         }
     }
     
@@ -88,7 +88,7 @@ public class PlayerPanel : MonoBehaviour
     {
         while (expSlider.value < targetValue)
         {
-            expSlider.value += Time.deltaTime * 0.5f;
+            expSlider.value += Time.deltaTime * 0.3f;
             yield return null;
         }
     

@@ -78,7 +78,7 @@ public partial class GameManager : MonoBehaviour
 
         TileId position = GameState.GetPlayer(_player.Id).Position;
         TileType tileType = BoardManager.Instance.GetTile(position).tileType;
-
+        
         if (IsLastStep())
         {
             BoardManager.Instance.InteractWithTile(tileType);

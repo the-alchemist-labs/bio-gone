@@ -22,8 +22,6 @@ public partial class GameManager
         UpdateBattlePhaseCommand.OnBattlePhaseChanged += BattlePhaseChanged;
         GameState.OnGameOver += GameOver;
         ModifyExpCommand.OnExpUpdated += ExpUpdated;
-        GameState.OnLevelUp += RegisterExpUpdate;
-
     }
 
     private void UnsetUpEventListeners()
@@ -38,7 +36,6 @@ public partial class GameManager
         ToggleBattleCommand.OnBattleToggled -= ToggleBattle;
         UpdateBattlePhaseCommand.OnBattlePhaseChanged -= BattlePhaseChanged;
         GameState.OnGameOver -= GameOver;
-        GameState.OnLevelUp -= RegisterExpUpdate;
         ModifyExpCommand.OnExpUpdated -= ExpUpdated;
     }
 

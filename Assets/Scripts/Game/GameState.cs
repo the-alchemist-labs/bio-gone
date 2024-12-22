@@ -7,16 +7,16 @@ public class GameState
 {
     public static event Action<string, TileId> OnPlayerMove;
     public static event Action OnTurnChanged;
-    public static event Action<int> OnStepsChanged;
+    public static event Action<int?> OnStepsChanged;
     public static event Action<string> OnStatsChanged;
-    public static event Action<int, string> OnLevelUp;
+    public static event Action<string> OnLevelUp;
     public static event Action<Player> OnGameOver;
 
     public string RoomId { get; }
     public List<Player> Players { get; }
     public int PlayerIndexTurn { get; private set; }
 
-    public int Steps { get; private set; }
+    public int? Steps { get; private set; }
 
     private string _playerId;
 
@@ -60,6 +60,7 @@ public class GameState
     public void UpdatePlayerTurn(int index)
     {
         PlayerIndexTurn = index;
+        SetSteps(null);
         OnTurnChanged?.Invoke();
     }
 
@@ -78,12 +79,12 @@ public class GameState
     public void AddExpToPlayer(string playerId, int amount)
     {
         Player player = GetPlayer(playerId);
-        player.UpdateExp(amount);
+        player.AddExp(amount);
         
         if (player.ShouldLevelUp() && !player.IsMaxLevel())
         {
             player.LevelUp();
-            if (player.Id == _playerId) OnLevelUp?.Invoke(-Consts.ExpToLevelUp, playerId);
+            if (player.Id == _playerId) OnLevelUp?.Invoke(playerId);
         }
         
         OnStatsChanged?.Invoke(player.Id);
@@ -98,7 +99,7 @@ public class GameState
         if (lives == 0) PlayerDied();
     }
 
-    public void SetSteps(int steps)
+    public void SetSteps(int? steps)
     {
         Steps = steps;
         OnStepsChanged?.Invoke(Steps);

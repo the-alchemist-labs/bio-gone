@@ -37,12 +37,12 @@ public partial class GameManager
         ));
     }
     
-    public void RegisterExpUpdate(int amount, string playerId = null)
+    public void RegisterExpUpdate(int amount)
     {
         Commander.PostCommand(new CommandEvent(
             GameState.RoomId,
             Command.ModifyPlayerExp,
-            JsonConvert.SerializeObject(new ModifyExpCommanddPayload(playerId ?? _player.Id, amount))
+            JsonConvert.SerializeObject(new ModifyExpCommanddPayload(_player.Id, amount))
         ));
     }
 

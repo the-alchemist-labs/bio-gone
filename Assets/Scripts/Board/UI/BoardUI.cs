@@ -4,7 +4,7 @@ using UnityEngine;
 public class BoardUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text playerNameText;
-    
+
     void OnEnable()
     {
         GameState.OnStepsChanged += UpdateStepsText;
@@ -15,8 +15,8 @@ public class BoardUI : MonoBehaviour
         GameState.OnStepsChanged -= UpdateStepsText;
     }
 
-    void UpdateStepsText(int steps)
+    void UpdateStepsText(int? steps)
     {
-        playerNameText.text = $"Steps: {steps}";
+        playerNameText.text = steps.HasValue ? $"Steps: {steps}" : "";
     }
 }
