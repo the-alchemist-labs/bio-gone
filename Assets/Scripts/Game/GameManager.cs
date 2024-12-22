@@ -50,13 +50,14 @@ public partial class GameManager : MonoBehaviour
 
     public void TakeStep()
     {
+        if (GameState.Steps == null) return;
+
         if (GameState.IsYourTurn() && IsLastStep())
         {
-            //RegisterExpUpdate(Consts.TileLandExpGain);
             RegisterEndTurn();
             return;
         }
-
+        
         TileId currentPosition = GameState.GetPlayer(_player.Id).Position;
         List<TileId> nextTiles = BoardManager.Instance.GetTile(currentPosition).GetNextTiles();
 
