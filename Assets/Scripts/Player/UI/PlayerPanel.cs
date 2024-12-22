@@ -28,7 +28,6 @@ public class PlayerPanel : MonoBehaviour
         GameManager.OnGameStateSet += InitializePanel;
         GameState.OnStatsChanged += UpdateStats;
         GameState.OnTurnChanged += UpdateTurnIndicator;
-        GameState.OnLevelUp += OnLevelUp;
     }
 
     void OnDisable()
@@ -36,7 +35,6 @@ public class PlayerPanel : MonoBehaviour
         GameManager.OnGameStateSet -= InitializePanel;
         GameState.OnStatsChanged -= UpdateStats;
         GameState.OnTurnChanged -= UpdateTurnIndicator;
-        GameState.OnLevelUp -= OnLevelUp;
     }
 
     private void InitializePanel()
@@ -51,11 +49,13 @@ public class PlayerPanel : MonoBehaviour
     {
         if (playerId == _player.Id)
         {
+
+            bool hasLevelUp = int.Parse(levelText.text) < _player.Level;
             livesContainer.UpdateLives(_player.Lives);
             coinsText.text = $"{_player.Coins}";
             battlePowerText.text = $"{_player.BattlePower}";
-            levelText.text = $"{_player.Level}";
-            StartCoroutine(GradualExpIncrease((float)_player.GetSliderExperience() / Consts.ExpToLevelUp));
+            float sliderValue = (float)_player.GetSliderExperience() / Consts.ExpToLevelUp;
+            StartCoroutine(GradualExpIncrease(sliderValue, hasLevelUp));
         }
     }
 
@@ -69,29 +69,32 @@ public class PlayerPanel : MonoBehaviour
 
     public void OnRollClicked()
     {
-        int rollValue = 3; // Random.Range(Consts.MinRollValue, Consts.MaxRollValue);
+        int rollValue = Random.Range(Consts.MinRollValue, Consts.MaxRollValue);
         GameManager.Instance.RegisterRollDice(rollValue);
         if (rollButtonMask != null) rollButtonMask.gameObject.SetActive(true);
         if (rollButton != null) rollButton.interactable = false;
     }
-
-    private void OnLevelUp(string playerId)
-    {
-        if (playerId == _player.Id)
-        {
-            levelUpAnimation.SetTrigger("LevelUpTrigger");
-            expSlider.value = (float)_player.GetSliderExperience() / Consts.ExpToLevelUp;
-        }
-    }
     
-    private IEnumerator GradualExpIncrease(float targetValue)
+    private IEnumerator GradualExpIncrease(float targetValue, bool hasLeveledUp)
     {
-        while (expSlider.value < targetValue)
+        bool shouldLevelUp = hasLeveledUp;
+        
+        yield return new WaitForSeconds(0.4f);
+
+        while (expSlider.value < targetValue || shouldLevelUp)
         {
-            expSlider.value += Time.deltaTime * 0.3f;
+            expSlider.value += Time.deltaTime;
+            if (expSlider.value >= expSlider.maxValue)
+            {
+                levelUpAnimation.SetTrigger("LevelUpTrigger");
+                levelText.text = $"{_player.Level}";
+                expSlider.value = 0;
+                shouldLevelUp = false;
+            }
+            
             yield return null;
         }
     
-        expSlider.value = targetValue;
+        //expSlider.value = targetValue;
     }
 }

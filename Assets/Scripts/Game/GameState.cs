@@ -9,7 +9,6 @@ public class GameState
     public static event Action OnTurnChanged;
     public static event Action<int?> OnStepsChanged;
     public static event Action<string> OnStatsChanged;
-    public static event Action<string> OnLevelUp;
     public static event Action<Player> OnGameOver;
 
     public string RoomId { get; }
@@ -84,7 +83,6 @@ public class GameState
         if (player.ShouldLevelUp() && !player.IsMaxLevel())
         {
             player.LevelUp();
-            if (player.Id == _playerId) OnLevelUp?.Invoke(playerId);
         }
         
         OnStatsChanged?.Invoke(player.Id);
