@@ -11,6 +11,7 @@ public class ShopService
         List<Item> equipItems = ItemCatalog.Instance.EquipmentItems;
         List<Item> freeItems = ItemCatalog.Instance.Items.Where(i => i.IsFree).ToList();
 
+        
         List<Item> shopItems = new List<Item>();
 
         foreach (List<Item> list in new[] { freeItems, consumableItem, equipItems })

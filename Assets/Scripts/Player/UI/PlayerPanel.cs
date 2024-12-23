@@ -53,7 +53,10 @@ public class PlayerPanel : MonoBehaviour
             bool hasLevelUp = int.Parse(levelText.text) < _player.Level;
             livesContainer.UpdateLives(_player.Lives);
             coinsText.text = $"{_player.Coins}";
+
+            if (_player.BattlePower > int.Parse(battlePowerText.text)) StartCoroutine(HighlightText(Color.red, 0.5F));
             battlePowerText.text = $"{_player.BattlePower}";
+
             float sliderValue = (float)_player.GetSliderExperience() / Consts.ExpToLevelUp;
             StartCoroutine(GradualExpIncrease(sliderValue, hasLevelUp));
         }
@@ -66,10 +69,18 @@ public class PlayerPanel : MonoBehaviour
         if (rollButtonMask != null) rollButtonMask.gameObject.SetActive(!yourTurn);
         if (rollButton != null) rollButton.interactable = yourTurn;
     }
-
+    
+    private IEnumerator HighlightText(Color color, float duration)
+    {
+        Color originalColor = playerImage.color;
+        battlePowerText.color = color;
+        yield return new WaitForSeconds(duration);
+        battlePowerText.color = originalColor;
+    }
+    
     public void OnRollClicked()
     {
-        int rollValue = Random.Range(Consts.MinRollValue, Consts.MaxRollValue);
+        int rollValue = 6; // Random.Range(Consts.MinRollValue, Consts.MaxRollValue);
         GameManager.Instance.RegisterRollDice(rollValue);
         if (rollButtonMask != null) rollButtonMask.gameObject.SetActive(true);
         if (rollButton != null) rollButton.interactable = false;

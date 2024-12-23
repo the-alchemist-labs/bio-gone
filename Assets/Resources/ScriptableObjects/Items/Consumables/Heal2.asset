@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84bd2a3f69644785ad1586366ab16276, type: 3}
   m_Name: Heal2
   m_EditorClassIdentifier: 
-  Id: 2
+  Id: 3
   Name: First Aid Kit
   Price: 300
   IsFree: 0

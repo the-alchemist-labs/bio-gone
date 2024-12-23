@@ -1,9 +1,10 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ShopItem : MonoBehaviour
+public class ShopItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public event Action<ItemId> OnItemSelected;
 
@@ -22,8 +23,8 @@ public class ShopItem : MonoBehaviour
         _item = item;
         _player = GameManager.Instance.GameState.GetPlayer(PlayerProfile.Instance.Id);
 
-        nameText.text = item.Id.ToString();
-        itemImage.sprite = Resources.Load<Sprite>($"Sprites/Items/{item.ItemType}s/{item.Id}");
+        nameText.text = item.Name;
+        itemImage.sprite =  ItemCatalog.Instance.GetItemSprite(item.Id);
         priceText.text = item.IsFree ? "Free" : item.Price.ToString();
         coinImage.gameObject.SetActive(!item.IsFree);
         LayoutRebuilder.ForceRebuildLayoutImmediate(priceLayout.GetComponent<RectTransform>());
@@ -39,5 +40,27 @@ public class ShopItem : MonoBehaviour
         }
 
         OnItemSelected?.Invoke(_item.Id);
+    }
+    
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (eventData.pointerEnter == itemImage.gameObject)
+        {
+            PopupManager.Instance.itemPopup.OpenPopup(_item);
+        }
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (eventData.pointerEnter == itemImage.gameObject)
+        {
+            PopupManager.Instance.itemPopup.ClosePopup();
+        }
+    }
+
+    private void HandleTouchStart()
+    {
+        // Perform your logic here for touch start
+        Debug.Log("Item Image Touch Start Logic");
     }
 }

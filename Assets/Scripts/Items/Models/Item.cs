@@ -8,12 +8,10 @@ public enum ItemId
     Heal1 = 2,
     Heal2 = 3,
     Boost1 = 4,
-    Boost2 = 5,
     Knife = 6,
     Sword = 7,
     Axe = 8,
     Armor = 9,
-    Hack = 10
 }
 
 public enum ItemType

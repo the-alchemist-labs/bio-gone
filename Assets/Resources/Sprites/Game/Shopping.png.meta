@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7697c7f42ae329847b8402e90bd16509
+guid: 6c755d67d78540145adb1b72b7586c4a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3862463782332711850
-    second: Boost2_0
+      213: 6473636550467892607
+    second: Shopping_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Boost2_0
+      name: Shopping_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 200
-        height: 200
+        x: 5
+        y: 4
+        width: 368
+        height: 449
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 65c3f3877a5c56ac0800000000000000
-      internalID: -3862463782332711850
+      spriteID: f75bf93d42af6d950800000000000000
+      internalID: 6473636550467892607
       vertices: []
       indices: 
       edges: []
@@ -173,8 +173,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Boost2_0: -3862463782332711850
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

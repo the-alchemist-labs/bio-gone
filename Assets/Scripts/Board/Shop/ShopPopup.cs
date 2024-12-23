@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class ShopPopup : MonoBehaviour
     [SerializeField] private Button closeButton;
     [SerializeField] private Transform content;
     [SerializeField] private GameObject shopItemPrefab;
+    [SerializeField] private Image shoppingImage;
 
     public void Display()
     {
@@ -17,7 +19,7 @@ public class ShopPopup : MonoBehaviour
         
         closeButton.gameObject.SetActive(isYourTurn);
         content.gameObject.SetActive(isYourTurn);
-
+        shoppingImage.gameObject.SetActive(!isYourTurn);
         if (isYourTurn) RestockShop();
     }
 

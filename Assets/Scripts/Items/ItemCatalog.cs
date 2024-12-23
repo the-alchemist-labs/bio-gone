@@ -14,6 +14,8 @@ public class ItemCatalog : MonoBehaviour
 
     public List<Item> ConsumableItems { get; private set; }
     public List<Item> EquipmentItems { get; private set; }
+    
+    private Dictionary<ItemId, Sprite> _itemSprites = new Dictionary<ItemId, Sprite>();
 
     private void Awake()
     {
@@ -39,10 +41,22 @@ public class ItemCatalog : MonoBehaviour
             .ToList();
 
         Items = ConsumableItems.Concat(EquipmentItems).ToList();
+        Items.ForEach(i => _itemSprites.Add(i.Id, Resources.Load<Sprite>($"Sprites/Items/{i.ItemType}s/{i.Id}")));
+        Debug.Log("Item catalog initialized");
     }
 
     public T GetItem<T>(ItemId id) where T : Item
     {
         return Items.Find(el => el.Id == id) as T;
+    }
+    
+    public Sprite GetItemSprite(ItemId itemId)
+    {
+        if (_itemSprites.TryGetValue(itemId, out var sprite))
+        {
+            return sprite;
+        }
+        
+        return Resources.Load<Sprite>($"Sprites/Items/Unknown");
     }
 }
