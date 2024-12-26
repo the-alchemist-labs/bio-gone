@@ -26,14 +26,17 @@ public class PlayerBattlePanel : MonoBehaviour
         levelText.text = player.Level.ToString();
         battlePowerText.text = player.BattlePower.ToString();
 
+        Invoke("SetUpButtons", 0.5f);
+    }
+    
+    private void SetUpButtons()
+    {
         fightButtons.SetActive(false);
         opponentButtons.SetActive(false);
         fleeButtons.SetActive(false);
         encounterButtons.SetActive(_youAreFighting);
     }
     
-    // Updates
-
     public void OnInterruptPhase()
     {
         encounterButtons.SetActive(false);
