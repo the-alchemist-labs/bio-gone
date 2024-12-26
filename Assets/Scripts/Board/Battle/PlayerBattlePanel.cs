@@ -12,7 +12,6 @@ public class PlayerBattlePanel : MonoBehaviour
     [SerializeField] private GameObject encounterButtons;
     [SerializeField] private GameObject fightButtons;
     [SerializeField] private GameObject opponentButtons;
-    [SerializeField] private GameObject fleeButtons;
 
     private bool _youAreFighting;
     
@@ -33,7 +32,6 @@ public class PlayerBattlePanel : MonoBehaviour
     {
         fightButtons.SetActive(false);
         opponentButtons.SetActive(false);
-        fleeButtons.SetActive(false);
         encounterButtons.SetActive(_youAreFighting);
     }
     
@@ -61,7 +59,6 @@ public class PlayerBattlePanel : MonoBehaviour
     {
         encounterButtons.SetActive(false);
         fightButtons.SetActive(false);
-        fleeButtons.SetActive(_youAreFighting);
     }
     
     // Clickes
@@ -73,13 +70,6 @@ public class PlayerBattlePanel : MonoBehaviour
     public void OnFleeClicked()
     {
         GameManager.Instance.RegisterBattlePhaseUpdate(BattlePhase.Flee);
-    }
-    
-    public void OnFleeRollClicked()
-    {
-        bool hasFled = Random.Range(1, 5) > Random.Range(1, 5);
-        VsPanel.UpdateVsValues();
-        GameManager.Instance.RegisterBattlePhaseUpdate(BattlePhase.Result, null, hasFled);
     }
     
     public void OnBagClicked()

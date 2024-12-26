@@ -2,6 +2,7 @@
 using System;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 public class BattleItemUsed
 {
@@ -42,6 +43,11 @@ public class UpdateBattlePhaseCommand : ICommand
 
     public UpdateBattlePhaseCommand(string payloadString)
     {
+        JObject obj = JObject.Parse(payloadString);
+        int battlePhaseValue = (int)obj["BattlePhase"];
+        BattlePhase battlePhase = (BattlePhase)battlePhaseValue;
+        
+        
         UpdateBattlePhaseCommandPayload payload = JsonConvert.DeserializeObject<UpdateBattlePhaseCommandPayload>(payloadString);
         BattlePhase = payload.BattlePhase;
         BattleItemUsed = payload.BattleItemUsed;

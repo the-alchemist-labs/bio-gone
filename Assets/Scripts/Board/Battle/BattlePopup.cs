@@ -8,16 +8,6 @@ public class BattlePopup : MonoBehaviour
     [SerializeField] private BattleResultPanel resultPanel;
     [SerializeField] private VsPanel vsPanel;
 
-    void OnEnable()
-    {
-        VsPanel.OnVsValuesUpdated += vsPanel.SetVsValues;
-    }
-
-    void OnDisable()
-    {
-        VsPanel.OnVsValuesUpdated -= vsPanel.SetVsValues;
-    }
-
     public void Display(Battle battle)
     {
         gameObject.SetActive(true);
@@ -30,16 +20,19 @@ public class BattlePopup : MonoBehaviour
     public void TryToFlee()
     {
         playerBattlePanel.OnFleePhase();
+        vsPanel.SetVsValues();
     }
 
     public void Interrupt()
     {
         playerBattlePanel.OnInterruptPhase();
+        vsPanel.SetVsValues();
     }
 
     public void PlayerAction()
     {
         playerBattlePanel.OnPlayerActionPhase();
+        vsPanel.SetVsValues();
     }
 
     public void Result(bool? hasEscaped)

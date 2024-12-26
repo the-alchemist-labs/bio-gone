@@ -30,10 +30,10 @@ public class DicePopup : MonoBehaviour
         diceImage.sprite = diceSprites[diceValue - 1];
         diceText.text = $"{diceValue} steps";
 
-        Invoke("Go", 1f);
+        Invoke(nameof(Go), 1f);
     }
     
-    public void Go()
+    private void Go()
     {
         gameObject.SetActive(false);
         

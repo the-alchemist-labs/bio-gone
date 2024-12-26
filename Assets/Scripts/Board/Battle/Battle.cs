@@ -29,6 +29,7 @@ public enum BattleResult
 public class PlayerInBattle : Player
 {
     public int TempPower { get; set; }
+    public int FleeRollValue { get; set; }
     public new int BattlePower => base.BattlePower + TempPower;
 
     public PlayerInBattle(string playerId, string name, PlayerProfilePicture profilePicture, TileId position)
@@ -41,6 +42,8 @@ public class PlayerInBattle : Player
 public class MonsterInBattle : Monster
 {
     public int TempPower { get; set; }
+    public int FleeRollValue { get; set; }
+
     public new int BattlePower => base.BattlePower + TempPower;
 
     public new void Initialize(Monster monster)
