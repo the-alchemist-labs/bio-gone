@@ -15,7 +15,8 @@ public class ItemCatalog : MonoBehaviour
     public List<Item> ConsumableItems { get; private set; }
     public List<Item> EquipmentItems { get; private set; }
     
-    private Dictionary<ItemId, Sprite> _itemSprites = new Dictionary<ItemId, Sprite>();
+    private Dictionary<ItemId, Sprite> _itemSprites = new();
+    private Dictionary<ItemEffectId, Sprite> _itemEffectSprites = new();
 
     private void Awake()
     {
@@ -42,7 +43,8 @@ public class ItemCatalog : MonoBehaviour
 
         Items = ConsumableItems.Concat(EquipmentItems).ToList();
         Items.ForEach(i => _itemSprites.Add(i.Id, Resources.Load<Sprite>($"Sprites/Items/{i.ItemType}s/{i.Id}")));
-        Debug.Log("Item catalog initialized");
+        _itemEffectSprites.Add(ItemEffectId.BonusPower, Resources.Load<Sprite>($"Sprites/Game/BP"));
+        _itemEffectSprites.Add(ItemEffectId.HealUser, Resources.Load<Sprite>($"Sprites/Game/Heart"));
     }
 
     public T GetItem<T>(ItemId id) where T : Item
@@ -53,6 +55,16 @@ public class ItemCatalog : MonoBehaviour
     public Sprite GetItemSprite(ItemId itemId)
     {
         if (_itemSprites.TryGetValue(itemId, out var sprite))
+        {
+            return sprite;
+        }
+        
+        return Resources.Load<Sprite>($"Sprites/Items/Unknown");
+    }
+    
+    public Sprite GetItemEffectSprite(ItemEffectId effectId)
+    {
+        if (_itemEffectSprites.TryGetValue(effectId, out var sprite))
         {
             return sprite;
         }

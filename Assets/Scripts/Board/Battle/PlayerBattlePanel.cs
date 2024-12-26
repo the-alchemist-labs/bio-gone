@@ -12,6 +12,7 @@ public class PlayerBattlePanel : MonoBehaviour
     [SerializeField] private GameObject encounterButtons;
     [SerializeField] private GameObject fightButtons;
     [SerializeField] private GameObject opponentButtons;
+    [SerializeField] private GameObject bagButton;
 
     private bool _youAreFighting;
     
@@ -25,7 +26,7 @@ public class PlayerBattlePanel : MonoBehaviour
         levelText.text = player.Level.ToString();
         battlePowerText.text = player.BattlePower.ToString();
 
-        Invoke("SetUpButtons", 0.5f);
+        Invoke("SetUpButtons", 0.2f);
     }
     
     private void SetUpButtons()
@@ -39,7 +40,8 @@ public class PlayerBattlePanel : MonoBehaviour
     {
         encounterButtons.SetActive(false);
         fightButtons.SetActive(false);
-        if (!_youAreFighting && GameManager.Instance.GameState.GetPlayer().GetBagItems().Count == 0)
+        
+        if (!_youAreFighting && !HasBagItems())
         {
             OnDontInterruptClicked();
             return;
@@ -52,6 +54,7 @@ public class PlayerBattlePanel : MonoBehaviour
     {
         encounterButtons.SetActive(false);
         opponentButtons.SetActive(false);
+        bagButton.SetActive(HasBagItems());
         fightButtons.SetActive(_youAreFighting);
     }
     
@@ -96,5 +99,10 @@ public class PlayerBattlePanel : MonoBehaviour
     public void OnEndClicked()
     {
         PopupManager.Instance.battlePopup.CloseClicked();
+    }
+
+    private bool HasBagItems()
+    {
+        return GameManager.Instance.GameState.GetPlayer().GetBagItems().Count > 0;
     }
 }
