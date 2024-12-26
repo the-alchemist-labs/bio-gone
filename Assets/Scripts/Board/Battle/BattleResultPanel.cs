@@ -19,20 +19,21 @@ public class BattleResultPanel : MonoBehaviour
         gameObject.SetActive(true);
         string playerName = GetPlayerName(PlayerProfile.Instance.Id);
         
-        resultImage.sprite = Resources.Load<Sprite>($"Sprites/Battle/Results/{result}");
+        resultImage.sprite = Resources.Load<Sprite>($"Sprites/Battle/{result}");
         winPanel.SetActive(result == BattleResult.Win);
         losePanel.SetActive(result == BattleResult.Lose || result == BattleResult.FailedFlee);
         
+        Invoke(nameof(EndBattle), 3);
         switch (result)
         {
             case BattleResult.Win:
                 Monster monster = GameManager.Instance.Battle.Monster;
-                resultText.text = $"{playerName} win!";
+                resultText.text = $"{playerName} won!";
                 expText.text = monster.ExperienceGain.ToString();
                 coinsText.text = monster.CoinsGain.ToString();
                 break;
             case BattleResult.Lose:
-                resultText.text = $"{playerName} lose!";
+                resultText.text = $"{playerName} lost!";
                 break;
             case BattleResult.Draw:
                 resultText.text = $"{playerName} draw!";
@@ -50,5 +51,10 @@ public class BattleResultPanel : MonoBehaviour
     {
         bool isInBattle = GameManager.Instance.Battle.IsInBattle(playerId);
         return isInBattle ? "You" : GameManager.Instance.Battle.Player.Name;
+    }
+
+    private void EndBattle()
+    {
+        GameManager.Instance.RegisterToggleBattle(false);
     }
 }

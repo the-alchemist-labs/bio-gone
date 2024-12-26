@@ -29,7 +29,7 @@ public enum BattleResult
 public class PlayerInBattle : Player
 {
     public int TempPower { get; set; }
-    public int FleeRollValue { get; set; }
+    public int? FleeRollValue { get; set; }
     public new int BattlePower => base.BattlePower + TempPower;
 
     public PlayerInBattle(string playerId, string name, PlayerProfilePicture profilePicture, TileId position)
@@ -42,7 +42,7 @@ public class PlayerInBattle : Player
 public class MonsterInBattle : Monster
 {
     public int TempPower { get; set; }
-    public int FleeRollValue { get; set; }
+    public int? FleeRollValue { get; set; }
 
     public new int BattlePower => base.BattlePower + TempPower;
 
@@ -132,10 +132,13 @@ public class Battle
     
     public BattleResult GetBattleResult()
     {
-        bool hasEscaped = Player.FleeRollValue > Monster.FleeRollValue;
+        if (Player.FleeRollValue != null)
+        {
+            bool hasEscaped = Player.FleeRollValue > Monster.FleeRollValue;
+            if (hasEscaped) return BattleResult.Fled;
+            return BattleResult.FailedFlee;
+        }
         
-        if (Phase == BattlePhase.Flee && hasEscaped) return BattleResult.Fled;
-        if (Phase == BattlePhase.Flee && !hasEscaped) return BattleResult.FailedFlee;
         if (Monster.BattlePower < Player.BattlePower) return BattleResult.Win;
         if (Monster.BattlePower > Player.BattlePower) return BattleResult.Lose;
         return BattleResult.Draw;
@@ -145,5 +148,21 @@ public class Battle
     {
         if (target == BattleTarget.Player) Player.TempPower += modifier;
         else Monster.TempPower += modifier;
+    }
+
+    public void LostBattle()
+    {
+        GameManager.Instance.RegisterLivesUpdate(-1);
+    }
+
+    public void WonBattle()
+    {
+        GameManager.Instance.RegisterCoinsUpdate(Monster.CoinsGain);
+        GameManager.Instance.RegisterExpUpdate(Monster.ExperienceGain);
+    }
+
+    public void Draw()
+    {
+        
     }
 }

@@ -22,6 +22,12 @@ public class FleeBattle
 {
     public int PlayerFleeValue { get; set; }
     public int MonsterFleeValue { get; set; }
+
+    public FleeBattle(int playerFleeValue, int monsterFleeValue)
+    {
+        PlayerFleeValue = playerFleeValue;
+        MonsterFleeValue = monsterFleeValue;
+    }
 }
 
 [Serializable]

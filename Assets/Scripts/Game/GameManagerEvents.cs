@@ -109,7 +109,6 @@ public partial class GameManager
 
     private void BattlePhaseChanged(BattlePhase phase, [CanBeNull] BattleItemUsed usedItem, [CanBeNull] FleeBattle fleeBattle)
     {
-        Battle.UpdateBattlePhase(phase);
         if (usedItem != null)
         {
             Battle.UseItem(usedItem);
@@ -118,7 +117,10 @@ public partial class GameManager
         if (fleeBattle != null)
         {
             Battle.SetFleeRolls(fleeBattle);
+            Debug.Log($"{fleeBattle.PlayerFleeValue} - {fleeBattle.PlayerFleeValue}");
+
         }
+        Battle.UpdateBattlePhase(phase);
     }
 
     private void GameOver(Player player)

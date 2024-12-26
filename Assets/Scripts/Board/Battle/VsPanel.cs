@@ -13,7 +13,7 @@ public class VsPanel : MonoBehaviour
     public void SetVsValues()
     {
         bool isFleeing = GameManager.Instance.Battle.Phase == BattlePhase.Flee;
-
+        
         playerDiceImage.gameObject.SetActive(isFleeing);
         monsterDiceImage.gameObject.SetActive(isFleeing);
 
@@ -34,9 +34,8 @@ public class VsPanel : MonoBehaviour
     private void SetFleeRollValues()
     {
         Battle battle = GameManager.Instance.Battle;
-
-        StartCoroutine(RandomizeDice(playerDiceImage, battle.Player.FleeRollValue));
-        StartCoroutine(RandomizeDice(monsterDiceImage, battle.Monster.FleeRollValue));
+        StartCoroutine(RandomizeDice(playerDiceImage, battle.Player.FleeRollValue.Value));
+        StartCoroutine(RandomizeDice(monsterDiceImage, battle.Monster.FleeRollValue.Value));
         
         Invoke(nameof(Next), 2);
     }

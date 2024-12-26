@@ -41,17 +41,8 @@ public class BattlePopup : MonoBehaviour
         resultPanel.DisplayBattleResult(battleResult);
 
         if (!GameManager.Instance.Battle.IsInBattle()) return;
-        if (ShouldTakeDamage(battleResult))
-        {
-            GameManager.Instance.RegisterLivesUpdate(-1);
-        }
-
-        if (battleResult == BattleResult.Win)
-        {
-            Monster monster = GameManager.Instance.Battle.Monster;
-            GameManager.Instance.RegisterCoinsUpdate(monster.CoinsGain);
-            GameManager.Instance.RegisterExpUpdate(monster.ExperienceGain);
-        }
+        if (ShouldTakeDamage(battleResult)) GameManager.Instance.Battle.LostBattle();
+        if (battleResult == BattleResult.Win) GameManager.Instance.Battle.WonBattle();
         
         resultPanel.DisplayBattleResult(battleResult);
     }

@@ -69,7 +69,8 @@ public class PlayerBattlePanel : MonoBehaviour
     
     public void OnFleeClicked()
     {
-        GameManager.Instance.RegisterBattlePhaseUpdate(BattlePhase.Flee);
+        FleeBattle fleeBattle = new FleeBattle(Random.Range(0, 7), Random.Range(0, 7));
+        GameManager.Instance.RegisterBattlePhaseUpdate(BattlePhase.Flee, null, fleeBattle);
     }
     
     public void OnBagClicked()
