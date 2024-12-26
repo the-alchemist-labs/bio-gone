@@ -18,44 +18,45 @@ public class BattleItemUsed
     }
 }
 
+public class FleeBattle
+{
+    public int PlayerFleeValue { get; set; }
+    public int MonsterFleeValue { get; set; }
+}
+
 [Serializable]
 public class UpdateBattlePhaseCommandPayload
 { 
     public BattlePhase BattlePhase { get; set; }
     [CanBeNull] public BattleItemUsed BattleItemUsed { get; set; }
-    public bool? HasEscaped { get; set; }
+    [CanBeNull] public FleeBattle FleeBattle { get; set; }
     
-    public UpdateBattlePhaseCommandPayload(BattlePhase battlePhase, BattleItemUsed battleItemUsed, bool? hasEscaped)
+    public UpdateBattlePhaseCommandPayload(BattlePhase battlePhase, BattleItemUsed battleItemUsed, FleeBattle fleeBattle)
     {
         BattlePhase = battlePhase;
         BattleItemUsed = battleItemUsed;
-        HasEscaped = hasEscaped;
+        FleeBattle = fleeBattle;
     }
 }
 
 public class UpdateBattlePhaseCommand : ICommand
 {
-    public static event Action<BattlePhase, BattleItemUsed, bool?> OnBattlePhaseChanged;
+    public static event Action<BattlePhase, BattleItemUsed, FleeBattle> OnBattlePhaseChanged;
 
     public BattlePhase BattlePhase { get; set; }
     [CanBeNull] public BattleItemUsed BattleItemUsed { get; set; }
-    public bool? HasEscaped { get; set; }
+    [CanBeNull] public FleeBattle FleeBattle { get; set; }
 
     public UpdateBattlePhaseCommand(string payloadString)
     {
-        JObject obj = JObject.Parse(payloadString);
-        int battlePhaseValue = (int)obj["BattlePhase"];
-        BattlePhase battlePhase = (BattlePhase)battlePhaseValue;
-        
-        
         UpdateBattlePhaseCommandPayload payload = JsonConvert.DeserializeObject<UpdateBattlePhaseCommandPayload>(payloadString);
         BattlePhase = payload.BattlePhase;
         BattleItemUsed = payload.BattleItemUsed;
-        HasEscaped = payload.HasEscaped;
+        FleeBattle = payload.FleeBattle;
     }
     
     public void Execute()
     {
-        OnBattlePhaseChanged?.Invoke(BattlePhase, BattleItemUsed, HasEscaped);
+        OnBattlePhaseChanged?.Invoke(BattlePhase, BattleItemUsed, FleeBattle);
     }
 }

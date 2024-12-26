@@ -85,7 +85,7 @@ public class Battle
         return Player.Id == (playerId ?? PlayerProfile.Instance.Id);
     }
     
-    public void UpdateBattlePhase(BattlePhase battlePhase, bool? hasEscaped)
+    public void UpdateBattlePhase(BattlePhase battlePhase)
     {
         Phase = battlePhase;
         switch (battlePhase)
@@ -100,12 +100,11 @@ public class Battle
                 PopupManager.Instance.battlePopup.PlayerAction();
                 return;
             case BattlePhase.Result:
-                PopupManager.Instance.battlePopup.Result(hasEscaped);
+                PopupManager.Instance.battlePopup.Result();
                 return;
         }
     }
 
-    // Probably should be on the ItemService
     public void UseItem(BattleItemUsed usedItem)
     {
         ConsumableItem item = ItemCatalog.Instance.GetItem<ConsumableItem>(usedItem.ItemId);
@@ -113,17 +112,30 @@ public class Battle
         {
             case ItemEffectId.BonusPower:
                 ModifyBattlePower(usedItem.Target, item.Effect.Value);
-                return;
+                break;
             case ItemEffectId.HealUser:
                 GameManager.Instance.GameState.UpdatePlayerLive(usedItem.UserPlayerId, item.Effect.Value);
-                return;
+                break;
+        }
+
+        if (usedItem.UserPlayerId == PlayerProfile.Instance.Id)
+        {
+            GameManager.Instance.RegisterInventoryUpdate(usedItem.ItemId, ItemAction.Remove);
         }
     }
 
-    public BattleResult GetBattleResult(bool? hasEscaped)
+    public void SetFleeRolls(FleeBattle fleeBattle)
     {
-        if (hasEscaped == true) return BattleResult.Fled;
-        if (hasEscaped == false) return BattleResult.FailedFlee;
+        Player.FleeRollValue = fleeBattle.MonsterFleeValue;
+        Monster.FleeRollValue = fleeBattle.PlayerFleeValue;
+    }
+    
+    public BattleResult GetBattleResult()
+    {
+        bool hasEscaped = Player.FleeRollValue > Monster.FleeRollValue;
+        
+        if (Phase == BattlePhase.Flee && hasEscaped) return BattleResult.Fled;
+        if (Phase == BattlePhase.Flee && !hasEscaped) return BattleResult.FailedFlee;
         if (Monster.BattlePower < Player.BattlePower) return BattleResult.Win;
         if (Monster.BattlePower > Player.BattlePower) return BattleResult.Lose;
         return BattleResult.Draw;

@@ -103,9 +103,9 @@ public class GameState
         OnStepsChanged?.Invoke(Steps);
     }
 
-    public void AddItemsToPlayer(string playerId, ItemId itemId)
+    public void UpdatePlayerInventory(string playerId, ItemId itemId, ItemAction action)
     {
-        GetPlayer(playerId).AddItem(itemId);
+        GetPlayer(playerId).UpdateInventory(itemId, action);
         OnStatsChanged?.Invoke(playerId);
     }
 

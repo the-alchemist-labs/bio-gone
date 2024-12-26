@@ -11,7 +11,7 @@ public class Commander
         { Command.ModifyPlayerCoins, payload => new ModifyCoinsCommand(payload) },
         { Command.ToggleShop, payload => new ToggleShopCommand(payload) },
         { Command.NewTurn, payload => new NewTurnCommand(payload) },
-        { Command.GainItem, payload => new GainItemCommand(payload) },
+        { Command.GainItem, payload => new UpdateInventoryCommand(payload) },
         { Command.ToggleBattle, payload => new ToggleBattleCommand(payload) },
         { Command.UpdateBattlePhase, payload => new UpdateBattlePhaseCommand(payload) },
         { Command.ModifyPlayerLive, payload => new ModifyLiveCommand(payload)},

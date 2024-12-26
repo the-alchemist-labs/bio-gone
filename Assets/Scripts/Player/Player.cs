@@ -71,10 +71,11 @@ public class Player
         return Lives;
     }
     
-    public void AddItem(ItemId itemId)
+    public void UpdateInventory(ItemId itemId, ItemAction action)
     {
         Item newItem = ItemCatalog.Instance.GetItem<Item>(itemId);
-        Items.Add(newItem);
+        if (action == ItemAction.Get) Items.Add(newItem);
+        else Items.Remove(newItem);
     }
 
     public List<ConsumableItem> GetBagItems()

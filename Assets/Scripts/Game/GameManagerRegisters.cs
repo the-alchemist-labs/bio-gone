@@ -65,12 +65,12 @@ public partial class GameManager
         ));
     }
 
-    public void RegisterItemGain(ItemId itemId)
+    public void RegisterInventoryUpdate(ItemId itemId, ItemAction action)
     {
         Commander.PostCommand(new CommandEvent(
             GameState.RoomId,
             Command.GainItem,
-            JsonConvert.SerializeObject(new GainItemCommandPayload(_player.Id, itemId))
+            JsonConvert.SerializeObject(new UpdateInventoryCommandPayload(_player.Id, itemId, action))
         ));
     }
 
@@ -93,12 +93,12 @@ public partial class GameManager
     }
 
     
-    public void RegisterBattlePhaseUpdate(BattlePhase phase, BattleItemUsed itemUsed = null, bool? hasEscaped = null)
+    public void RegisterBattlePhaseUpdate(BattlePhase phase, BattleItemUsed itemUsed = null, FleeBattle fleeBattle = null)
     {
         Commander.PostCommand(new CommandEvent(
             GameState.RoomId,
             Command.UpdateBattlePhase,
-            JsonConvert.SerializeObject(new UpdateBattlePhaseCommandPayload(phase, itemUsed, hasEscaped))
+            JsonConvert.SerializeObject(new UpdateBattlePhaseCommandPayload(phase, itemUsed, fleeBattle))
         ));
     }
 

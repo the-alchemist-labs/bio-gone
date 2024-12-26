@@ -17,7 +17,7 @@ public partial class GameManager
         ModifyLiveCommand.OnLivesModified += LivesUpdated;
         NewTurnCommand.OnNewTurn += NewTurn;
         ToggleShopCommand.OnShopToggled += ToggleShop;
-        GainItemCommand.OnItemGained += GainItem;
+        UpdateInventoryCommand.OnItemGained += UpdateInventory;
         ToggleBattleCommand.OnBattleToggled += ToggleBattle;
         UpdateBattlePhaseCommand.OnBattlePhaseChanged += BattlePhaseChanged;
         GameState.OnGameOver += GameOver;
@@ -32,7 +32,7 @@ public partial class GameManager
         ModifyLiveCommand.OnLivesModified -= LivesUpdated;
         NewTurnCommand.OnNewTurn -= NewTurn;
         ToggleShopCommand.OnShopToggled -= ToggleShop;
-        GainItemCommand.OnItemGained -= GainItem;
+        UpdateInventoryCommand.OnItemGained -= UpdateInventory;
         ToggleBattleCommand.OnBattleToggled -= ToggleBattle;
         UpdateBattlePhaseCommand.OnBattlePhaseChanged -= BattlePhaseChanged;
         GameState.OnGameOver -= GameOver;
@@ -90,9 +90,9 @@ public partial class GameManager
         else shop.ClosePopup();
     }
 
-    private void GainItem(string playerId, ItemId itemId)
+    private void UpdateInventory(string playerId, ItemId itemId, ItemAction action)
     {
-        GameState.AddItemsToPlayer(playerId, itemId);
+        GameState.UpdatePlayerInventory(playerId, itemId, action);
     }
 
     private void ToggleBattle(bool isOpen, string playerId, MonsterId? monsterId)
@@ -107,12 +107,17 @@ public partial class GameManager
         else battle.ClosePopup();
     }
 
-    private void BattlePhaseChanged(BattlePhase phase, [CanBeNull] BattleItemUsed usedItem, bool? hasEscaped)
+    private void BattlePhaseChanged(BattlePhase phase, [CanBeNull] BattleItemUsed usedItem, [CanBeNull] FleeBattle fleeBattle)
     {
-        Battle.UpdateBattlePhase(phase, hasEscaped);
+        Battle.UpdateBattlePhase(phase);
         if (usedItem != null)
         {
             Battle.UseItem(usedItem);
+        }
+
+        if (fleeBattle != null)
+        {
+            Battle.SetFleeRolls(fleeBattle);
         }
     }
 

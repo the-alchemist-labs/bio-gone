@@ -51,7 +51,7 @@ public class ShopPopup : MonoBehaviour
     
     private void ItemSelected(ItemId itemId)
     {
-        GameManager.Instance.RegisterItemGain(itemId);
+        GameManager.Instance.RegisterInventoryUpdate(itemId, ItemAction.Get);
         CloseClicked();
     }
     

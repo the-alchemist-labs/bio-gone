@@ -35,9 +35,9 @@ public class BattlePopup : MonoBehaviour
         vsPanel.SetVsValues();
     }
 
-    public void Result(bool? hasEscaped)
+    public void Result()
     {
-        BattleResult battleResult = GameManager.Instance.Battle.GetBattleResult(hasEscaped);
+        BattleResult battleResult = GameManager.Instance.Battle.GetBattleResult();
         resultPanel.DisplayBattleResult(battleResult);
 
         if (!GameManager.Instance.Battle.IsInBattle()) return;
