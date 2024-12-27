@@ -57,10 +57,4 @@ public class ShopItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             PopupManager.Instance.itemPopup.ClosePopup();
         }
     }
-
-    private void HandleTouchStart()
-    {
-        // Perform your logic here for touch start
-        Debug.Log("Item Image Touch Start Logic");
-    }
 }

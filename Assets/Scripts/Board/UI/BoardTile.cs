@@ -35,7 +35,6 @@ public class BoardTile : MonoBehaviour
 
     public void TileSelected()
     {
-        Debug.Log("Tile selected");
         GameManager.Instance.RegisterPlayerMove(tileId);
     }
 

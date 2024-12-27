@@ -24,7 +24,6 @@ public class BagItem : MonoBehaviour
 
     public void OnClick()
     {
-        Debug.Log("click");
         OnItemSelected?.Invoke(_item.Id);
     }
 }

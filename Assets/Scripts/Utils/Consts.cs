@@ -3,8 +3,6 @@ public static class Consts
     public const string ServerURI = "http://192.168.1.223:3000";
     // public const string ServerURI = "https://munch-party.onrender.com";
     public const int DefaultLives = 3;
-    public const int MaxRollValue = 6;
-    public const int MinRollValue = 1;
     public const int LevelPowerModifier = 10;
     public const int MonsterLevelDiff = 2;
     public const int MaxLevel = 10;
@@ -13,6 +11,7 @@ public static class Consts
     public const int TileExpGain = 150;
     public const int TileLandExpGain = 50;
     public const float TileYPositionCorrection = -0.04f;
+    public const int TurnSeconds = 10;
 }
 
 public static class SocketEvents

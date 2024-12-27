@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using UnityEngine;
 
 public class GameState
@@ -10,12 +11,15 @@ public class GameState
     public static event Action<int?> OnStepsChanged;
     public static event Action<string> OnStatsChanged;
     public static event Action<Player> OnGameOver;
+    public static event Action<int> OnTimerUpdated;
 
     public string RoomId { get; }
     public List<Player> Players { get; }
     public int PlayerIndexTurn { get; private set; }
 
     public int? Steps { get; private set; }
+
+    public int TurnTimer { get; private set; }
 
     private string _playerId;
 
@@ -60,7 +64,19 @@ public class GameState
     {
         PlayerIndexTurn = index;
         SetSteps(null);
+        SetTimer(Consts.TurnSeconds);
         OnTurnChanged?.Invoke();
+    }
+
+    public void SetTimer(int timer)
+    {
+        if (timer <= 0 && IsYourTurn())
+        {
+            GameManager.Instance.RegisterEndTurn();
+        }
+        
+        TurnTimer = timer;
+        OnTimerUpdated?.Invoke(TurnTimer);
     }
 
     public void MovePlayer(string playerId, TileId newPosition)
@@ -74,20 +90,20 @@ public class GameState
         GetPlayer(playerId).UpdateCoins(modifier);
         OnStatsChanged?.Invoke(playerId);
     }
-    
+
     public void AddExpToPlayer(string playerId, int amount)
     {
         Player player = GetPlayer(playerId);
         player.AddExp(amount);
-        
+
         if (player.ShouldLevelUp() && !player.IsMaxLevel())
         {
             player.LevelUp();
         }
-        
+
         OnStatsChanged?.Invoke(player.Id);
     }
-    
+
     public void UpdatePlayerLive(string playerId, int modifier)
     {
         int lives = GetPlayer(playerId).ModifyLives(modifier);
@@ -95,7 +111,6 @@ public class GameState
         OnStatsChanged?.Invoke(playerId);
 
         if (lives == 0) PlayerDied();
-        Debug.Log(GetPlayer(playerId).Lives);
     }
 
     public void SetSteps(int? steps)

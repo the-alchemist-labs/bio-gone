@@ -12,9 +12,8 @@ public partial class GameManager : MonoBehaviour
     [SerializeField] private RewardAnimationPool rewardAnimationPool;
 
     private Commander Commander { get; set; }
-
     private Player _player;
-
+    
     void Awake()
     {
         if (Instance == null)
@@ -36,6 +35,7 @@ public partial class GameManager : MonoBehaviour
         OnGameStateSet?.Invoke();
 
         GameState.UpdatePlayerTurn(GameState.PlayerIndexTurn);
+        StartCoroutine(nameof(UpdateTimer));
     }
 
     void OnEnable()
@@ -112,5 +112,15 @@ public partial class GameManager : MonoBehaviour
     private bool IsLastStep()
     {
         return GameState.Steps == 0;
+    }
+
+    private IEnumerator UpdateTimer()
+    {
+        while (GameState.TurnTimer > 0)
+        {
+            Debug.Log("UpdateTimer");
+            GameState.SetTimer(GameState.TurnTimer - 1);
+            yield return new WaitForSeconds(1f);
+        }
     }
 }

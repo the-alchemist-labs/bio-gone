@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +17,7 @@ public class DicePopup : MonoBehaviour
         StartCoroutine(RandomizeDice(diceValue));
     }
     
-    private System.Collections.IEnumerator RandomizeDice(int diceValue)
+    private IEnumerator RandomizeDice(int diceValue)
     {
         Sprite[] diceSprites = Resources.LoadAll<Sprite>("Sprites/Game/Dice");
 

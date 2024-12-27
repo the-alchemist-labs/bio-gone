@@ -76,13 +76,13 @@ public partial class GameManager
 
     private void LivesUpdated(string playerId, int modifier)
     {
-        Debug.Log("LivesUpdated: " + modifier);
         GameState.UpdatePlayerLive(playerId, modifier);
     }
 
     private void NewTurn(int index)
     {
         GameState.UpdatePlayerTurn(index);
+        GameState.SetTimer(Consts.TurnSeconds);
     }
 
     private void ToggleShop(bool isOpen)
