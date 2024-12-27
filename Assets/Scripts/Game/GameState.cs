@@ -95,6 +95,7 @@ public class GameState
         OnStatsChanged?.Invoke(playerId);
 
         if (lives == 0) PlayerDied();
+        Debug.Log(GetPlayer(playerId).Lives);
     }
 
     public void SetSteps(int? steps)

@@ -37,7 +37,7 @@ public class VsPanel : MonoBehaviour
         StartCoroutine(RandomizeDice(playerDiceImage, battle.Player.FleeRollValue.Value));
         StartCoroutine(RandomizeDice(monsterDiceImage, battle.Monster.FleeRollValue.Value));
         
-        Invoke(nameof(Next), 2);
+        if (battle.IsInBattle())Invoke(nameof(Next), 2);
     }
 
     private System.Collections.IEnumerator RandomizeDice(Image diceImage, int diceValue)

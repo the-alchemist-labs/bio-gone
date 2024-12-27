@@ -76,6 +76,7 @@ public partial class GameManager
 
     private void LivesUpdated(string playerId, int modifier)
     {
+        Debug.Log("LivesUpdated: " + modifier);
         GameState.UpdatePlayerLive(playerId, modifier);
     }
 

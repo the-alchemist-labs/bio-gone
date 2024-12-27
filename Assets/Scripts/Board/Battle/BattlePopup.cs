@@ -46,13 +46,14 @@ public class BattlePopup : MonoBehaviour
 
     public void Result()
     {
-        BattleResult battleResult = GameManager.Instance.Battle.GetBattleResult();
-
-        if (!GameManager.Instance.Battle.IsInBattle()) return;
-        if (ShouldTakeDamage(battleResult)) GameManager.Instance.Battle.LostBattle();
-        if (battleResult == BattleResult.Win) GameManager.Instance.Battle.WonBattle();
+        Battle battle = GameManager.Instance.Battle;
+        BattleResult battleResult = battle.GetBattleResult();
         
         resultPanel.DisplayBattleResult(battleResult);
+
+        if (!battle.IsInBattle()) return;
+        if (ShouldTakeDamage(battleResult)) battle.LostBattle();
+        if (battleResult == BattleResult.Win) battle.WonBattle();
     }
 
     public void ClosePopup()

@@ -129,7 +129,7 @@ public class Battle
 
     public void SetFleeRolls(FleeBattle fleeBattle)
     {
-        Player.FleeRollValue = fleeBattle.MonsterFleeValue;
+        Player.FleeRollValue = 1; // fleeBattle.MonsterFleeValue;
         Monster.FleeRollValue = fleeBattle.PlayerFleeValue;
     }
 
@@ -156,15 +156,11 @@ public class Battle
 
     public void LostBattle()
     {
-        if (!IsInBattle()) return;
-        
         GameManager.Instance.RegisterLivesUpdate(-1);
     }
 
     public void WonBattle()
     {
-        if (!IsInBattle()) return;
-
         GameManager.Instance.RegisterCoinsUpdate(Monster.CoinsGain);
         GameManager.Instance.RegisterExpUpdate(Monster.ExperienceGain);
     }
