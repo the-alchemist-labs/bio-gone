@@ -128,6 +128,8 @@ public partial class GameManager
 
     private void GameOver(string playerId)
     {
+        PopupManager.Instance.CloseAll();
+        
         Player player = GameState.GetPlayer(playerId);
         PopupManager.Instance.gameOverPopup.Display(player);
     }
