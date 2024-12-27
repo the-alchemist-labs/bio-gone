@@ -115,6 +115,7 @@ public class BagPopup : MonoBehaviour, IPopup
             yield return new WaitForSeconds(1f);
         }
         
+        ClosePopup();
         GameManager.Instance.RegisterBattlePhaseUpdate(BattlePhase.PlayerAction);
     }
 }
