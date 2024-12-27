@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopPopup : MonoBehaviour
+public class ShopPopup : MonoBehaviour, IPopup
 {
     [SerializeField] private Button closeButton;
     [SerializeField] private Transform content;

@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemPopup : MonoBehaviour
+public class ItemPopup : MonoBehaviour, IPopup
 {
     [SerializeField] private Image itemImage;
     [SerializeField] private TMP_Text nameText;

@@ -123,4 +123,11 @@ public partial class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
     }
+
+    private void ClearTurn()
+    {
+        Battle = null;
+        GameState.SetSteps(null);
+        PopupManager.Instance.CloseAll();
+    }
 }

@@ -9,9 +9,8 @@ public static class Consts
     public const int ExpToLevelUp = 250;
     public const int TileCoinGain = 100;
     public const int TileExpGain = 150;
-    public const int TileLandExpGain = 50;
     public const float TileYPositionCorrection = -0.04f;
-    public const int TurnSeconds = 10;
+    public const int TurnSeconds = 50;
 }
 
 public static class SocketEvents

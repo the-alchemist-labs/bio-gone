@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameOverPopup : MonoBehaviour
+public class GameOverPopup : MonoBehaviour, IPopup
 {
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private Image image;
@@ -20,7 +20,12 @@ public class GameOverPopup : MonoBehaviour
 
     public void FinishClicked()
     {
-        gameObject.SetActive(false);
+        ClosePopup();
         SceneManager.LoadScene(SceneNames.MainMenu);
+    }
+    
+    public void ClosePopup()
+    {
+        gameObject.SetActive(false);
     }
 }

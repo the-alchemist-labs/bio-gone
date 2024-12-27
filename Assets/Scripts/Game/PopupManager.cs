@@ -1,4 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
+public interface IPopup
+{
+    void ClosePopup();
+}
 
 public class PopupManager : MonoBehaviour
 {
@@ -8,6 +15,8 @@ public class PopupManager : MonoBehaviour
     [SerializeField] public BagPopup bagPopup;
     [SerializeField] public GameOverPopup gameOverPopup;
     [SerializeField] public ItemPopup itemPopup;
+
+    private List<IPopup> _popups = new List<IPopup>();
     
     public static PopupManager Instance { get; private set; }
     
@@ -22,5 +31,15 @@ public class PopupManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void OnEnable()
+    {
+        _popups = GetComponentsInChildren<IPopup>(true).ToList();
+    }
+    
+    public void CloseAll()
+    {
+        _popups.ForEach(p => p.ClosePopup());
     }
 }

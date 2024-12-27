@@ -63,7 +63,6 @@ public class GameState
     public void UpdatePlayerTurn(int index)
     {
         PlayerIndexTurn = index;
-        SetSteps(null);
         SetTimer(Consts.TurnSeconds);
         OnTurnChanged?.Invoke();
     }

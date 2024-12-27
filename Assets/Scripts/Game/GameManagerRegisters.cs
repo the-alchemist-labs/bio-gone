@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Unity.VisualScripting;
 
 public partial class GameManager
 {
@@ -57,6 +58,7 @@ public partial class GameManager
     
     public void RegisterEndTurn()
     {
+        ClearTurn();
         int playerIndex = GameState.GetNextPlayerTurnIndex();
         Commander.PostCommand(new CommandEvent(
             GameState.RoomId,

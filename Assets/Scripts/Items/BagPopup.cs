@@ -12,7 +12,7 @@ public enum BagState
     OpponentBattle,
 }
 
-public class BagPopup : MonoBehaviour
+public class BagPopup : MonoBehaviour, IPopup
 {
     [SerializeField] private Button useButton;
     [SerializeField] private ScrollRect scrollView;
@@ -36,7 +36,7 @@ public class BagPopup : MonoBehaviour
         PopulateBagItems();
     }
 
-    public void Close()
+    public void ClosePopup()
     {
         gameObject.SetActive(false);
     }
@@ -64,7 +64,7 @@ public class BagPopup : MonoBehaviour
         }
 
         targetContainer.SetActive(false);
-        Close();
+        ClosePopup();
     }
     
     private void PopulateBagItems()

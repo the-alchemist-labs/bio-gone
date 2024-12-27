@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BattlePopup : MonoBehaviour
+public class BattlePopup : MonoBehaviour, IPopup
 {
     [SerializeField] private MonsterBattlePanel monsterBattlePanel;
     [SerializeField] private PlayerBattlePanel playerBattlePanel;

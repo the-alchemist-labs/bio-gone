@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DicePopup : MonoBehaviour
+public class DicePopup : MonoBehaviour, IPopup
 {
     [SerializeField] private Image diceImage;
     [SerializeField] private TMP_Text diceText;
@@ -36,11 +36,16 @@ public class DicePopup : MonoBehaviour
     
     private void Go()
     {
-        gameObject.SetActive(false);
+        ClosePopup();
         
         if (GameManager.Instance.GameState.IsYourTurn())
         {
             GameManager.Instance.TakeStep();
         }
+    }
+
+    public void ClosePopup()
+    {
+        gameObject.SetActive(false);
     }
 }
