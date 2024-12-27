@@ -21,8 +21,8 @@ public partial class GameManager
         UpdateInventoryCommand.OnItemGained += UpdateInventory;
         ToggleBattleCommand.OnBattleToggled += ToggleBattle;
         UpdateBattlePhaseCommand.OnBattlePhaseChanged += BattlePhaseChanged;
-        GameState.OnGameOver += GameOver;
         ModifyExpCommand.OnExpUpdated += ExpUpdated;
+        GameOverCommand.OnGameOver += GameOver;
     }
 
     private void UnsetUpEventListeners()
@@ -36,8 +36,8 @@ public partial class GameManager
         UpdateInventoryCommand.OnItemGained -= UpdateInventory;
         ToggleBattleCommand.OnBattleToggled -= ToggleBattle;
         UpdateBattlePhaseCommand.OnBattlePhaseChanged -= BattlePhaseChanged;
-        GameState.OnGameOver -= GameOver;
         ModifyExpCommand.OnExpUpdated -= ExpUpdated;
+        GameOverCommand.OnGameOver -= GameOver;
     }
 
     private void DiceRolled(string playerId, int steps)
@@ -126,8 +126,9 @@ public partial class GameManager
         Battle.UpdateBattlePhase(phase);
     }
 
-    private void GameOver(Player player)
+    private void GameOver(string playerId)
     {
+        Player player = GameState.GetPlayer(playerId);
         PopupManager.Instance.gameOverPopup.Display(player);
     }
 }

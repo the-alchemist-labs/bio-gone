@@ -14,6 +14,7 @@ public enum Command
     UpdateBattlePhase,
     ModifyPlayerLive,
     ModifyPlayerExp,
+    GameOver,
 }
 
 public interface ICommand

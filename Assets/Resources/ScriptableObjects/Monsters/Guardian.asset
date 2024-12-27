@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d24e62f35c24549bbd8791ede8a9530, type: 3}
+  m_Name: Guardian
+  m_EditorClassIdentifier: 
+  Id: 100
+  Name: General Spot
+  Description: This is a very awkward self proclamed general that just want to end
+    humanity that's all jeez..
+  Level: 2
+  BattlePower: 5
+  ExperienceGain: 500
+  CoinsGain: 200

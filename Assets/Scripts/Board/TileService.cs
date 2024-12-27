@@ -13,7 +13,9 @@ public class TileService
             { TileType.Coin, HandleCoinTile },
             { TileType.Shop, HandleShopTile },
             { TileType.Monster, HandleMonsterTile },
-            { TileType.Exp, HandleExpTile }
+            { TileType.Exp, HandleExpTile },
+            { TileType.Guardian, HandleGuardianTile },
+
         };
     }
 
@@ -45,5 +47,10 @@ public class TileService
     private void HandleExpTile()
     {
         GameManager.Instance.RegisterExpUpdate(Consts.TileExpGain);
+    }
+    
+    private void HandleGuardianTile()
+    {
+        GameManager.Instance.RegisterToggleBattle(true, MonsterId.Guardian);
     }
 }

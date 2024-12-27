@@ -161,6 +161,12 @@ public class Battle
 
     public void WonBattle()
     {
+
+        if (Monster.Id == MonsterId.Guardian)
+        {
+            GameManager.Instance.RegisterGameOver(Player.Id);
+            return;
+        }
         GameManager.Instance.RegisterCoinsUpdate(Monster.CoinsGain);
         GameManager.Instance.RegisterExpUpdate(Monster.ExperienceGain);
     }

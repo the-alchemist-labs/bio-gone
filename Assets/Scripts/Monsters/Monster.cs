@@ -3,6 +3,7 @@ using UnityEngine;
 public enum MonsterId
 {
     GeneralSpot,
+    Guardian = 100,
 }
 
 [CreateAssetMenu(fileName = "New Monster", menuName = "Scriptable Objects/Monster")]

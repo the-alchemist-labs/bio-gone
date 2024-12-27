@@ -103,5 +103,13 @@ public partial class GameManager
             JsonConvert.SerializeObject(new UpdateBattlePhaseCommandPayload(phase, itemUsed, fleeBattle))
         ));
     }
-
+    public void RegisterGameOver(string playerId)
+    {
+        Commander.PostCommand(new CommandEvent(
+            GameState.RoomId,
+            Command.GameOver,
+            JsonConvert.SerializeObject(new GameOverCommandPayload(playerId))
+        ));
+    }
+    
 }

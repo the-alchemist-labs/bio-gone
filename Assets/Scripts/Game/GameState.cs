@@ -10,7 +10,6 @@ public class GameState
     public static event Action OnTurnChanged;
     public static event Action<int?> OnStepsChanged;
     public static event Action<string> OnStatsChanged;
-    public static event Action<Player> OnGameOver;
     public static event Action<int> OnTimerUpdated;
 
     public string RoomId { get; }
@@ -135,7 +134,7 @@ public class GameState
         List<Player> alivePlayers = Players.Where(player => player.Lives > 0).ToList();
         Player winner = alivePlayers.Count == 1 ? alivePlayers.First() : null;
 
-        if (winner != null) OnGameOver?.Invoke(winner);
+        if (winner != null) GameManager.Instance.RegisterGameOver(winner.Id);
     }
 
     private TileId GetStartPosition(int index)
