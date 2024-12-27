@@ -17,6 +17,6 @@ public class StepsPanel : MonoBehaviour
 
     void UpdateStepsText(int? steps)
     {
-        playerNameText.text = steps.HasValue ? $"Steps: {steps}" : "";
+        playerNameText.text = steps.HasValue ? $"{steps}" : "";
     }
 }
