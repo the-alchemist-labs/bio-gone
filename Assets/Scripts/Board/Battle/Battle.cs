@@ -129,7 +129,7 @@ public class Battle
 
     public void SetFleeRolls(FleeBattle fleeBattle)
     {
-        Player.FleeRollValue = 1; // fleeBattle.MonsterFleeValue;
+        Player.FleeRollValue = fleeBattle.MonsterFleeValue;
         Monster.FleeRollValue = fleeBattle.PlayerFleeValue;
     }
 
