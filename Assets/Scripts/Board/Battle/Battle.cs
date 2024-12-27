@@ -51,7 +51,7 @@ public class MonsterInBattle : Monster
     public new void Initialize(Monster monster)
     {
         base.Initialize(monster);
-        TempPower = 0; // Set any additional fields specific to MonsterInBattle
+        TempPower = 0;
     }
 }
 

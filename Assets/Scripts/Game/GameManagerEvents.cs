@@ -59,7 +59,7 @@ public partial class GameManager
 
         GameState.MovePlayer(playerId, newPosition);
     }
-    
+
     private void CoinsGained(string playerId, int modifier)
     {
         RewardDestination dest = playerId == _player.Id ? RewardDestination.Player : RewardDestination.Opponent;
@@ -73,12 +73,12 @@ public partial class GameManager
         DisplayRewards(RewardType.Exp, dest, amount);
         Instance.GameState.AddExpToPlayer(playerId, amount);
     }
-    
+
     private void LivesUpdated(string playerId, int modifier)
     {
         GameState.UpdatePlayerLive(playerId, modifier);
     }
-    
+
     private void NewTurn(int index)
     {
         GameState.UpdatePlayerTurn(index);
@@ -104,11 +104,12 @@ public partial class GameManager
             Battle = new Battle(playerId, monsterId.Value);
             battle.Display(Battle);
         }
-            
+
         else battle.ClosePopup();
     }
 
-    private async void BattlePhaseChanged(BattlePhase phase, [CanBeNull] BattleItemUsed usedItem, [CanBeNull] FleeBattle fleeBattle)
+    private async void BattlePhaseChanged(BattlePhase phase, [CanBeNull] BattleItemUsed usedItem,
+        [CanBeNull] FleeBattle fleeBattle)
     {
         if (usedItem != null)
         {
@@ -119,9 +120,8 @@ public partial class GameManager
         if (fleeBattle != null)
         {
             Battle.SetFleeRolls(fleeBattle);
-            Debug.Log($"{fleeBattle.PlayerFleeValue} - {fleeBattle.PlayerFleeValue}");
-
         }
+
         Battle.UpdateBattlePhase(phase);
     }
 

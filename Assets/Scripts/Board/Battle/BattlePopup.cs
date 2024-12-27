@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class BattlePopup : MonoBehaviour
@@ -48,9 +46,7 @@ public class BattlePopup : MonoBehaviour
 
     public void Result()
     {
-        
         BattleResult battleResult = GameManager.Instance.Battle.GetBattleResult();
-        resultPanel.DisplayBattleResult(battleResult);
 
         if (!GameManager.Instance.Battle.IsInBattle()) return;
         if (ShouldTakeDamage(battleResult)) GameManager.Instance.Battle.LostBattle();
