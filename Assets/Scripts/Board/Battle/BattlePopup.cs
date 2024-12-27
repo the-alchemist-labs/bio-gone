@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -7,6 +8,16 @@ public class BattlePopup : MonoBehaviour
     [SerializeField] private PlayerBattlePanel playerBattlePanel;
     [SerializeField] private BattleResultPanel resultPanel;
     [SerializeField] private VsPanel vsPanel;
+
+    void OnEnable()
+    {
+        Battle.OnBattlePowerModified += vsPanel.SetVsValues;
+    }
+
+    void OnDisable()
+    {
+        Battle.OnBattlePowerModified -= vsPanel.SetVsValues;
+    }
 
     public void Display(Battle battle)
     {

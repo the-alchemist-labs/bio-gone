@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public enum BattleTarget
 {
@@ -55,6 +57,7 @@ public class MonsterInBattle : Monster
 
 public class Battle
 {
+    public static event Action OnBattlePowerModified;
     public BattlePhase Phase { get; private set; }
     public MonsterInBattle Monster { get; }
     public PlayerInBattle Player { get; }
@@ -69,7 +72,7 @@ public class Battle
         Player = new PlayerInBattle(player.Id, player.Name, player.ProfilePicture, player.Position);
         Phase = BattlePhase.Encounter;
     }
-    
+
     public static MonsterId GetMonster(int playerLevel)
     {
         List<Monster> monsters = MonsterCatalog.Instance.Monsters
@@ -84,7 +87,7 @@ public class Battle
     {
         return Player.Id == (playerId ?? PlayerProfile.Instance.Id);
     }
-    
+
     public void UpdateBattlePhase(BattlePhase battlePhase)
     {
         Phase = battlePhase;
@@ -129,7 +132,7 @@ public class Battle
         Player.FleeRollValue = fleeBattle.MonsterFleeValue;
         Monster.FleeRollValue = fleeBattle.PlayerFleeValue;
     }
-    
+
     public BattleResult GetBattleResult()
     {
         if (Player.FleeRollValue != null)
@@ -138,31 +141,31 @@ public class Battle
             if (hasEscaped) return BattleResult.Fled;
             return BattleResult.FailedFlee;
         }
-        
+
         if (Monster.BattlePower < Player.BattlePower) return BattleResult.Win;
         if (Monster.BattlePower > Player.BattlePower) return BattleResult.Lose;
         return BattleResult.Draw;
     }
-    
+
     private void ModifyBattlePower(BattleTarget target, int modifier)
     {
         if (target == BattleTarget.Player) Player.TempPower += modifier;
         else Monster.TempPower += modifier;
+        OnBattlePowerModified?.Invoke();
     }
 
     public void LostBattle()
     {
+        if (!IsInBattle()) return;
+        
         GameManager.Instance.RegisterLivesUpdate(-1);
     }
 
     public void WonBattle()
     {
+        if (!IsInBattle()) return;
+
         GameManager.Instance.RegisterCoinsUpdate(Monster.CoinsGain);
         GameManager.Instance.RegisterExpUpdate(Monster.ExperienceGain);
-    }
-
-    public void Draw()
-    {
-        
     }
 }

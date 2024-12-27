@@ -50,7 +50,7 @@ public class VsPanel : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
 
-        diceImage.sprite = diceSprites[diceValue - 1];
+        diceImage.sprite = diceSprites[diceValue];
     }
 
     private void Next()
