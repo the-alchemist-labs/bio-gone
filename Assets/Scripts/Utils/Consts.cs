@@ -11,6 +11,7 @@ public static class Consts
     public const int TileExpGain = 150;
     public const float TileYPositionCorrection = -0.04f;
     public const int TurnSeconds = 50;
+    public const int InterruptSeconds = 5;
 }
 
 public static class SocketEvents

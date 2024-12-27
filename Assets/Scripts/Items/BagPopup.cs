@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -21,10 +22,12 @@ public class BagPopup : MonoBehaviour, IPopup
     [SerializeField] private GameObject targetContainer;
     [SerializeField] private Image monsterImage;
     [SerializeField] private Image playerImage;
+    [SerializeField] private TMP_Text useButtonText;
 
     [CanBeNull] private ConsumableItem _selectedItem;
     private BagState _state;
-
+    private int? _interruptTimer;
+    
     public void Display(BagState state)
     {
         Battle battle = GameManager.Instance.Battle;
@@ -34,6 +37,8 @@ public class BagPopup : MonoBehaviour, IPopup
         _state = state;
         gameObject.SetActive(true);
         PopulateBagItems();
+        if (!battle.IsInBattle()) StartCoroutine(nameof(SetTimer));
+        else useButtonText.text = "Use";
     }
 
     public void ClosePopup()
@@ -98,5 +103,18 @@ public class BagPopup : MonoBehaviour, IPopup
     private bool IsSelectedItem(ItemId itemId)
     {
         return _selectedItem != null && _selectedItem.Id == itemId;
+    }
+    
+    private IEnumerator SetTimer()
+    {
+        _interruptTimer = Consts.InterruptSeconds;
+        
+        while (_interruptTimer > 0)
+        {
+            useButtonText.text = $"Use ({_interruptTimer--})";
+            yield return new WaitForSeconds(1f);
+        }
+        
+        GameManager.Instance.RegisterBattlePhaseUpdate(BattlePhase.PlayerAction);
     }
 }

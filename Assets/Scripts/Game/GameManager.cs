@@ -118,7 +118,6 @@ public partial class GameManager : MonoBehaviour
     {
         while (GameState.TurnTimer > 0)
         {
-            Debug.Log("UpdateTimer");
             GameState.SetTimer(GameState.TurnTimer - 1);
             yield return new WaitForSeconds(1f);
         }
