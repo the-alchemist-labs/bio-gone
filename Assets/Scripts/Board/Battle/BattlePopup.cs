@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class BattlePopup : MonoBehaviour
@@ -37,6 +37,7 @@ public class BattlePopup : MonoBehaviour
 
     public void Result()
     {
+        
         BattleResult battleResult = GameManager.Instance.Battle.GetBattleResult();
         resultPanel.DisplayBattleResult(battleResult);
 

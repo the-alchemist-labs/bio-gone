@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -107,11 +108,12 @@ public partial class GameManager
         else battle.ClosePopup();
     }
 
-    private void BattlePhaseChanged(BattlePhase phase, [CanBeNull] BattleItemUsed usedItem, [CanBeNull] FleeBattle fleeBattle)
+    private async void BattlePhaseChanged(BattlePhase phase, [CanBeNull] BattleItemUsed usedItem, [CanBeNull] FleeBattle fleeBattle)
     {
         if (usedItem != null)
         {
             Battle.UseItem(usedItem);
+            await Task.Delay(1500);
         }
 
         if (fleeBattle != null)

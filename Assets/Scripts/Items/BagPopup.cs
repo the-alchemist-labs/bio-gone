@@ -18,12 +18,19 @@ public class BagPopup : MonoBehaviour
     [SerializeField] private ScrollRect scrollView;
     [SerializeField] private Transform bagContent;
     [SerializeField] private GameObject bagItemPrefab;
+    [SerializeField] private GameObject targetContainer;
+    [SerializeField] private Image monsterImage;
+    [SerializeField] private Image playerImage;
 
     [CanBeNull] private ConsumableItem _selectedItem;
     private BagState _state;
 
     public void Display(BagState state)
     {
+        Battle battle = GameManager.Instance.Battle;
+        playerImage.sprite = Resources.Load<Sprite>($"Sprites/ProfilePics/{battle.Player.ProfilePicture}");
+        monsterImage.sprite = Resources.Load<Sprite>($"Sprites/Monsters/{battle.Monster.Id}");
+        
         _state = state;
         gameObject.SetActive(true);
         PopulateBagItems();
@@ -37,22 +44,29 @@ public class BagPopup : MonoBehaviour
     public void UseItem()
     {
         if (_selectedItem == null) return;
+        targetContainer.SetActive(true);
+    }
+
+    public void OnTargetClicked(int targetIndex)
+    {
+        BattleTarget[] targets = { BattleTarget.Player, BattleTarget.Monster };
+        
         switch (_state)
         {
-            // Check if it's targeting player or monster
             case BagState.Battle:
                 GameManager.Instance.RegisterBattlePhaseUpdate(BattlePhase.Result,
-                    new BattleItemUsed(PlayerProfile.Instance.Id, _selectedItem.Id, BattleTarget.Monster));
+                    new BattleItemUsed(PlayerProfile.Instance.Id, _selectedItem.Id, targets[targetIndex]));
                 break;
             case BagState.OpponentBattle:
                 GameManager.Instance.RegisterBattlePhaseUpdate(BattlePhase.PlayerAction,
-                    new BattleItemUsed(PlayerProfile.Instance.Id, _selectedItem.Id, BattleTarget.Player));
+                    new BattleItemUsed(PlayerProfile.Instance.Id, _selectedItem.Id, targets[targetIndex]));
                 break;
         }
 
+        targetContainer.SetActive(false);
         Close();
     }
-
+    
     private void PopulateBagItems()
     {
         bagContent.Cast<Transform>().ToList().ForEach(child =>
