@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class BoardUI : MonoBehaviour
+public class StepsPanel : MonoBehaviour
 {
     [SerializeField] private TMP_Text playerNameText;
 
