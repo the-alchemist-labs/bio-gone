@@ -67,39 +67,41 @@ public class PlayerBattlePanel : MonoBehaviour
     // Clickes
     public void OnEngageClicked()
     {
+        SoundManager.Instance.PlaySound(SoundId.Click);
         GameManager.Instance.RegisterBattlePhaseUpdate(BattlePhase.OpponentInterrupt);
     }
     
     public void OnFleeClicked()
     {
+        SoundManager.Instance.PlaySound(SoundId.Click);
         FleeBattle fleeBattle = new FleeBattle(Random.Range(0, 7), Random.Range(0, 7));
         GameManager.Instance.RegisterBattlePhaseUpdate(BattlePhase.Flee, null, fleeBattle);
     }
     
     public void OnBagClicked()
     {
+        SoundManager.Instance.PlaySound(SoundId.Click);
         PopupManager.Instance.bagPopup.Display(BagState.Battle);
     }
 
     public void OnInterruptClicked()
     {
+        SoundManager.Instance.PlaySound(SoundId.Click);
         PopupManager.Instance.bagPopup.Display(BagState.OpponentBattle);
     }
     
     public void OnDontInterruptClicked()
     {
+        SoundManager.Instance.PlaySound(SoundId.Click);
         GameManager.Instance.RegisterBattlePhaseUpdate(BattlePhase.PlayerAction);
     }
     
     public void OnAttackClicked()
     {
+        SoundManager.Instance.PlaySound(SoundId.Click);
         GameManager.Instance.RegisterBattlePhaseUpdate(BattlePhase.Result);
     }
-    
-    public void OnEndClicked()
-    {
-        PopupManager.Instance.battlePopup.CloseClicked();
-    }
+
 
     private bool HasBagItems()
     {

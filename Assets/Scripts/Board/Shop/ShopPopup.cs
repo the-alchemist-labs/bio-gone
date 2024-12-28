@@ -15,8 +15,10 @@ public class ShopPopup : MonoBehaviour, IPopup
     public void Display()
     {
         gameObject.SetActive(true);
+        SoundManager.Instance.PlaySound(SoundId.ShopBell);
+
         bool isYourTurn = GameManager.Instance.GameState.IsYourTurn();
-        
+
         closeButton.gameObject.SetActive(isYourTurn);
         content.gameObject.SetActive(isYourTurn);
         shoppingImage.gameObject.SetActive(!isYourTurn);
@@ -26,13 +28,13 @@ public class ShopPopup : MonoBehaviour, IPopup
     private void RestockShop()
     {
         List<Item> shopItems = BoardManager.Instance.ShopService.GetItems();
-        
+
         content.Cast<Transform>().ToList().ForEach(child =>
         {
             child.GetComponent<ShopItem>().OnItemSelected -= ItemSelected;
             Destroy(child.gameObject);
         });
-        
+
         foreach (Item item in shopItems)
         {
             GameObject newShopItem = Instantiate(shopItemPrefab, content);
@@ -46,15 +48,25 @@ public class ShopPopup : MonoBehaviour, IPopup
 
     public void ClosePopup()
     {
-        gameObject.SetActive(false);
+        if (gameObject.activeInHierarchy)
+        {
+            SoundManager.Instance.PlaySound(SoundId.CloseDoor);
+            gameObject.SetActive(false);
+        }
     }
-    
-    private void ItemSelected(ItemId itemId)
+
+    private void ItemSelected(Item item)
     {
-        GameManager.Instance.RegisterInventoryUpdate(itemId, ItemAction.Get);
+        SoundManager.Instance.PlaySound(SoundId.Buy);
+        if (!item.IsFree)
+        {
+            GameManager.Instance.RegisterCoinsUpdate(-item.Price);
+        }
+
+        GameManager.Instance.RegisterInventoryUpdate(item.Id, ItemAction.Get);
         CloseClicked();
     }
-    
+
     public void CloseClicked()
     {
         GameManager.Instance.RegisterToggleShop(false);

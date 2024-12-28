@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ShopItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public event Action<ItemId> OnItemSelected;
+    public event Action<Item> OnItemSelected;
 
     [SerializeField] private Image itemImage;
     [SerializeField] private TMP_Text nameText;
@@ -34,12 +34,9 @@ public class ShopItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void SelectItem()
     {
-        if (!_item.IsFree)
-        {
-            GameManager.Instance.RegisterCoinsUpdate(-_item.Price);
-        }
+        
 
-        OnItemSelected?.Invoke(_item.Id);
+        OnItemSelected?.Invoke(_item);
     }
     
     public void OnPointerDown(PointerEventData eventData)

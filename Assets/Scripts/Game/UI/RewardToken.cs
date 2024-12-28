@@ -7,14 +7,15 @@ public class RewardToken : MonoBehaviour
 {
     [SerializeField] Image image;
 
-    public void SpawnRewardToken (Sprite sprite, Vector3 destination, float speed, Action onComplete)
+    public void SpawnRewardToken (Sprite sprite, SoundId sound, Vector3 destination, float speed, Action onComplete)
     {
         image.sprite = sprite;
-        StartCoroutine(MoveToPosition(destination, speed, onComplete));
+        StartCoroutine(MoveToPosition(destination, speed, sound, onComplete));
     }
     
-    private IEnumerator MoveToPosition(Vector3 targetPosition, float speed, Action onComplete)
+    private IEnumerator MoveToPosition(Vector3 targetPosition, float speed, SoundId sound, Action onComplete)
     {
+        SoundManager.Instance.PlaySound(sound);
         while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
         {
             float step = speed * 100 * Time.deltaTime;

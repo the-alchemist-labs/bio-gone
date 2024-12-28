@@ -19,6 +19,7 @@ public class DicePopup : MonoBehaviour, IPopup
     
     private IEnumerator RandomizeDice(int diceValue)
     {
+        SoundManager.Instance.PlaySound(SoundId.Dice);
         Sprite[] diceSprites = Resources.LoadAll<Sprite>("Sprites/Game/Dice");
 
         for(int i = 0; i <= 8; i++)

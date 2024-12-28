@@ -26,6 +26,7 @@ public class ItemPopup : MonoBehaviour, IPopup
     public void OpenPopup(Item item)
     {
         gameObject.SetActive(true);
+        SoundManager.Instance.PlaySound(SoundId.Click);
 
         itemImage.sprite = ItemCatalog.Instance.GetItemSprite(item.Id);
         nameText.text = item.Name;

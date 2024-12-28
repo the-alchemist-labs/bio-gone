@@ -10,6 +10,7 @@ public class BattlePopup : MonoBehaviour, IPopup
     void OnEnable()
     {
         Battle.OnBattlePowerModified += vsPanel.SetVsValues;
+        SoundManager.Instance.PlayBGM(BackgroundMusicId.Battle);
     }
 
     void OnDisable()
@@ -54,20 +55,20 @@ public class BattlePopup : MonoBehaviour, IPopup
         if (!battle.IsInBattle()) return;
         if (ShouldTakeDamage(battleResult)) battle.LostBattle();
         if (battleResult == BattleResult.Win) battle.WonBattle();
+        if (battleResult == BattleResult.Fled) battle.FleedBattle();
     }
 
     public void ClosePopup()
     {
-        resultPanel.gameObject.SetActive(false);
-        gameObject.SetActive(false);
+        if (gameObject.activeInHierarchy)
+        {
+            SoundManager.Instance.PlayBGM(BackgroundMusicId.Main);
+            resultPanel.gameObject.SetActive(false);
+            gameObject.SetActive(false);
+            GameManager.Instance.TakeStep();
+        }
     }
-
-    public void CloseClicked()
-    {
-        GameManager.Instance.RegisterToggleBattle(false);
-        GameManager.Instance.TakeStep();
-    }
-
+    
     private bool ShouldTakeDamage(BattleResult result)
     {
         return GameManager.Instance.Battle.IsInBattle() &&

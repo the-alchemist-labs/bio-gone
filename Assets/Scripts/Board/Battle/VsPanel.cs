@@ -42,6 +42,7 @@ public class VsPanel : MonoBehaviour
 
     private System.Collections.IEnumerator RandomizeDice(Image diceImage, int diceValue)
     {
+        SoundManager.Instance.PlaySound(SoundId.Dice);
         Sprite[] diceSprites = Resources.LoadAll<Sprite>("Sprites/Game/Dice");
 
         for (int i = 0; i <= 8; i++)

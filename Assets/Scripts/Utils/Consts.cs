@@ -27,5 +27,10 @@ public static class SceneNames
     public const string MainMenu = "MainMenuScene";
     public const string Matchmaking = "MatchmakingScene";
     public const string Game = "GameScene";
-    
+}
+
+public static class PlayerPrefKeys
+{
+    public const string BGM_Volume = "BGM_Volume";
+    public const string SFX_Volume = "SFX_Volume";
 }

@@ -36,6 +36,7 @@ public class PopupManager : MonoBehaviour
     void OnEnable()
     {
         _popups = GetComponentsInChildren<IPopup>(true).ToList();
+        SoundManager.Instance.PlayBGM(BackgroundMusicId.Main);
     }
     
     public void CloseAll()

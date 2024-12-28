@@ -97,6 +97,7 @@ public class GameState
         if (player.ShouldLevelUp() && !player.IsMaxLevel())
         {
             player.LevelUp();
+            SoundManager.Instance.PlaySound(SoundId.LevelUp);
         }
 
         OnStatsChanged?.Invoke(player.Id);
@@ -105,6 +106,9 @@ public class GameState
     public void UpdatePlayerLive(string playerId, int modifier)
     {
         int lives = GetPlayer(playerId).ModifyLives(modifier);
+
+        if (modifier < 0)  SoundManager.Instance.PlaySound(SoundId.LoseLife);
+        if (modifier > 0) SoundManager.Instance.PlaySound(SoundId.GainLife);
 
         OnStatsChanged?.Invoke(playerId);
 

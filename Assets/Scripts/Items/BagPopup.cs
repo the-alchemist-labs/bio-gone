@@ -48,12 +48,14 @@ public class BagPopup : MonoBehaviour, IPopup
 
     public void UseItem()
     {
+        SoundManager.Instance.PlaySound(SoundId.Click);
         if (_selectedItem == null) return;
         targetContainer.SetActive(true);
     }
 
     public void OnTargetClicked(int targetIndex)
     {
+        SoundManager.Instance.PlaySound(SoundId.Click);
         BattleTarget[] targets = { BattleTarget.Player, BattleTarget.Monster };
         
         switch (_state)

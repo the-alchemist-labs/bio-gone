@@ -156,12 +156,14 @@ public class Battle
 
     public void LostBattle()
     {
+        SoundManager.Instance.PlaySound(SoundId.LoseBattle);
         GameManager.Instance.RegisterLivesUpdate(-1);
     }
 
     public void WonBattle()
     {
 
+        SoundManager.Instance.PlaySound(SoundId.WinBattle);
         if (Monster.Id == MonsterId.Guardian)
         {
             GameManager.Instance.RegisterGameOver(Player.Id);
@@ -169,5 +171,10 @@ public class Battle
         }
         GameManager.Instance.RegisterCoinsUpdate(Monster.CoinsGain);
         GameManager.Instance.RegisterExpUpdate(Monster.ExperienceGain);
+    }
+
+    public void FleedBattle()
+    {
+        SoundManager.Instance.PlaySound(SoundId.Flee);
     }
 }

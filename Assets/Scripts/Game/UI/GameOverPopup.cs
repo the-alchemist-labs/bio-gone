@@ -16,10 +16,14 @@ public class GameOverPopup : MonoBehaviour, IPopup
         titleText.text = hasWon ? "You won!" : "You lost!";
         image.sprite = Resources.Load<Sprite>($"Sprites/Game/{(hasWon ? "Golden Apple" : "Worm")}");
         text.text = hasWon ? "Kept the doctor away!" : "Time for more immoral tests";
+
+        SoundId sound = hasWon ? SoundId.WinGame : SoundId.LoseBattle;
+        SoundManager.Instance.PlaySound(sound);
     }
 
     public void FinishClicked()
     {
+        SoundManager.Instance.PlaySound(SoundId.Click);
         ClosePopup();
         SceneManager.LoadScene(SceneNames.MainMenu);
     }

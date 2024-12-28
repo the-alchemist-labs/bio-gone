@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     
     private IEnumerator MoveToPosition(Vector3 targetPosition)
     {
+        SoundManager.Instance.PlaySound(SoundId.Step);
         while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
