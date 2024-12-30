@@ -4,7 +4,6 @@ using System.Linq;
 
 public enum PlayerProfilePicture
 {
-    Bob,
     Dana,
     Bill,
 }

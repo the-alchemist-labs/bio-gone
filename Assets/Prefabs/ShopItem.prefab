@@ -260,7 +260,7 @@ MonoBehaviour:
   itemImage: {fileID: 1697932141864516290}
   nameText: {fileID: 7858992698361883138}
   priceLayout: {fileID: 354753554481415193}
-  priceButton: {fileID: 0}
+  priceButton: {fileID: 7566778284214506035}
   coinImage: {fileID: 8484469512204168181}
   priceText: {fileID: 3015039409774645882}
 --- !u!114 &5989690570983503435
@@ -741,6 +741,17 @@ PrefabInstance:
       addedObject: {fileID: 2134688591240899682}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5b1306653532dc42baf94a46b78cad4, type: 3}
+--- !u!114 &7566778284214506035 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 496831491304876796, guid: d5b1306653532dc42baf94a46b78cad4, type: 3}
+  m_PrefabInstance: {fileID: 8063555879846983887}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &9048412493436494361 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1330226968376351446, guid: d5b1306653532dc42baf94a46b78cad4, type: 3}
