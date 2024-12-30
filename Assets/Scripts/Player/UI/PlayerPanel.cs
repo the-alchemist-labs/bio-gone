@@ -81,7 +81,7 @@ public class PlayerPanel : MonoBehaviour
     public void OnRollClicked()
     {
         SoundManager.Instance.PlaySound(SoundId.Click);
-        int rollValue = 3;
+        int rollValue = Random.Range(1, 7);
         GameManager.Instance.RegisterRollDice(rollValue);
         if (rollButtonMask != null) rollButtonMask.gameObject.SetActive(true);
         if (rollButton != null) rollButton.interactable = false;

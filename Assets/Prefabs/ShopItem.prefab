@@ -622,6 +622,30 @@ PrefabInstance:
     m_TransformParent: {fileID: 4103847608753748147}
     m_Modifications:
     - target: {fileID: 496831491304876796, guid: d5b1306653532dc42baf94a46b78cad4, type: 3}
+      propertyPath: m_Transition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 496831491304876796, guid: d5b1306653532dc42baf94a46b78cad4, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 496831491304876796, guid: d5b1306653532dc42baf94a46b78cad4, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.a
+      value: 0.6117647
+      objectReference: {fileID: 0}
+    - target: {fileID: 496831491304876796, guid: d5b1306653532dc42baf94a46b78cad4, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.b
+      value: 0.8773585
+      objectReference: {fileID: 0}
+    - target: {fileID: 496831491304876796, guid: d5b1306653532dc42baf94a46b78cad4, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.g
+      value: 0.8773585
+      objectReference: {fileID: 0}
+    - target: {fileID: 496831491304876796, guid: d5b1306653532dc42baf94a46b78cad4, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.r
+      value: 0.8773585
+      objectReference: {fileID: 0}
+    - target: {fileID: 496831491304876796, guid: d5b1306653532dc42baf94a46b78cad4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}

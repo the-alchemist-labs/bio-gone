@@ -12,6 +12,7 @@ public class PlayerBattlePanel : MonoBehaviour
     [SerializeField] private GameObject encounterButtons;
     [SerializeField] private GameObject fightButtons;
     [SerializeField] private GameObject opponentButtons;
+    [SerializeField] private GameObject waitingNotice;
     [SerializeField] private GameObject bagButton;
 
     private bool _youAreFighting;
@@ -33,6 +34,7 @@ public class PlayerBattlePanel : MonoBehaviour
     {
         fightButtons.SetActive(false);
         opponentButtons.SetActive(false);
+        waitingNotice.SetActive(!_youAreFighting);
         encounterButtons.SetActive(_youAreFighting);
     }
     
@@ -48,20 +50,24 @@ public class PlayerBattlePanel : MonoBehaviour
         }
 
         opponentButtons.SetActive(!_youAreFighting);
+        waitingNotice.SetActive(_youAreFighting);
     }
 
     public void OnPlayerActionPhase()
     {
         encounterButtons.SetActive(false);
         opponentButtons.SetActive(false);
+
         bagButton.SetActive(HasBagItems());
         fightButtons.SetActive(_youAreFighting);
+        waitingNotice.SetActive(!_youAreFighting);
     }
     
     public void OnFleePhase()
     {
         encounterButtons.SetActive(false);
         fightButtons.SetActive(false);
+        waitingNotice.SetActive(false);
     }
     
     // Clickes
