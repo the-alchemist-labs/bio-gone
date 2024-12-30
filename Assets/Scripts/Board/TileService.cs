@@ -51,6 +51,6 @@ public class TileService
     
     private void HandleGuardianTile()
     {
-        GameManager.Instance.RegisterToggleBattle(true, MonsterId.Guardian);
+        GameManager.Instance.RegisterToggleBattle(true, MonsterId.Doctor);
     }
 }

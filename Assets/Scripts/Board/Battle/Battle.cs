@@ -164,7 +164,7 @@ public class Battle
     {
 
         SoundManager.Instance.PlaySound(SoundId.WinBattle);
-        if (Monster.Id == MonsterId.Guardian)
+        if (Monster.Id == MonsterId.Doctor)
         {
             GameManager.Instance.RegisterGameOver(Player.Id);
             return;

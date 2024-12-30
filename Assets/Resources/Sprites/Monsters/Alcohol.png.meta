@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a4c3e4ccc6b05c248a97177eabd60103
+guid: 003e0ac2743440c44bc3666da6759ed9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 309628545801974608
-    second: Helmet_0
+      213: -9086870433655771597
+    second: Alcohol_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,7 +139,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Helmet_0
+      name: Alcohol_0
       rect:
         serializedVersion: 2
         x: 0
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 053f8dc95850c4400800000000000000
-      internalID: 309628545801974608
+      spriteID: 33ea2f12c73f4e180800000000000000
+      internalID: -9086870433655771597
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Helmet_0: 309628545801974608
+      Alcohol_0: -9086870433655771597
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

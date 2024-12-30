@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a4c3e4ccc6b05c248a97177eabd60103
+guid: 38d11b6c41576364fadbcd987d468f2a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 309628545801974608
-    second: Helmet_0
+      213: 5006185027451739633
+    second: Vaccine_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,7 +139,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Helmet_0
+      name: Vaccine_0
       rect:
         serializedVersion: 2
         x: 0
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 053f8dc95850c4400800000000000000
-      internalID: 309628545801974608
+      spriteID: 1fdd32132ca897540800000000000000
+      internalID: 5006185027451739633
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Helmet_0: 309628545801974608
+      Vaccine_0: 5006185027451739633
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

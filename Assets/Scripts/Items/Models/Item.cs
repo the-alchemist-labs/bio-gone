@@ -4,14 +4,19 @@ using UnityEngine;
 public enum ItemId
 {
     Helmet = 0,
-    Boots = 1,
-    Heal1 = 2,
-    Heal2 = 3,
-    Boost1 = 4,
-    Knife = 6,
-    Sword = 7,
-    Axe = 8,
-    Armor = 9,
+    Shoes = 1,
+    Googles = 2,
+    Collar = 3,
+    Backpack = 4,
+    Gloves = 6,
+    Weapon1 = 7,
+    Weapon2 = 8,
+    Knife = 9,
+    Boost1 = 100,
+    Boost2 = 101,
+    Boost3 = 102,
+    Heal1 = 103,
+    Heal2 = 104,
 }
 
 public enum ItemType

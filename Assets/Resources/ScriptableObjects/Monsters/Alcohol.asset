@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d24e62f35c24549bbd8791ede8a9530, type: 3}
+  m_Name: Alcohol
+  m_EditorClassIdentifier: 
+  Id: 4
+  Name: Alex
+  Level: 6
+  BattlePower: 0
+  ExperienceGain: 0
+  CoinsGain: 0
