@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 851f63665b7fd0844be03695fc65ce4f
+guid: c3cad2c7c316ba149baad806da9005af
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3338749442709606003
-    second: Coin_0
+      213: -5994595783598684838
+    second: BioGone_0
+  - first:
+      213: -615861868123537124
+    second: BioGone_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +142,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Coin_0
+      name: BioGone_0
       rect:
         serializedVersion: 2
-        x: 703
-        y: 681
-        width: 1595
-        height: 1638
+        x: 44
+        y: 26
+        width: 460
+        height: 432
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +157,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d81b24142116aa1d0800000000000000
-      internalID: -3338749442709606003
+      spriteID: a55cb8245eaeecca0800000000000000
+      internalID: -5994595783598684838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BioGone_1
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 406
+        width: 63
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c11c9c7d4e40477f0800000000000000
+      internalID: -615861868123537124
       vertices: []
       indices: 
       edges: []
@@ -174,7 +199,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Coin_0: -3338749442709606003
+      BioGone_0: -5994595783598684838
+      BioGone_1: -615861868123537124
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -57,11 +57,11 @@ public class BoardTile : MonoBehaviour
             case TileType.Curse:
                 return new Color32(110, 125, 107, 255);
             case TileType.Shop:
-                return new Color32(79, 158, 66, 255);
+                return new Color32(140, 140, 140, 255);
             case TileType.Monster:
-                return new Color32(170, 50, 50, 255);
+                return new Color32(180, 80, 80, 255);
             case TileType.Guardian:
-                return new Color32(242, 208, 24, 255);
+                return new Color32(79, 158, 66, 255);
             default:
                 return Color.white;
         }

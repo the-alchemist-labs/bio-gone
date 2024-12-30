@@ -1,4 +1,3 @@
-using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -63,7 +62,7 @@ public class MainManager : MonoBehaviour
 
         if (_isSocketReady && _isPlayerReady)
         {
-            SceneManager.LoadScene(SceneNames.Matchmaking);
+            SceneManager.LoadScene(SceneNames.MainMenu);
         }
     }
 }

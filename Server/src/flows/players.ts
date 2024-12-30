@@ -9,7 +9,7 @@ export async function getPlayer(playerId: string): Promise<Player | null> {
     const newPlayer = await PlayersStore.CreatePlayer({
         id: playerId,
         name: `Player_${generateCodeFromUniqueId(playerId)}`,
-        profilePicture: 0,
+        profilePicture: Math.floor(Math.random() * 2),
     });
 
     console.log("Player registered", playerId);
