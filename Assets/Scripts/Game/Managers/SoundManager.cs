@@ -34,8 +34,8 @@ public enum SoundId
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
-    [SerializeField] private float SFXVolume;
-    [SerializeField] private float BGMVolume;
+    public float SFXVolume;
+    public float BGMVolume;
 
     [SerializeField] private GameObject audioSourcePrefab;
     private ObjectPool<AudioSource> _pool;
