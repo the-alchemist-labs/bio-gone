@@ -1,7 +1,6 @@
 public static class Consts
 {
-    public const string ServerURI = "http://192.168.1.223:3000";
-    // public const string ServerURI = "https://munch-party.onrender.com";
+    public const string ServerURI = "https://munch-party.onrender.com";
     public const int DefaultLives = 3;
     public const int BasePower = 100;
     public const int StartingCoins = 100;
