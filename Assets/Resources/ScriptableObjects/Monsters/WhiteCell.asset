@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 1
   Name: Cell Power
-  Level: 2
-  BattlePower: 5
-  ExperienceGain: 0
-  CoinsGain: 0
+  Level: 3
+  BattlePower: 120
+  ExperienceGain: 60
+  CoinsGain: 80

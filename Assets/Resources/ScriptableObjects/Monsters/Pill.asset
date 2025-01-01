@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 2
   Name: Phill
-  Level: 4
-  BattlePower: 0
-  ExperienceGain: 0
-  CoinsGain: 0
+  Level: 5
+  BattlePower: 200
+  ExperienceGain: 80
+  CoinsGain: 120

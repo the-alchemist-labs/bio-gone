@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d24e62f35c24549bbd8791ede8a9530, type: 3}
-  m_Name: Vaccine
+  m_Script: {fileID: 11500000, guid: 03c9220d62fa49a5ab212c194dbcc6cb, type: 3}
+  m_Name: Weapon2
   m_EditorClassIdentifier: 
-  Id: 5
-  Name: Vacnin
-  Level: 4
-  BattlePower: 160
-  ExperienceGain: 70
-  CoinsGain: 100
+  Id: 8
+  Name: Smash Pro
+  Price: 260
+  IsFree: 0
+  ItemType: 0
+  Description: Big Ouch
+  BattlePowerBonus: 140

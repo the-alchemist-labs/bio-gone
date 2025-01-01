@@ -15,6 +15,6 @@ MonoBehaviour:
   Id: 4
   Name: Alex
   Level: 6
-  BattlePower: 0
-  ExperienceGain: 0
-  CoinsGain: 0
+  BattlePower: 260
+  ExperienceGain: 90
+  CoinsGain: 140

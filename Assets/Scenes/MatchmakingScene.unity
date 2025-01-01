@@ -421,7 +421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matchFoundPanel: {fileID: 1132663793}
-  countDownSeconds: 1
+  countDownSeconds: 3
 --- !u!4 &413845310
 Transform:
   m_ObjectHideFlags: 0

@@ -27,7 +27,7 @@ public class Player
         Name = name;
         ProfilePicture = profilePicture;
         Position = position;
-        Coins = 0;
+        Coins = Consts.StartingCoins;
         Level = 1;
         Experience = 0;
         Lives = Consts.DefaultLives;
@@ -90,7 +90,7 @@ public class Player
     
     private int CalculatePower()
     {
-        int levelsPower = Level * Consts.LevelPowerModifier;
+        int levelsPower = Consts.BasePower + Level * Consts.LevelPowerModifier;
         int itemsPower = Items
             .Where(i => i.ItemType == ItemType.Equipment)
             .OfType<EquipItem>()

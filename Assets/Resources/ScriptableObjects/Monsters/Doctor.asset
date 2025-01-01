@@ -15,6 +15,6 @@ MonoBehaviour:
   Id: 100
   Name: Dr. Doomberg
   Level: 10
-  BattlePower: 0
-  ExperienceGain: 0
-  CoinsGain: 0
+  BattlePower: 450
+  ExperienceGain: 140
+  CoinsGain: 240

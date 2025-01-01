@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 3
   Name: Anti boti
-  Level: 5
-  BattlePower: 0
-  ExperienceGain: 0
-  CoinsGain: 0
+  Level: 8
+  BattlePower: 340
+  ExperienceGain: 110
+  CoinsGain: 240
