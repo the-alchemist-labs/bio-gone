@@ -1,5 +1,6 @@
 import http from 'http';
 import express from 'express';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import { Server } from 'socket.io';
 import { initializeSockets } from './sockets/sockets';
@@ -12,7 +13,16 @@ import { lobby } from './routes/lobby';
 const app = express();
 
 const server = http.createServer(app);
-export const io = new Server(server);
+export const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
+
+app.use(cors({
+  origin: "*",
+}));
 
 app.use(bodyParser.json());
 

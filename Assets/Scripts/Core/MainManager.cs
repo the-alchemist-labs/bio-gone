@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,8 @@ public enum GamePrerequisite
 }
 public class MainManager : MonoBehaviour
 {
+
+    [SerializeField] private TMP_Text text;
     private static MainManager _instance;
 
     private bool _isSocketReady = false;
@@ -39,6 +42,7 @@ public class MainManager : MonoBehaviour
 
         SocketIO.OnSocketConnected += PrepareGame;
         PlayerProfile.OnPlayerInit += PrepareGame;
+        text.text = $"isSocketReady: {_isSocketReady} | isPlayerReady: {_isPlayerReady}\n";
     }
 
     void OnDestroy()
@@ -59,6 +63,8 @@ public class MainManager : MonoBehaviour
                 _isPlayerReady = true;
                 break;
         }
+        
+        text.text += $"isSocketReady: {_isSocketReady} | isPlayerReady: {_isPlayerReady}\n";
 
         if (_isSocketReady && _isPlayerReady)
         {

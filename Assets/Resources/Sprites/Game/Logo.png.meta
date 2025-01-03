@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 76ad8f966e0595d4085eb062e7f645e6
+guid: 76f398dccc47906449f309f9ce06b1a6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3127401591272192619
-    second: engage_0
+      213: 1404028623067837608
+    second: Logo_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: engage_0
+      name: Logo_0
       rect:
         serializedVersion: 2
-        x: 53
-        y: 18
-        width: 406
-        height: 476
+        x: 0
+        y: 0
+        width: 504
+        height: 495
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 595ca3a82dc3994d0800000000000000
-      internalID: -3127401591272192619
+      spriteID: 8a47074089c1c7310800000000000000
+      internalID: 1404028623067837608
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      engage_0: -3127401591272192619
+      Logo_0: 1404028623067837608
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
